@@ -79,14 +79,13 @@ public class CityTest extends TestCase {
     }
 
     public void testShouldShowCitySorted() throws SQLException, ClassNotFoundException, NotNullableException {
-        City city4 = new City ("4","City4",1);
-        city4.save();
-        City cityA = new City ("1","CityA",1);
+        City cityZ = new City ("1","Z", 1);
+        cityZ.save();
+        City cityA = new City ("2","A", 2);
         cityA.save();
-        City city2 = new City ("2","City2",1);
-        city2.save();
-        assertEquals(cityA.getName(), City.first().getName());
-        assertEquals(city4.getName(), City.last().getName());
+        ArrayList<City> list = City.getAll();
+        assertEquals(cityA.getName(), list.get(0).getName());
+        assertEquals(cityZ.getName(), list.get(list.size() - 1).getName());
     }
 
     //Metodos Diferentes por classe

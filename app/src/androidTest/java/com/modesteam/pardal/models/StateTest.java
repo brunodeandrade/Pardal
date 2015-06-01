@@ -5,6 +5,7 @@ import com.modesteam.pardal.Pardal;
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import helpers.Condition;
 import helpers.Operator;
@@ -81,13 +82,14 @@ public class StateTest extends TestCase {
     }
 
     public void testShouldShowStateSorted() throws SQLException, ClassNotFoundException, NotNullableException {
-        State state4 = new State ("state4");
-        state4.save();
-        State stateA = new State ("stateA");
+        State stateZ = new State ("Z");
+        stateZ.save();
+        State stateA = new State ("A");
         stateA.save();
-        State state2 = new State ("state2");
-        state2.save();
-        assertEquals(stateA.getName(), State.first().getName());
-        assertEquals(state4.getName(), State.last().getName());
+        ArrayList<State> list = State.getAll();
+        assertEquals(stateA.getName(), list.get(0).getName());
+        assertEquals(stateZ.getName(), list.get(list.size() - 1).getName());
+        stateA.delete();
+        stateZ.delete();
     }
 }

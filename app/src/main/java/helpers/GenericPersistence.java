@@ -359,7 +359,7 @@ public class GenericPersistence extends Database {
                     HasMany hasMany = hasMultiple.value()[i];
                     Class<?> child = hasMany.entity();
                     Object childInstance = child.newInstance();
-                    ArrayList<Object> results = selectMany(bean, childInstance, getOrderField(childInstance) , conn);
+                    ArrayList<Object> results = selectMany(bean, childInstance , conn);
                     for (Object object : results) {
                         boolean status = deleteBean(object, conn);
                         if (!status){
@@ -367,7 +367,10 @@ public class GenericPersistence extends Database {
                         }
                     }
                 }
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (InstantiationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -649,7 +652,10 @@ public class GenericPersistence extends Database {
         Object result = null;
         try {
             result = bean.getClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

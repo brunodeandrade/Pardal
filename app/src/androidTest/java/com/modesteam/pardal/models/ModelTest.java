@@ -1,10 +1,15 @@
 package com.modesteam.pardal.models;
 
+import android.util.Log;
+
 import com.modesteam.pardal.Pardal;
 
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import helpers.Condition;
 import helpers.Operator;
@@ -29,8 +34,8 @@ public class ModelTest  extends TestCase {
             }
             type1 = new Type("tipo passagerio","PASSAGEIRO");
             type1.save();
-            model1 = new Model("model1",true,1,type1.getId());
-            model2 = new Model("model2",false,2,2);
+            model1 = new Model("Model1",true,1,type1.getId());
+            model2 = new Model("Model2",false,2,2);
             model1.save();
             model2.save();
 
@@ -64,14 +69,14 @@ public class ModelTest  extends TestCase {
 
         public void testShouldSavemodelFromDatabase() throws SQLException, ClassNotFoundException, NotNullableException {
             assertEquals(2, Model.getAll().size());
-            Model model3 = new Model("model3",false,3,3);
+            Model model3 = new Model("Model3",false,3,3);
             model3.save();
             assertEquals(3, Model.getAll().size());
             model3.delete();
         }
 
         public void testShouldDeletemodelFromDatabase() throws SQLException, ClassNotFoundException, NotNullableException {
-            Model model3 = new Model("model3",false,3,3);
+            Model model3 = new Model("Model3",false,3,3);
             model3.save();
             assertEquals(3, Model.getAll().size());
             model3.delete();
@@ -79,7 +84,7 @@ public class ModelTest  extends TestCase {
         }
 
         public void testShouldGetWheremodelFromDatabase() throws SQLException, ClassNotFoundException, NotNullableException {
-            Condition condition = new Condition(new Model(),"name", Operator.EQUAL,"model1");
+            Condition condition = new Condition(new Model(),"name", Operator.EQUAL,"Model1");
             assertEquals(model1.getName(), Model.getWhere(condition).get(0).getName());
         }
         public void testShouldGetTypeFromModelFromDatabase() throws SQLException, ClassNotFoundException {
@@ -102,14 +107,15 @@ public class ModelTest  extends TestCase {
     }
 
     public void testShouldShowModelSorted() throws SQLException, ClassNotFoundException, NotNullableException {
-        Model modelZ = new Model ("Z",false,6,6);
+        Model modelZ = new Model("Z",true,1,1);
         modelZ.save();
-        Model modelA = new Model ("A",false,5,5);
+        Model modelA = new Model ("A",true,2,2);
         modelA.save();
-        assertEquals(modelZ.getName(), Model.first().getName());
-        assertEquals(modelA.getName(), Model.last().getName());
-        modelZ.delete();
+        ArrayList<Model> list = Model.getAll();
+        assertEquals(modelA.getName(), list.get(0).getName());
+        assertEquals(modelZ.getName(), list.get(list.size() - 1).getName());
         modelA.delete();
+        modelZ.delete();
     }
 
 

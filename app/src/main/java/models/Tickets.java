@@ -20,7 +20,7 @@ import annotations.OneRelations;
 	@HasOne(entity=HighwayStretch.class, reference ="idHighwayStretch", belongs=true),
 	@HasOne(entity=Model.class, reference="idModel", belongs=true)
 })
-public class Tickets{
+public class Tickets {
 	
 	@Column(name="_id", nullable=false)
 	private int id;

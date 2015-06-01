@@ -5,6 +5,7 @@ import com.modesteam.pardal.Pardal;
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import helpers.Condition;
 import helpers.Operator;
@@ -77,14 +78,15 @@ public class TypeTest extends TestCase {
     }
 
     public void testShouldShowTypeSorted() throws SQLException, ClassNotFoundException, NotNullableException {
-        Type type4 = new Type ("type4","4");
-        type4.save();
-        Type typeA = new Type ("typeA","A");
+        Type typeZ = new Type ("1","Z");
+        typeZ.save();
+        Type typeA = new Type ("2","A");
         typeA.save();
-        Type type2 = new Type ("type2","2");
-        type2.save();
-        assertEquals(typeA.getName(), Type.first().getName());
-        assertEquals(type4.getName(), Type.last().getName());
+        ArrayList<Type> list = Type.getAll();
+        assertEquals(typeA.getName(), list.get(0).getName());
+        assertEquals(typeZ.getName(), list.get(list.size() - 1).getName());
+        typeA.delete();
+        typeZ.delete();
     }
 //Metodos Diferentes por classe
 
