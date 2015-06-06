@@ -14,4 +14,18 @@
         android:id="@+id/imageView"
         android:src="@drawable/splashscreenpardal"
         android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Pardal\n v 1.0"
+        android:id="@+id/textViewVersion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#ff333693"
+        android:textStyle="bold"
+        android:textSize="35dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginLeft="125dp" />
 </RelativeLayout>
