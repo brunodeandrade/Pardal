@@ -137,16 +137,15 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openDetailFragment(R.id. brand_list_view);
     }
 
-//      TESTE DA BRANCH DO RAFAEL
-//    public void testShouldShowAbout(){
-//        this.mActivity = getActivity();
-//        openDrawerOptionAt(1);
-//        mInstrumentation.waitForIdleSync();
-//        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-//        ImageButton imageButton = (ImageButton) (fragment3.getView().findViewById(R.id.bAbout));
-//        TouchUtils.clickView(this,imageButton);
-//
-//    }
+
+    public void testShouldShowAbout(){
+        this.mActivity = getActivity();
+        mInstrumentation.waitForIdleSync();
+        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+        ImageButton imageButton = (ImageButton) (fragment3.getView().findViewById(R.id.bAbout));
+        TouchUtils.clickView(this,imageButton);
+
+    }
 
     public void testShouldFilterBrandList(){
         this.mActivity = getActivity();
