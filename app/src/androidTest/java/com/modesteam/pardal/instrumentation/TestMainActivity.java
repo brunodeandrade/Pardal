@@ -294,4 +294,11 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openDetailFragment(R.id. model_list_view);
         openCompareFragment(R.id.model_list_view);
     }
+    public void testShouldOpenTypeCompareFragment(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bType);
+        openListFragment(R.id.bList);
+        openDetailFragment(R.id. type_list_view);
+        openCompareFragment(R.id.type_list_view);
+    }
 }
