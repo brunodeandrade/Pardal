@@ -205,11 +205,11 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mCallbacks = (NavigationDrawerCallbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
-        }
+        //try {
+          //  mCallbacks = (NavigationDrawerCallbacks) activity;
+        //} catch (ClassCastException e) {
+          //  throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
+        //}
     }
 
     @Override
