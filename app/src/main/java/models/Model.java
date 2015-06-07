@@ -1,5 +1,7 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
 import annotations.OrderBy;
 import helpers.Condition;
 import helpers.GenericPersistence;
@@ -22,7 +24,7 @@ import annotations.OneRelations;
 })
 @ManyRelations({@HasMany(entity=Tickets.class, foreignKey="idModel")})
 @OrderBy(field = "name")
-public class Model {
+public class Model implements ComparableCategory{
 	
 	@Column(name="_id", nullable=false)
 	private int id;
@@ -154,6 +156,62 @@ public class Model {
 	@Override
 	public String toString() {
 		return ""+name;
-	}	
-	
+	}
+
+    @Override
+    public int getTotalTickets() {
+        try {
+            int total = 0;
+            ArrayList<Tickets> tickets = getTickets();
+            for(Tickets ticket : tickets){
+                total += ticket.getTotalTickets();
+            }
+            return total;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public Double getAverageExceded() {
+        try {
+            double average = 0;
+            ArrayList<Tickets> tickets = getTickets();
+            for(Tickets ticket : tickets){
+                average += ticket.getAverageExceded();
+            }
+            return average/tickets.size();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0.0;
+    }
+
+    @Override
+    public Double getMaximumMeasuredVelocity() {
+        try {
+            double maximum = 0;
+            ArrayList<Tickets> tickets = getTickets();
+            for(Tickets ticket : tickets){
+                if(maximum<ticket.getMaximumMeasuredVelocity()){
+                    maximum = ticket.getMaximumMeasuredVelocity();
+                }
+            }
+            return maximum;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0.0;
+    }
+
 }

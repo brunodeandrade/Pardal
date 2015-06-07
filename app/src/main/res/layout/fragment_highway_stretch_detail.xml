@@ -117,4 +117,14 @@
         android:layout_alignStart="@+id/textViewName"
         android:layout_above="@+id/totalTickets" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Comparar"
+        android:id="@+id/compareButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp" />
+
+
 </RelativeLayout>

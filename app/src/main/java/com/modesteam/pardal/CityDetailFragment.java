@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -71,6 +72,7 @@ public class CityDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_city_detail, container, false);
         detailType(rootView);
+
         return rootView;
     }
 
@@ -101,6 +103,8 @@ public class CityDetailFragment extends Fragment {
             }
             arrayHighwayStretchesOfCity = cityForDetail.getHighwayStretches();
             stateOfCity = cityForDetail.getState();
+
+
         }catch(ClassNotFoundException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());
@@ -129,6 +133,13 @@ public class CityDetailFragment extends Fragment {
         averageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         DecimalFormat f = new DecimalFormat("#.##");
         averageExceded.setText(""+f.format(cityForDetail.getAverageExceded()));
+
+        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(cityForDetail.getId(), CityListFragment.newInstance(cityForDetail));
+            }
+        });
 
     }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -78,7 +79,7 @@ public class StateDetailFragment extends Fragment {
             if (stateDetail==null){
                 stateDetail = State.get(getArguments().getInt(ID_STATE));
             }
-            
+
             double averageExceded = stateDetail.getAverageExceded();
             double maximumMeasuredVelocity = stateDetail.getMaximumMeasuredVelocity();
             int totalTickets = stateDetail.getTotalTickets();
@@ -98,6 +99,12 @@ public class StateDetailFragment extends Fragment {
 
             TextView textViewAverageExcede = (TextView) rootView.findViewById(R.id.textViewAverageExceded);
             textViewAverageExcede.setText(String.format("%.1f", averageExceded) + " km/h");
+            Button compareButton = (Button) rootView.findViewById(R.id.compareButton);
+            compareButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    mListener.onFragmentInteraction(stateDetail.getId(),StateListFragment.newInstance(stateDetail));
+                }
+            });
         } catch(ClassNotFoundException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());

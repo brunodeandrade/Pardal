@@ -1,5 +1,7 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
 import annotations.OrderBy;
 import helpers.Condition;
 import helpers.GenericPersistence;
@@ -16,7 +18,7 @@ import annotations.ManyRelations;
 @Entity(table="type", primaryKey="id")
 @ManyRelations({@HasMany(entity=Model.class, foreignKey="idType")})
 @OrderBy(field = "name")
-public class Type {
+public class Type implements ComparableCategory {
 	
 	@Column(name="_id", nullable=false)
 	private int id;

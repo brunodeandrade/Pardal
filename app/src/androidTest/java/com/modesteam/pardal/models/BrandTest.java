@@ -5,6 +5,7 @@ import com.modesteam.pardal.Pardal;
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import helpers.Condition;
 import helpers.Operator;
@@ -81,13 +82,14 @@ public class BrandTest extends TestCase {
     }
 
     public void testShouldShowBrandSorted() throws SQLException, ClassNotFoundException, NotNullableException {
-        Brand brand4 = new Brand ("Brand4");
-        brand4.save();
-        Brand brandA = new Brand ("BrandA");
+        Brand brandZ = new Brand ("Z");
+        brandZ.save();
+        Brand brandA = new Brand ("A");
         brandA.save();
-        Brand brand2 = new Brand ("Brand2");
-        brand2.save();
-        assertEquals(brandA.getName(), Brand.first().getName());
-        assertEquals(brand4.getName(), Brand.last().getName());
+        ArrayList<Brand> list = Brand.getAll();
+        assertEquals(brandA.getName(), list.get(0).getName());
+        assertEquals(brandZ.getName(), list.get(list.size()-1).getName());
+        brandA.delete();
+        brandZ.delete();
     }
 }

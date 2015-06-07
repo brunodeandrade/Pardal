@@ -1,5 +1,7 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
 import annotations.OrderBy;
 import helpers.Condition;
 import helpers.GenericPersistence;
@@ -18,8 +20,7 @@ import annotations.OneRelations;
 	@HasOne(entity=HighwayStretch.class, reference ="idHighwayStretch", belongs=true),
 	@HasOne(entity=Model.class, reference="idModel", belongs=true)
 })
-@OrderBy(field = "name")
-public class Tickets {
+public class Tickets{
 	
 	@Column(name="_id", nullable=false)
 	private int id;

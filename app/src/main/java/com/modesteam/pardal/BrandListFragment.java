@@ -25,6 +25,7 @@ import com.modesteam.pardal.brand.BrandContent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import helpers.ListViewSearch;
 import models.Brand;
@@ -44,10 +45,12 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_BRAND = "brand";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Brand brand;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,6 +76,15 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         return fragment;
     }
 
+    public static BrandListFragment newInstance(Brand brand) {
+        BrandListFragment fragment = new BrandListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_BRAND, brand.getId());
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -85,13 +97,33 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            if(getArguments().getInt(ARG_BRAND) == 0){
+                mParam1 = getArguments().getString(ARG_PARAM1);
+                mParam2 = getArguments().getString(ARG_PARAM2);
+            }else{
+                try {
+                    brand = Brand.get(getArguments().getInt(ARG_BRAND));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         // TODO: Change Adapter to display your content
+        List<Brand> listBrand = new ArrayList<Brand>();
+        if(brand != null) {
+            for (Brand brandItem : BrandContent.ITEMS) {
+                if (brandItem.getId() != brand.getId()) {
+                    listBrand.add(brandItem);
+                }
+            }
+        }else{
+            listBrand = BrandContent.ITEMS;
+        }
         mAdapter = new ArrayAdapter<Brand>(getActivity(),
-                  android.R.layout.simple_list_item_1, android.R.id.text1, BrandContent.ITEMS);
+                  android.R.layout.simple_list_item_1, android.R.id.text1, listBrand);
         setHasOptionsMenu(true);
     }
 
@@ -133,9 +165,13 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-
+            if(brand == null){
                 Brand brandSelected = (Brand)mAdapter.getItem(position);
                 mListener.onFragmentInteraction(position, BrandDetailFragment.newInstance(brandSelected));
+            }else{
+                Brand brandSelected = (Brand)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(position, CompareFragment.newInstance(brand,brandSelected,"Marca"));
+            }
         }
     }
 

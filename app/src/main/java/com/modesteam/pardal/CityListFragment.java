@@ -20,8 +20,12 @@ import com.modesteam.pardal.brand.BrandContent;
 import com.modesteam.pardal.city.CityContent;
 
 import helpers.ListViewSearch;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 import models.City;
 
 /**
@@ -39,10 +43,12 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_CITY = "city";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private City city;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,6 +73,15 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         return fragment;
     }
 
+    public static CityListFragment newInstance(City city) {
+        CityListFragment fragment = new CityListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_CITY, city.getId());
+
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -79,13 +94,34 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            if(getArguments().getInt(ARG_CITY) == 0){
+                mParam1 = getArguments().getString(ARG_PARAM1);
+                mParam2 = getArguments().getString(ARG_PARAM2);
+            }else{
+                try {
+                    city = City.get(getArguments().getInt(ARG_CITY));
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         // TODO: Change Adapter to display your content
+        List<City> listCity = new ArrayList<City>();
+        if(city != null) {
+            for (City cityItem : CityContent.ITEMS) {
+                if (cityItem.getId() != city.getId()) {
+                    listCity.add(cityItem);
+                }
+            }
+        }else{
+            listCity = CityContent.ITEMS;
+        }
         mAdapter = new ArrayAdapter<City>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, CityContent.ITEMS);
+                android.R.layout.simple_list_item_1, android.R.id.text1, listCity);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -127,8 +163,13 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            City citySelected = (City)mAdapter.getItem(position);
-            mListener.onFragmentInteraction(citySelected.getId(),CityDetailFragment.newInstance(citySelected));
+            if(city == null){
+                City citySelected = (City)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(citySelected.getId(),CityDetailFragment.newInstance(citySelected));
+            }else{
+                City citySelected = (City)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(position, CompareFragment.newInstance(city,citySelected,"Cidade"));
+            }
         }
     }
 

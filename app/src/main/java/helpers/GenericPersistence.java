@@ -359,7 +359,7 @@ public class GenericPersistence extends Database {
                     HasMany hasMany = hasMultiple.value()[i];
                     Class<?> child = hasMany.entity();
                     Object childInstance = child.newInstance();
-                    ArrayList<Object> results = selectMany(bean, childInstance, getOrderField(bean) , conn);
+                    ArrayList<Object> results = selectMany(bean, childInstance, getOrderField(childInstance) , conn);
                     for (Object object : results) {
                         boolean status = deleteBean(object, conn);
                         if (!status){

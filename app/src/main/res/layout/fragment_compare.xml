@@ -1,0 +1,184 @@
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.modesteam.pardal.CompareFragment"
+    android:id="@+id/compareXml">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Title"
+        android:id="@+id/titleTextView"
+        android:layout_x="150dp"
+        android:layout_y="23dp"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Média do Limite Excedido"
+        android:id="@+id/average1TextView"
+        android:layout_x="11dp"
+        android:layout_y="148dp"
+        android:textColor="#ff4240ff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total de Multas"
+        android:id="@+id/totalTickets1TextView"
+        android:layout_x="39dp"
+        android:layout_y="192dp"
+        android:textColor="#ff4240ff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Velocidade Máx. Registrada"
+        android:id="@+id/maximum1TextView"
+        android:layout_x="6dp"
+        android:layout_y="245dp"
+        android:textColor="#ff4240ff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Média do Limite Excedido"
+        android:id="@+id/average2TextView"
+        android:layout_x="192dp"
+        android:layout_y="148dp"
+        android:textColor="#ffaeb32e" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total de Multas"
+        android:id="@+id/totalTickets2TextView"
+        android:layout_x="215dp"
+        android:layout_y="192dp"
+        android:textColor="#ffaeb32e" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Velocidade Máx. Registrada"
+        android:id="@+id/maximum2TextView"
+        android:layout_x="187dp"
+        android:layout_y="245dp"
+        android:textColor="#ffaeb32e" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/averageValue1TextView"
+        android:layout_x="66dp"
+        android:layout_y="170dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/totalTicketsValue1TextView"
+        android:layout_x="66dp"
+        android:layout_y="215dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/maximumValue1TextView"
+        android:layout_x="66dp"
+        android:layout_y="271dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/averageValue2TextView"
+        android:layout_x="237dp"
+        android:layout_y="170dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/totalTicketsValue2TextView"
+        android:layout_x="237dp"
+        android:layout_y="215dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/maximumValue2TextView"
+        android:layout_x="237dp"
+        android:layout_y="271dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/percentageTotalTicketsTextView"
+        android:layout_x="154dp"
+        android:layout_y="335dp"
+        android:textColor="#ffff0000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pocentagem de Velocidade Máx. Registrada"
+        android:id="@+id/percentageMaximumTitle"
+        android:layout_x="59dp"
+        android:layout_y="365dp"
+        android:textColor="#ff000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Porcentagem de Total de Multas"
+        android:id="@+id/percentageTotalTicketsTitle"
+        android:layout_x="95dp"
+        android:layout_y="315dp"
+        android:textColor="#ff000000"
+        android:singleLine="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/percentageMaximumTextView"
+        android:layout_x="154dp"
+        android:layout_y="385dp"
+        android:textColor="#ffff0000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/itemName1textView"
+        android:layout_x="45dp"
+        android:layout_y="81dp"
+        android:textColor="#ff4240ff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/itemName2textView"
+        android:layout_x="230dp"
+        android:layout_y="81dp"
+        android:textColor="#ffaeb32e" />
+
+    <TextView
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Estas Pocentagens são referentes a diferença do maior valor comparado com o menor"
+        android:id="@+id/textView10"
+        android:layout_x="43dp"
+        android:layout_y="430dp"
+        android:textColor="#ff000000" />
+</AbsoluteLayout>

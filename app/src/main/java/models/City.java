@@ -1,5 +1,7 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
 import annotations.OrderBy;
 import helpers.Condition;
 import helpers.GenericPersistence;
@@ -19,7 +21,7 @@ import annotations.OneRelations;
 @OneRelations({@HasOne(entity=State.class, reference="idState", belongs=true)})
 @ManyRelations({@HasMany(entity=HighwayStretch.class, foreignKey="idCity")})
 @OrderBy(field = "name")
-public class City {
+public class City implements ComparableCategory {
 
 	@Column(name="_id", nullable=false)
 	private int id;

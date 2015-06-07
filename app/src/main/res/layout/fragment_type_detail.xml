@@ -114,4 +114,13 @@
             android:layout_alignRight="@+id/textViewAverageExceded"
             android:layout_alignEnd="@+id/textViewAverageExceded" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comparar"
+            android:id="@+id/compareButton"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp" />
+
     </RelativeLayout>

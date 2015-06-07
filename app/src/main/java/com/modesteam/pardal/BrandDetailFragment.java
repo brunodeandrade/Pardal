@@ -1,14 +1,18 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.modesteam.pardal.category.CategoryContent;
 
 import java.sql.SQLException;
 
@@ -84,7 +88,7 @@ public class BrandDetailFragment extends Fragment {
             }
 
             double averageExceded = brandDetail.getAverageExceded(), maximumMeasuredVelocity=brandDetail.getMaximumMeasuredVelocity();
-            int  totalTickets=brandDetail.getTotalTickets();
+            int  totalTickets = brandDetail.getTotalTickets();
 
             TextView textViewTotalTickets = (TextView) rootView.findViewById(R.id.textViewTotalTickets);
             textViewTotalTickets.setText(Integer.toString(totalTickets));
@@ -97,6 +101,14 @@ public class BrandDetailFragment extends Fragment {
 
             TextView textViewMaximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.textViewMaximumMeasuredVelocity);
             textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
+
+            Button compareButton = (Button) rootView.findViewById(R.id.compareButton);
+            compareButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    mListener.onFragmentInteraction(brandDetail.getId(),BrandListFragment.newInstance(brandDetail));
+                }
+            });
+
 
         } catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();

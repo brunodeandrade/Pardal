@@ -1,5 +1,7 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -17,7 +19,7 @@ import annotations.ManyRelations;
 	@HasMany(entity=City.class, foreignKey="idState")
 })
 @OrderBy(field = "name")
-public class State {
+public class State implements ComparableCategory {
 
 	@Column(name="_id", nullable=false)
 	private int id;

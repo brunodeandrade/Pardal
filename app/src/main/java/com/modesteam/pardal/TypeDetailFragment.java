@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -24,7 +25,7 @@ public class TypeDetailFragment extends Fragment {
     private static final String ID_TYPE = "idType";
 
     // TODO: Rename and change types of parameters
-   private static int idType;
+    private static int idType;
 
     private OnFragmentInteractionListener mListener;
 
@@ -116,6 +117,13 @@ public class TypeDetailFragment extends Fragment {
 
         TextView typeDesc = (TextView) view.findViewById(R.id.textViewDesc);
         typeDesc.setText(typeForDetail.getDescription());
-        }
+
+        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(typeForDetail.getId(),TypeListFragment.newInstance(typeForDetail));
+            }
+        });
+    }
 
 }
