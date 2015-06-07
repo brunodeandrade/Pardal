@@ -45,7 +45,6 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
     private String mParam2;
     private State state;
 
-
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -69,10 +68,6 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public static StateListFragment newInstance(State state) {
         StateListFragment fragment = new StateListFragment();
         Bundle args = new Bundle();
@@ -80,6 +75,13 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
 
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public StateListFragment() {
     }
 
     @Override
@@ -112,8 +114,8 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
         }else{
             listState = StateContent.ITEMS;
         }
-
-        mAdapter = new ArrayAdapter<State>(getActivity(),android.R.layout.simple_list_item_1, android.R.id.text1, listState);
+        mAdapter = new ArrayAdapter<State>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, listState);
         setHasOptionsMenu(true);
     }
 
@@ -158,9 +160,9 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
             if(state == null){
                 State stateSelected = (State)mAdapter.getItem(position);
                 mListener.onFragmentInteraction(position, StateDetailFragment.newInstance(stateSelected));
-            }else{
-                State stateSelected = (State)mAdapter.getItem(position);
-                mListener.onFragmentInteraction(position, CompareFragment.newInstance(state,stateSelected,"Estado"));
+            }else {
+                State stateSelected = (State) mAdapter.getItem(position);
+                mListener.onFragmentInteraction(position, CompareFragment.newInstance(state, stateSelected, "Estado"));
             }
         }
     }
