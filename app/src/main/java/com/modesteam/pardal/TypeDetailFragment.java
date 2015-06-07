@@ -25,7 +25,7 @@ public class TypeDetailFragment extends Fragment {
     private static final String ID_TYPE = "idType";
 
     // TODO: Rename and change types of parameters
-   private static int idType;
+    private static int idType;
 
     private OnFragmentInteractionListener mListener;
 
@@ -121,9 +121,9 @@ public class TypeDetailFragment extends Fragment {
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mListener.onFragmentInteraction(typeForDetail.getId(),TypeDetailFragment.newInstance(typeForDetail));
+                mListener.onFragmentInteraction(typeForDetail.getId(),TypeListFragment.newInstance(typeForDetail));
             }
         });
-        }
+    }
 
 }
