@@ -49,27 +49,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="    Marca"
-                android:id="@+id/sBrand" />
+                android:text="Marca"
+                android:id="@+id/sBrand"
+                android:layout_marginLeft="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="                Modelo"
-                android:id="@+id/sModel" />
+                android:text="Modelo"
+                android:id="@+id/sModel"
+                android:layout_marginLeft="75dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Tipo"
-                android:id="@+id/sType" />
+                android:id="@+id/sType"
+                android:layout_marginLeft="25dp" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/sw">
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -104,18 +108,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="    Cidade"
+                android:text="Cidade"
                 android:id="@+id/sCity"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:layout_marginLeft="10dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="                Estado"
+                android:text="Estado"
                 android:id="@+id/sState"
                 android:layout_column="1"
-                android:capitalize="words" />
+                android:capitalize="words"
+                android:layout_marginLeft="75dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,13 +134,6 @@
 
     </TableLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sobre"
-        android:id="@+id/bAbout"
-        android:layout_gravity="center_horizontal|bottom" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -143,5 +142,13 @@
         android:layout_gravity="center_horizontal|top"
         android:textStyle="bold"
         android:textSize="24dip" />
+
+    <ImageButton
+        android:layout_width="143dp"
+        android:layout_height="60dp"
+        android:text="Sobre"
+        android:id="@+id/bAbout"
+        android:layout_gravity="left|bottom"
+        android:background="@drawable/about" />
 
 </FrameLayout>

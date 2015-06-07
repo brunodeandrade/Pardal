@@ -6,9 +6,28 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.modesteam.pardal.brand.BrandContent;
 import com.modesteam.pardal.category.CategoryContent;
+import com.modesteam.pardal.city.CityContent;
+import com.modesteam.pardal.highwayStretch.HighwayStretchContent;
+import com.modesteam.pardal.model.ModelContent;
+import com.modesteam.pardal.state.StateContent;
+import com.modesteam.pardal.type.TypeContent;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import models.Brand;
+import models.City;
+import models.HighwayStretch;
+import models.Model;
+import models.State;
+import models.Type;
 
 
     /**
@@ -62,15 +81,62 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        List<State> listState = (ArrayList<State>) StateContent.ITEMS;
+        List<City> listCity = (ArrayList<City>) CityContent.ITEMS;
+        List<HighwayStretch> listHigh = (ArrayList<HighwayStretch>) HighwayStretchContent.ITEMS;
+        List<Model> listModel = (ArrayList<Model>) ModelContent.ITEMS;
+        List<Type> listType = (ArrayList<Type>) TypeContent.ITEMS;
+        List<Brand> listBrand = (ArrayList<Brand>) BrandContent.ITEMS;
+
+
+
         View view = inflater.inflate(R.layout.fragment_rank_or_list, container, false);
         ImageButton bRank = (ImageButton) view.findViewById(R.id.bRank);
         ImageButton bList = (ImageButton) view.findViewById(R.id.bList);
         bRank.setOnClickListener(this);
         bList.setOnClickListener(this);
+
+
+        TextView textView= (TextView) view.findViewById(R.id.textViewDesc);
+        TextView textView2= (TextView) view.findViewById(R.id.textViewTotal);
+        switch(mParam1) {
+            case "1":
+                textView.setText("Estados Brasileiros");
+                int tamanho1 = listState.size();
+                textView2.setText("Total de Estados: "+ Integer.toString(tamanho1));
+                break;
+            case "2":
+                textView.setText("Cidades Brasileiras");
+                int tamanho2 = listCity.size();
+                textView2.setText("Total de Cidades: "+ Integer.toString(tamanho2));
+                break;
+            case "3":
+                textView.setText("Rodovias Brasileiras");
+                int tamanho3 = listHigh.size();
+                textView2.setText("Total de Rodovias: "+ Integer.toString(tamanho3));
+                break;
+            case "4":
+                textView.setText("Modelos de Veículos");
+                int tamanho4 = listModel.size();
+                textView2.setText("Total de Modelos: "+ Integer.toString(tamanho4));
+                break;
+            case "5":
+                textView.setText("Tipos de Veículos");
+                int tamanho5 = listType.size();
+                textView2.setText("Total de Tipos: "+ Integer.toString(tamanho5));
+                break;
+            case "6":
+                textView.setText("Marcas de Veículos");
+                int tamanho6 = listBrand.size();
+                textView2.setText("Total de Marcas: "+ Integer.toString(tamanho6));
+                break;
+        }
         return view;
     }
 

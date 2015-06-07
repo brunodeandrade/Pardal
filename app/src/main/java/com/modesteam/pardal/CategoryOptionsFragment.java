@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.modesteam.pardal.category.CategoryContent;
@@ -76,12 +77,14 @@ public class CategoryOptionsFragment extends Fragment implements View.OnClickLis
         ImageButton bCity = (ImageButton) view.findViewById(R.id.bCity);
         ImageButton bHighway = (ImageButton) view.findViewById(R.id.bHighway);
         ImageButton bState = (ImageButton) view.findViewById(R.id.bState);
+        ImageButton bAbout = (ImageButton) view.findViewById(R.id.bAbout);
         bModel.setOnClickListener(this);
         bType.setOnClickListener(this);
         bBrand.setOnClickListener(this);
         bCity.setOnClickListener(this);
         bState.setOnClickListener(this);
         bHighway.setOnClickListener(this);
+        bAbout.setOnClickListener(this);
         return view;
     }
 
@@ -163,6 +166,9 @@ public class CategoryOptionsFragment extends Fragment implements View.OnClickLis
                 break;
             case R.id.bHighway:
                 mListener.onFragmentInteraction(CategoryContent.ITEM_MAP.get(3).id, RankOrListFragment.newInstance("3", ""));
+                break;
+            case R.id.bAbout:
+                mListener.onFragmentInteraction(1,AboutFragment.newInstance("",""));
                 break;
 
         }

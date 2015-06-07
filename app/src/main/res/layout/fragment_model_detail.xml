@@ -54,9 +54,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Velocidade excedida media:"
             android:id="@+id/textView4"
-            android:layout_alignBottom="@+id/textViewAverangeVelocity"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_above="@+id/textViewAverangeVelocity"
+            android:layout_alignRight="@+id/textViewName"
+            android:layout_alignEnd="@+id/textViewName"
+            android:layout_marginBottom="32dp" />
 
         <TextView
             android:layout_width="wrap_content"
