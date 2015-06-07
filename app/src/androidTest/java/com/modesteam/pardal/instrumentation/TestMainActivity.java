@@ -47,28 +47,9 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         this.mInstrumentation = getInstrumentation();
     }
 
-    public void openDrawerOptionAt(int position){
-        Fragment fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        DrawerLayout drawerLayout = (DrawerLayout)this.mActivity.findViewById(R.id.drawer_layout);
-        if(!drawerLayout.isDrawerOpen(GravityCompat.START)){
-            View v = fragment.getView().focusSearch(View.FOCUS_RIGHT);
-            TouchUtils.clickView(this,v);
-        }
-        ListView listView = (ListView)fragment.getView();
-        TouchUtils.clickView(this,listView.getChildAt(position));
-    }
-    public void testShouldSelectWelcome(){
-        this.mActivity = getActivity();
-        openDrawerOptionAt(0);
-    }
-    public void testShouldSelectShowRanking(){
-        this.mActivity = getActivity();
-        openDrawerOptionAt(1);
-    }
 
     public Fragment openListFragment(int position){
         this.mActivity = getActivity();
-        openDrawerOptionAt(1);
         Fragment fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         mInstrumentation.waitForIdleSync();
         ImageButton imageButton = (ImageButton) (fragment.getView().findViewById(position));
@@ -230,7 +211,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
 
         TouchUtils.clickView(this,editText);
-        mInstrumentation.sendStringSync("b");
+        mInstrumentation.sendStringSync("ba");
         mInstrumentation.waitForIdleSync();
         assertEquals("BA",((State)listView.getAdapter().getItem(0)).getName());
     }
