@@ -72,7 +72,7 @@ public class ModelDetailFragment extends Fragment {
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         //if (mListener != null) {
-          //  mListener.onFragmentInteraction(uri);
+        //  mListener.onFragmentInteraction(uri);
         //}
     }
 
@@ -129,11 +129,10 @@ public class ModelDetailFragment extends Fragment {
         topSpeedLabel.setText(Double.toString(topSpeed));
         TextView averageVelocityLabel = (TextView) view.findViewById(R.id.textViewAverangeVelocity);
         averageVelocityLabel.setText(String.format("%.2fKM/h", averageVelocity));
-
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mListener.onFragmentInteraction(modelDetail.getId(),ModelDetailFragment.newInstance(modelDetail));
+                mListener.onFragmentInteraction(modelDetail.getId(),ModelListFragment.newInstance(modelDetail));
             }
         });
     }
@@ -148,9 +147,9 @@ public class ModelDetailFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-   // public interface OnFragmentInteractionListener {
-   // TODO: Update argument type and name
-   //     public void onFragmentInteraction(Uri uri);
-   // }
+    // public interface OnFragmentInteractionListener {
+    // TODO: Update argument type and name
+    //     public void onFragmentInteraction(Uri uri);
+    // }
 
 }
