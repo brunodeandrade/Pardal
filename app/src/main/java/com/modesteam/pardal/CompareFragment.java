@@ -92,6 +92,28 @@ public class CompareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_compare, container, false);
+        showCompareOfItens(rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public void showCompareOfItens (View view){
         double percentageMaximum = 0.0;
         double percentageTotalTickets = 0.0;
 
@@ -115,17 +137,17 @@ public class CompareFragment extends Fragment {
             percentageTotalTickets = (percentageTotalTickets/totalTickets2)*100;
         }
 
-        TextView titleTextView = (TextView) rootView.findViewById(R.id.titleTextView);
+        TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
         titleTextView.setText(nameCategory);
 
-        TextView itemName1textView = (TextView) rootView.findViewById(R.id.itemName1textView);
+        TextView itemName1textView = (TextView) view.findViewById(R.id.itemName1textView);
         itemName1textView.setText(nameItem1);
-        TextView itemName2textView = (TextView) rootView.findViewById(R.id.itemName2textView);
+        TextView itemName2textView = (TextView) view.findViewById(R.id.itemName2textView);
         itemName2textView.setText(nameItem2);
 
 
-        TextView averageValue1TextView = (TextView) rootView.findViewById(R.id.averageValue1TextView);
-        TextView averageValue2TextView = (TextView) rootView.findViewById(R.id.averageValue2TextView);
+        TextView averageValue1TextView = (TextView) view.findViewById(R.id.averageValue1TextView);
+        TextView averageValue2TextView = (TextView) view.findViewById(R.id.averageValue2TextView);
         if(averageExceded1>averageExceded2){
             averageValue1TextView.setTextColor(Color.RED);
             averageValue2TextView.setTextColor(Color.parseColor("#ff188341"));
@@ -133,11 +155,12 @@ public class CompareFragment extends Fragment {
             averageValue1TextView.setTextColor(Color.parseColor("#ff188341"));
             averageValue2TextView.setTextColor(Color.RED);
         }
-        averageValue1TextView.setText(Double.toString(averageExceded1));
-        averageValue2TextView.setText(Double.toString(averageExceded2));
+        DecimalFormat f = new DecimalFormat("#.##");
+        averageValue1TextView.setText(""+f.format(averageExceded1));
+        averageValue2TextView.setText(""+f.format(averageExceded2));
 
-        TextView totalTicketsValue1TextView = (TextView) rootView.findViewById(R.id.totalTicketsValue1TextView);
-        TextView totalTicketsValue2TextView = (TextView) rootView.findViewById(R.id.totalTicketsValue2TextView);
+        TextView totalTicketsValue1TextView = (TextView) view.findViewById(R.id.totalTicketsValue1TextView);
+        TextView totalTicketsValue2TextView = (TextView) view.findViewById(R.id.totalTicketsValue2TextView);
         if(totalTickets1>totalTickets2){
             totalTicketsValue1TextView.setTextColor(Color.RED);
             totalTicketsValue2TextView.setTextColor(Color.parseColor("#ff188341"));
@@ -148,8 +171,8 @@ public class CompareFragment extends Fragment {
         totalTicketsValue1TextView.setText(Integer.toString(totalTickets1));
         totalTicketsValue2TextView.setText(Integer.toString(totalTickets2));
 
-        TextView maximumValue1TextView = (TextView) rootView.findViewById(R.id.maximumValue1TextView);
-        TextView maximumValue2TextView = (TextView) rootView.findViewById(R.id.maximumValue2TextView);
+        TextView maximumValue1TextView = (TextView) view.findViewById(R.id.maximumValue1TextView);
+        TextView maximumValue2TextView = (TextView) view.findViewById(R.id.maximumValue2TextView);
         if(maximumMeasuredVelocity1>maximumMeasuredVelocity2){
             maximumValue1TextView.setTextColor(Color.RED);
             maximumValue2TextView.setTextColor(Color.parseColor("#ff188341"));
@@ -157,32 +180,14 @@ public class CompareFragment extends Fragment {
             maximumValue1TextView.setTextColor(Color.parseColor("#ff188341"));
             maximumValue2TextView.setTextColor(Color.RED);
         }
-        maximumValue1TextView.setText(Double.toString(maximumMeasuredVelocity1));
-        maximumValue2TextView.setText(Double.toString(maximumMeasuredVelocity2));
+        maximumValue1TextView.setText(""+f.format(maximumMeasuredVelocity1));
+        maximumValue2TextView.setText(""+f.format(maximumMeasuredVelocity2));
 
-        TextView percentageTotalTicketsTextView = (TextView) rootView.findViewById(R.id.percentageTotalTicketsTextView);
-        percentageTotalTicketsTextView.setText(Double.toString(percentageTotalTickets)+" %");
-        TextView percentageMaximumTextView = (TextView) rootView.findViewById(R.id.percentageMaximumTextView);
-        percentageMaximumTextView.setText(Double.toString(percentageMaximum)+" %");
+        TextView percentageTotalTicketsTextView = (TextView) view.findViewById(R.id.percentageTotalTicketsTextView);
+        percentageTotalTicketsTextView.setText(""+f.format(percentageTotalTickets)+" %");
+        TextView percentageMaximumTextView = (TextView) view.findViewById(R.id.percentageMaximumTextView);
+        percentageMaximumTextView.setText(""+f.format(percentageMaximum)+" %");
 
-        return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
 }
