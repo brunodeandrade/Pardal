@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exception.GenericAlertDialogException;
+import models.City;
 import models.HighwayStretch;
+import models.State;
 import models.Tickets;
 
 
@@ -71,73 +73,7 @@ public class HighwayStretchDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_highway_stretch_detail, container, false);
-
-        try {
-            if (highwayStretchDetail==null){
-                highwayStretchDetail = HighwayStretch.get(getArguments().getInt(ID_HIGHWAY_STRETCH));
-            }
-
-            ArrayList<Tickets> tickets = highwayStretchDetail.getTickets();
-
-            int amountTickets = 0;
-            double velocity = 0.0;
-            double velocityExceded = 0;
-            double maximumVelocity = 0;
-
-            if (tickets.size() > 0){
-                for (Tickets ticket : tickets) {
-                    amountTickets += ticket.getTotalTickets();
-                    if (maximumVelocity < ticket.getMaximumMeasuredVelocity()){
-                        maximumVelocity = ticket.getMaximumMeasuredVelocity();
-                    }
-                    velocityExceded += ticket.getAverageExceded();
-                }
-                velocity = tickets.get(0).getVelocityLimit();
-                velocityExceded = velocityExceded / tickets.size();
-            }
-
-            //Imprime total ticktes
-            TextView totalTickets = (TextView) rootView.findViewById(R.id.totalTickets);
-            totalTickets.setText(Integer.toString(amountTickets));
-
-
-            //Imprime velocidade limite dos carros na rodovia
-            TextView velocityLimit = (TextView) rootView.findViewById(R.id.velocityLimit);
-            velocityLimit.setText(Double.toString(velocity) + " km/h");
-
-            //Imprime a media de velocidade excedida
-            TextView averageExceded = (TextView) rootView.findViewById(R.id.averageExceded);
-            averageExceded.setText(String.format("%.1f", velocityExceded) + " km/h");
-
-            //Imprime a maxima velocidade registrada
-            TextView maximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.maximumMeasuredVelocity);
-            maximumMeasuredVelocity.setText(Double.toString(maximumVelocity) + " km/h");
-
-            TextView name = (TextView) rootView.findViewById(R.id.textViewName);
-            name.setText("BR "+(highwayStretchDetail.getNumber())+" KM "+(highwayStretchDetail.getKilometer()));
-
-            TextView cityState = (TextView) rootView.findViewById(R.id.textViewCityState);
-            cityState.setText(""+(highwayStretchDetail.getCity().getName())+"/"+(highwayStretchDetail.getCity().getState().getName()));
-
-            Button compareButton = (Button) rootView.findViewById(R.id.compareButton);
-            compareButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    mListener.onFragmentInteraction(highwayStretchDetail.getId(),HighwayStretchListFragment.newInstance(highwayStretchDetail));
-                }
-            });
-
-
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch (NullPointerException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }
-
+        detailHighwayStretch(rootView);
         return rootView;
     }
 
@@ -163,5 +99,69 @@ public class HighwayStretchDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void detailHighwayStretch(View view) {
+
+        City cityOfHighwayStretch = null;
+        State stateOfHighwayStretch = null;
+        ArrayList<Tickets> tickets = null;
+        double velocityLimitOfHighwayStretch = 0.0;
+
+
+        try {
+            if (highwayStretchDetail==null){
+                highwayStretchDetail = HighwayStretch.get(getArguments().getInt(ID_HIGHWAY_STRETCH));
+            }
+            cityOfHighwayStretch = highwayStretchDetail.getCity();
+            stateOfHighwayStretch = cityOfHighwayStretch.getState();
+
+            tickets = highwayStretchDetail.getTickets();
+
+            if (tickets.size()>0) {
+                velocityLimitOfHighwayStretch = tickets.get(0).getVelocityLimit();
+            }
+
+        }catch(ClassNotFoundException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }catch(SQLException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }catch (NullPointerException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }
+
+
+        //Imprime total ticktes
+        TextView totalTickets = (TextView) view.findViewById(R.id.totalTickets);
+        totalTickets.setText(Integer.toString(highwayStretchDetail.getTotalTickets()));
+
+
+        //Imprime velocidade limite dos carros na rodovia
+        TextView velocityLimit = (TextView) view.findViewById(R.id.velocityLimit);
+        velocityLimit.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+
+        //Imprime a media de velocidade excedida
+        TextView averageExceded = (TextView) view.findViewById(R.id.averageExceded);
+        averageExceded.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+
+        //Imprime a maxima velocidade registrada
+        TextView maximumMeasuredVelocity = (TextView) view.findViewById(R.id.maximumMeasuredVelocity);
+        maximumMeasuredVelocity.setText(Double.toString(highwayStretchDetail.getMaximumMeasuredVelocity()) + " km/h");
+
+        TextView name = (TextView) view.findViewById(R.id.textViewName);
+        name.setText("BR "+(highwayStretchDetail.getNumber())+" KM "+(highwayStretchDetail.getKilometer()));
+
+        TextView cityState = (TextView) view.findViewById(R.id.textViewCityState);
+        cityState.setText(""+(cityOfHighwayStretch.getName())+"/"+(stateOfHighwayStretch.getName()));
+
+        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(highwayStretchDetail.getId(),HighwayStretchListFragment.newInstance(highwayStretchDetail));
+            }
+        });
     }
 }

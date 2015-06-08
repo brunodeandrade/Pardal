@@ -71,7 +71,7 @@ public class CityDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_city_detail, container, false);
-        detailType(rootView);
+        detailCity(rootView);
 
         return rootView;
     }
@@ -93,7 +93,7 @@ public class CityDetailFragment extends Fragment {
         mListener = null;
     }
 
-    public void detailType(View view) {
+    public void detailCity(View view) {
 
         ArrayList<HighwayStretch> arrayHighwayStretchesOfCity = null;
         State stateOfCity = null;

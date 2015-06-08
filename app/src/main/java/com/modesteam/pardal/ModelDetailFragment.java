@@ -65,7 +65,7 @@ public class ModelDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_model_detail, container, false);
-        createInfo(rootView);
+        detailModel(rootView);
         return rootView;
     }
 
@@ -92,25 +92,14 @@ public class ModelDetailFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    public void createInfo(View view){
-        int numeberTotalTickets=0;
-        double topSpeed =0.0;
-        double averageVelocity = 0.0;
+    public void detailModel(View view){
+
         ArrayList<Tickets> tickets = null;
         try {
             if (modelDetail==null){
                 modelDetail = Model.get(getArguments().getInt(ID_MODEL));
             }
 
-            tickets = modelDetail.getTickets();
-            for(Tickets ticket: tickets){
-                numeberTotalTickets = numeberTotalTickets + ticket.getTotalTickets();
-                if(topSpeed < ticket.getMaximumMeasuredVelocity()){
-                    topSpeed = ticket.getMaximumMeasuredVelocity();
-                }
-                averageVelocity = averageVelocity + ticket.getAverageExceded();
-            }
-            averageVelocity = averageVelocity/tickets.size();
         }catch(ClassNotFoundException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());
@@ -124,11 +113,11 @@ public class ModelDetailFragment extends Fragment {
         TextView nameModel = (TextView) view.findViewById(R.id.textViewName);
         nameModel.setText(modelDetail.getName());
         TextView totalTicketsLabel = (TextView) view.findViewById(R.id.textViewTickets);
-        totalTicketsLabel.setText( Integer.toString(numeberTotalTickets));
+        totalTicketsLabel.setText(Integer.toString(modelDetail.getTotalTickets()));
         TextView topSpeedLabel = (TextView) view.findViewById(R.id.textViewTopSpeed);
-        topSpeedLabel.setText(Double.toString(topSpeed));
+        topSpeedLabel.setText(Double.toString(modelDetail.getMaximumMeasuredVelocity()));
         TextView averageVelocityLabel = (TextView) view.findViewById(R.id.textViewAverangeVelocity);
-        averageVelocityLabel.setText(String.format("%.2fKM/h", averageVelocity));
+        averageVelocityLabel.setText(String.format("%.2fKM/h", modelDetail.getAverageExceded()));
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -136,20 +125,5 @@ public class ModelDetailFragment extends Fragment {
             }
         });
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    // public interface OnFragmentInteractionListener {
-    // TODO: Update argument type and name
-    //     public void onFragmentInteraction(Uri uri);
-    // }
 
 }

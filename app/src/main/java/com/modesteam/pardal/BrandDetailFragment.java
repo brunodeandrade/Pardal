@@ -81,46 +81,7 @@ public class BrandDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_brand_detail, container, false);
-
-        try {
-            if (brandDetail==null){
-                brandDetail = Brand.get(getArguments().getInt(ID_BRAND));
-            }
-
-            double averageExceded = brandDetail.getAverageExceded(), maximumMeasuredVelocity=brandDetail.getMaximumMeasuredVelocity();
-            int  totalTickets = brandDetail.getTotalTickets();
-
-            TextView textViewTotalTickets = (TextView) rootView.findViewById(R.id.textViewTotalTickets);
-            textViewTotalTickets.setText(Integer.toString(totalTickets));
-
-            TextView textViewName = (TextView) rootView.findViewById(R.id.textViewName);
-            textViewName.setText((brandDetail.getName()));
-
-            TextView textViewAverageExceded = (TextView) rootView.findViewById(R.id.textViewAverageExceded);
-            textViewAverageExceded.setText((String.format("%.1f", averageExceded) + " km/h"));
-
-            TextView textViewMaximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.textViewMaximumMeasuredVelocity);
-            textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
-
-            Button compareButton = (Button) rootView.findViewById(R.id.compareButton);
-            compareButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    mListener.onFragmentInteraction(brandDetail.getId(),BrandListFragment.newInstance(brandDetail));
-                }
-            });
-
-
-        } catch (NullPointerException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch (ClassNotFoundException e) {
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        } catch (SQLException e) {
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }
-
+        detailBrand(rootView);
         return rootView;
     }
 
@@ -140,6 +101,46 @@ public class BrandDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void detailBrand(View view) {
+        try {
+            if (brandDetail==null){
+                brandDetail = Brand.get(getArguments().getInt(ID_BRAND));
+            }
+
+        } catch (NullPointerException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }catch (ClassNotFoundException e) {
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        } catch (SQLException e) {
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }
+
+        double averageExceded = brandDetail.getAverageExceded(), maximumMeasuredVelocity=brandDetail.getMaximumMeasuredVelocity();
+        int  totalTickets = brandDetail.getTotalTickets();
+
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(totalTickets));
+
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText((brandDetail.getName()));
+
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText((String.format("%.1f", averageExceded) + " km/h"));
+
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
+
+        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(brandDetail.getId(),BrandListFragment.newInstance(brandDetail));
+            }
+        });
     }
 
 

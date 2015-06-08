@@ -71,51 +71,7 @@ public class StateDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_state_detail, container, false);
-
-        try {
-            ArrayList<City> listCity = stateDetail.getCities();
-            ArrayList<HighwayStretch> listHighwayStretches = new ArrayList<>();
-            ArrayList<Tickets> listTickets = new ArrayList<>();
-            if (stateDetail==null){
-                stateDetail = State.get(getArguments().getInt(ID_STATE));
-            }
-
-            double averageExceded = stateDetail.getAverageExceded();
-            double maximumMeasuredVelocity = stateDetail.getMaximumMeasuredVelocity();
-            int totalTickets = stateDetail.getTotalTickets();
-            int totalCities = listCity.size();
-
-            TextView textViewName = (TextView) rootView.findViewById(R.id.textViewName);
-            textViewName.setText((stateDetail.getName()));
-
-            TextView textViewCities = (TextView) rootView.findViewById(R.id.textViewCities);
-            textViewCities.setText(Integer.toString(totalCities));
-
-            TextView textViewTickets = (TextView) rootView.findViewById(R.id.textViewTickets);
-            textViewTickets.setText(Integer.toString(totalTickets));
-
-            TextView textViewMaximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.textViewMaximumMeasuredVelocity);
-            textViewMaximumMeasuredVelocity.setText(String.format("%.1f", maximumMeasuredVelocity) + " km/h");
-
-            TextView textViewAverageExcede = (TextView) rootView.findViewById(R.id.textViewAverageExceded);
-            textViewAverageExcede.setText(String.format("%.1f", averageExceded) + " km/h");
-            Button compareButton = (Button) rootView.findViewById(R.id.compareButton);
-            compareButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    mListener.onFragmentInteraction(stateDetail.getId(),StateListFragment.newInstance(stateDetail));
-                }
-            });
-        } catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch (NullPointerException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }
-
+        detailState(rootView);
         return rootView;
 
     }
@@ -135,5 +91,55 @@ public class StateDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void detailState(View view) {
+        ArrayList<City> listCity = null;
+        ArrayList<HighwayStretch> listHighwayStretches = null;
+        ArrayList<Tickets> listTickets = null;
+        try {
+            listCity = stateDetail.getCities();
+            listHighwayStretches = new ArrayList<>();
+            listTickets = new ArrayList<>();
+            if (stateDetail==null){
+                stateDetail = State.get(getArguments().getInt(ID_STATE));
+            }
+
+        } catch(ClassNotFoundException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }catch(SQLException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }catch (NullPointerException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }
+
+        double averageExceded = stateDetail.getAverageExceded();
+        double maximumMeasuredVelocity = stateDetail.getMaximumMeasuredVelocity();
+        int totalTickets = stateDetail.getTotalTickets();
+        int totalCities = listCity.size();
+
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText((stateDetail.getName()));
+
+        TextView textViewCities = (TextView) view.findViewById(R.id.textViewCities);
+        textViewCities.setText(Integer.toString(totalCities));
+
+        TextView textViewTickets = (TextView) view.findViewById(R.id.textViewTickets);
+        textViewTickets.setText(Integer.toString(totalTickets));
+
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(String.format("%.1f", maximumMeasuredVelocity) + " km/h");
+
+        TextView textViewAverageExcede = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExcede.setText(String.format("%.1f", averageExceded) + " km/h");
+        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(stateDetail.getId(),StateListFragment.newInstance(stateDetail));
+            }
+        });
     }
 }
