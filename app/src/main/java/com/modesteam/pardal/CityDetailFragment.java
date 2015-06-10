@@ -127,7 +127,7 @@ public class CityDetailFragment extends Fragment {
         textViewTotalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());
         textViewTotalHighwayStretches.setTypeface(typeface);
 
-        textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTickets);
+        textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
         textViewTotalTickets.setText(""+cityForDetail.getTotalTickets());
         textViewTotalTickets.setTypeface(typeface);
 
