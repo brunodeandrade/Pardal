@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -49,6 +51,7 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
     private String mParam1;
     private String mParam2;
     private City city;
+    private boolean changeButtonReverse = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,6 +95,7 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         if (getArguments() != null) {
             if(getArguments().getInt(ARG_CITY) == 0){
@@ -138,6 +142,24 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         mListView.setOnItemClickListener(this);
 
         searchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+
+
+
+        final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
+        ordenateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+                onReverseClick();
+                if (changeButtonReverse == false) {
+                    ordenateButton.setImageResource(R.drawable.arrow_up_float);
+                    changeButtonReverse = true;
+                } else{
+                    ordenateButton.setImageResource(R.drawable.arrow_down_float);
+                    changeButtonReverse = false;
+                }
+            }
+        });
 
         return view;
     }

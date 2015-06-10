@@ -36,7 +36,7 @@ android:paddingTop="@dimen/activity_vertical_margin">
             android:layout_width="32dp"
             android:layout_height="33dp"
             android:id="@+id/bOrdenate"
-            android:src="@android:drawable/arrow_down_float" />
+            android:src="@drawable/arrow_down_float" />
     </LinearLayout>
 
     <ListView
