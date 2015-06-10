@@ -10,7 +10,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="NOME DA CATEGORIA"
         android:id="@+id/textViewCategory"
-        android:layout_x="85dp"
+        android:layout_x="157dp"
         android:layout_y="17dp"
         android:textColor="#ff000000"
         android:textStyle="bold" />

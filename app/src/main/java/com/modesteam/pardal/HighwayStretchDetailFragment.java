@@ -136,7 +136,7 @@ public class HighwayStretchDetailFragment extends Fragment {
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
         //Imprime total ticktes
-        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.totalTickets);
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
         textViewTotalTickets.setText(Integer.toString(highwayStretchDetail.getTotalTickets()));
         textViewTotalTickets.setTypeface(typeface);
 
@@ -146,12 +146,12 @@ public class HighwayStretchDetailFragment extends Fragment {
         textViewVelocityLimit.setTypeface(typeface);
 
         //Imprime a media de velocidade excedida
-        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.averageExceded);
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         textViewAverageExceded.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
         textViewAverageExceded.setTypeface(typeface);
 
         //Imprime a maxima velocidade registrada
-        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.maximumMeasuredVelocity);
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
         textViewMaximumMeasuredVelocity.setText(Double.toString(highwayStretchDetail.getMaximumMeasuredVelocity()) + " km/h");
         textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
