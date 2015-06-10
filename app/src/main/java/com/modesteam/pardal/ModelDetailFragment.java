@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -110,14 +111,19 @@ public class ModelDetailFragment extends Fragment {
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());
         }
-        TextView nameModel = (TextView) view.findViewById(R.id.textViewName);
-        nameModel.setText(modelDetail.getName());
-        TextView totalTicketsLabel = (TextView) view.findViewById(R.id.textViewTickets);
-        totalTicketsLabel.setText(Integer.toString(modelDetail.getTotalTickets()));
-        TextView topSpeedLabel = (TextView) view.findViewById(R.id.textViewTopSpeed);
-        topSpeedLabel.setText(Double.toString(modelDetail.getMaximumMeasuredVelocity()));
-        TextView averageVelocityLabel = (TextView) view.findViewById(R.id.textViewAverangeVelocity);
-        averageVelocityLabel.setText(String.format("%.2fKM/h", modelDetail.getAverageExceded()));
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText(modelDetail.getName());
+        textViewName.setTypeface(typeface);
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(modelDetail.getTotalTickets()));
+        textViewTotalTickets.setTypeface(typeface);
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(Double.toString(modelDetail.getMaximumMeasuredVelocity()));
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText(String.format("%.2fKM/h", modelDetail.getAverageExceded()));
+        textViewAverageExceded.setTypeface(typeface);
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
