@@ -105,7 +105,7 @@ public class TypeDetailFragment extends Fragment {
         textViewName.setText(typeForDetail.getName());
         textViewName.setTypeface(typeface);
 
-        textViewTotalModels = (TextView) view.findViewById(R.id.textViewModels);
+        textViewTotalModels = (TextView) view.findViewById(R.id.textViewTotalModels);
         textViewTotalModels.setText(""+arrayModelsOfType.size());
 
         textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
