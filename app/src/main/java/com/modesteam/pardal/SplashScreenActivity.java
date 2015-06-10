@@ -30,7 +30,7 @@ public class SplashScreenActivity extends Activity {
 
         TextView textViewVersion = (TextView) getWindow().findViewById(R.id.textViewVersion);
         textViewVersion.setText("Pardal\n v 1.0");
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/futura.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/replay.ttf");
         textViewVersion.setTypeface(typeface);
 
         new Timer().schedule(new TimerTask() {
