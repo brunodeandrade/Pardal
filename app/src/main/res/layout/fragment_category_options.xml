@@ -32,8 +32,8 @@
         android:layout_y="0dp" />
 
     <ImageButton
-        android:layout_width="130dp"
-        android:layout_height="80dp"
+        android:layout_width="105dp"
+        android:layout_height="64dp"
         android:text="Sobre"
         android:id="@+id/bAbout"
         android:background="@drawable/about"
@@ -42,8 +42,8 @@
         android:layout_marginLeft="241dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="902dp"
-        android:layout_x="123dp"
-        android:layout_y="401dp" />
+        android:layout_x="129dp"
+        android:layout_y="415dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,8 +56,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="489dp"
-        android:layout_x="229dp"
-        android:layout_y="110dp" />
+        android:layout_x="79dp"
+        android:layout_y="233dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,8 +99,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="489dp"
-        android:layout_x="95dp"
-        android:layout_y="233dp" />
+        android:layout_x="92dp"
+        android:layout_y="356dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -144,8 +144,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="489dp"
-        android:layout_x="84dp"
-        android:layout_y="356dp" />
+        android:layout_x="227dp"
+        android:layout_y="110dp" />
 
     <ImageButton
         android:layout_width="80dp"
@@ -157,8 +157,8 @@
         android:layout_below="@+id/bType"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_x="71dp"
-        android:layout_y="269dp" />
+        android:layout_x="216dp"
+        android:layout_y="35dp" />
 
     <ImageButton
         android:layout_width="80dp"
@@ -186,8 +186,8 @@
         android:layout_marginLeft="468dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="782dp"
-        android:layout_x="216dp"
-        android:layout_y="35dp" />
+        android:layout_x="71dp"
+        android:layout_y="152dp" />
 
     <ImageButton
         android:layout_width="80dp"
@@ -201,7 +201,7 @@
         android:layout_toLeftOf="@+id/sCategories"
         android:layout_toStartOf="@+id/sCategories"
         android:layout_x="71dp"
-        android:layout_y="152dp" />
+        android:layout_y="269dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -216,7 +216,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="489dp"
-        android:layout_x="162dp"
-        android:layout_y="483dp" />
+        android:layout_x="156dp"
+        android:layout_y="482dp" />
 
 </AbsoluteLayout>
