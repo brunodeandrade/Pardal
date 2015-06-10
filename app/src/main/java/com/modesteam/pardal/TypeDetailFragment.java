@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -97,23 +98,25 @@ public class TypeDetailFragment extends Fragment {
             genericAlertDialogException.createAlert(this.getActivity());
         }
 
-        TextView nameType, totalModels,totalTickets,maxVelocity, averageExceded;
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        TextView textViewName, textViewTotalModels,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
-        nameType = (TextView) view.findViewById(R.id.textViewName);
-        nameType.setText(typeForDetail.getName());
+        textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText(typeForDetail.getName());
+        textViewName.setTypeface(typeface);
 
-        totalModels = (TextView) view.findViewById(R.id.textViewModels);
-        totalModels.setText(""+arrayModelsOfType.size());
+        textViewTotalModels = (TextView) view.findViewById(R.id.textViewModels);
+        textViewTotalModels.setText(""+arrayModelsOfType.size());
 
-        totalTickets = (TextView) view.findViewById(R.id.textViewTickets);
-        totalTickets.setText(""+typeForDetail.getTotalTickets());
+        textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(""+typeForDetail.getTotalTickets());
 
-        maxVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
-        maxVelocity.setText(typeForDetail.getMaximumMeasuredVelocity().toString());
+        textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(typeForDetail.getMaximumMeasuredVelocity().toString());
 
-        averageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         DecimalFormat f = new DecimalFormat("#.##");
-        averageExceded.setText(""+f.format(typeForDetail.getAverageExceded()));
+        textViewAverageExceded.setText(""+f.format(typeForDetail.getAverageExceded()));
 
         TextView typeDesc = (TextView) view.findViewById(R.id.textViewDesc);
         typeDesc.setText(typeForDetail.getDescription());
