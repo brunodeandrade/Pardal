@@ -1,12 +1,14 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -63,7 +65,20 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        View view = inflater.inflate(R.layout.fragment_about, container, false);
+        TextView textViewVersion = (TextView) view.findViewById(R.id.textViewVersion);
+        TextView textViewAboutApp = (TextView) view.findViewById(R.id.textViewAboutApp);
+        TextView textViewAboutTeam = (TextView) view.findViewById(R.id.textViewAboutTeam);
+        TextView textViewManagers = (TextView) view.findViewById(R.id.textViewManagers);
+        TextView textViewDevelopers = (TextView) view.findViewById(R.id.textViewDevelopers);
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        textViewVersion.setTypeface(typeface);
+        textViewAboutApp.setTypeface(typeface);
+        textViewAboutTeam.setTypeface(typeface);
+        textViewManagers.setTypeface(typeface);
+        textViewDevelopers.setTypeface(typeface);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
