@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -44,6 +45,7 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
     private String mParam1;
     private String mParam2;
     private State state;
+    private boolean changeButtonReverse = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -132,6 +134,22 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
         mListView.setOnItemClickListener(this);
 
         searchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+
+        final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
+        ordenateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+                onReverseClick();
+                if (changeButtonReverse == false) {
+                    ordenateButton.setImageResource(R.drawable.arrow_up_float);
+                    changeButtonReverse = true;
+                } else {
+                    ordenateButton.setImageResource(R.drawable.arrow_down_float);
+                    changeButtonReverse = false;
+                }
+            }
+        });
 
         return view;
     }
