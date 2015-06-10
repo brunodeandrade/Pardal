@@ -29,8 +29,9 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.activity_splash_screen);
 
         TextView textViewVersion = (TextView) getWindow().findViewById(R.id.textViewVersion);
-        textViewVersion.setText("Pardal\n v 1.0");
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/replay.ttf");
+        textViewVersion.setText("Pardal\n\t v 1.0");
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Quango.otf");
         textViewVersion.setTypeface(typeface);
 
         new Timer().schedule(new TimerTask() {

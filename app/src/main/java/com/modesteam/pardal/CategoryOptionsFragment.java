@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.modesteam.pardal.category.CategoryContent;
 
@@ -78,6 +80,19 @@ public class CategoryOptionsFragment extends Fragment implements View.OnClickLis
         ImageButton bHighway = (ImageButton) view.findViewById(R.id.bHighway);
         ImageButton bState = (ImageButton) view.findViewById(R.id.bState);
         ImageButton bAbout = (ImageButton) view.findViewById(R.id.bAbout);
+        TextView sBrand = (TextView) view.findViewById(R.id.sBrand);
+        TextView sModel = (TextView) view.findViewById(R.id.sModel);
+        TextView sType = (TextView) view.findViewById(R.id.sType);
+        TextView sState = (TextView) view.findViewById(R.id.sState);
+        TextView sHighway = (TextView) view.findViewById(R.id.sHighway);
+        TextView sCity = (TextView) view.findViewById(R.id.sCity);
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        sBrand.setTypeface(typeface);
+        sModel.setTypeface(typeface);
+        sType.setTypeface(typeface);
+        sState.setTypeface(typeface);
+        sHighway.setTypeface(typeface);
+        sCity.setTypeface(typeface);
         bModel.setOnClickListener(this);
         bType.setOnClickListener(this);
         bBrand.setOnClickListener(this);
