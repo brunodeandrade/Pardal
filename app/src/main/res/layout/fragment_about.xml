@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Versão 2.0"
+            android:text="Versão 1.0"
             android:id="@+id/textViewVersion"
             android:layout_gravity="center_horizontal" />
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewManagers"
             android:layout_gravity="center_horizontal"
-            android:text="Augusto Modesto\n Tainara Reis\n Cristóvão Frinhani\n Jonathan Moraes\n André Guedes\n " />
+            android:text=" Augusto Modesto\n Tainara Reis\n Cristóvão Frinhani\n Jonathan Moraes\n André Guedes\n " />
 
         <TextView
             android:layout_width="wrap_content"

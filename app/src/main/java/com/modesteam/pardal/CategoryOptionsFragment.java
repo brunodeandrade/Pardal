@@ -86,6 +86,7 @@ public class CategoryOptionsFragment extends Fragment implements View.OnClickLis
         TextView sState = (TextView) view.findViewById(R.id.sState);
         TextView sHighway = (TextView) view.findViewById(R.id.sHighway);
         TextView sCity = (TextView) view.findViewById(R.id.sCity);
+        TextView sAbout = (TextView) view.findViewById(R.id.sAbout);
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
         sBrand.setTypeface(typeface);
         sModel.setTypeface(typeface);
@@ -93,6 +94,7 @@ public class CategoryOptionsFragment extends Fragment implements View.OnClickLis
         sState.setTypeface(typeface);
         sHighway.setTypeface(typeface);
         sCity.setTypeface(typeface);
+        sAbout.setTypeface(typeface);
         bModel.setOnClickListener(this);
         bType.setOnClickListener(this);
         bBrand.setOnClickListener(this);
