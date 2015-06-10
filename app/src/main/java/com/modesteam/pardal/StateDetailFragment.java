@@ -131,7 +131,7 @@ public class StateDetailFragment extends Fragment {
         textViewCities.setText(Integer.toString(totalCities));
         textViewCities.setTypeface(typeface);
 
-        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTickets);
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
         textViewTotalTickets.setText(Integer.toString(totalTickets));
         textViewTotalTickets.setTypeface(typeface);
 

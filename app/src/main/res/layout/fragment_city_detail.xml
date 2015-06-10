@@ -82,7 +82,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="XXX KM/H"
         android:id="@+id/textViewTotalTickets"
-        android:layout_x="157dp"
+        android:layout_x="170dp"
         android:layout_y="317dp"
         android:textColor="#ffff2521" />
 
