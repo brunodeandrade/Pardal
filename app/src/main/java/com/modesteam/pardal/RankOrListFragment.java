@@ -1,6 +1,7 @@
     package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -102,9 +103,15 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         bRank.setOnClickListener(this);
         bList.setOnClickListener(this);
 
-
-        TextView textView= (TextView) view.findViewById(R.id.textViewDesc);
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        TextView sRanking = (TextView) view.findViewById(R.id.sRanking);
+        sRanking.setTypeface(typeface);
+        TextView sList = (TextView) view.findViewById(R.id.sList);
+        sList.setTypeface(typeface);
+        TextView textView = (TextView) view.findViewById(R.id.textViewDesc);
+        textView.setTypeface(typeface);
         TextView textView2= (TextView) view.findViewById(R.id.textViewTotal);
+        textView2.setTypeface(typeface);
         switch(mParam1) {
             case "1":
                 textView.setText("Estados Brasileiros");
