@@ -2,6 +2,7 @@
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.modesteam.pardal.brand.BrandContent;
@@ -80,6 +82,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
 
@@ -102,6 +105,9 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         ImageButton bList = (ImageButton) view.findViewById(R.id.bList);
         bRank.setOnClickListener(this);
         bList.setOnClickListener(this);
+        RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.rank_or_list);
+        Drawable drawable = null;
+
 
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
         TextView sRanking = (TextView) view.findViewById(R.id.sRanking);
@@ -112,38 +118,46 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         textView.setTypeface(typeface);
         TextView textView2= (TextView) view.findViewById(R.id.textViewTotal);
         textView2.setTypeface(typeface);
+
         switch(mParam1) {
             case "1":
                 textView.setText("Estados Brasileiros");
                 int tamanho1 = listState.size();
                 textView2.setText("Total de Estados: "+ Integer.toString(tamanho1));
+                drawable = getResources().getDrawable(R.drawable.statebg);
                 break;
             case "2":
                 textView.setText("Cidades Brasileiras");
                 int tamanho2 = listCity.size();
                 textView2.setText("Total de Cidades: "+ Integer.toString(tamanho2));
+                drawable = getResources().getDrawable(R.drawable.citybg);
                 break;
             case "3":
                 textView.setText("Rodovias Brasileiras");
                 int tamanho3 = listHigh.size();
                 textView2.setText("Total de Rodovias: "+ Integer.toString(tamanho3));
+                drawable = getResources().getDrawable(R.drawable.highwaybg);
                 break;
             case "4":
                 textView.setText("Modelos de Veículos");
                 int tamanho4 = listModel.size();
                 textView2.setText("Total de Modelos: "+ Integer.toString(tamanho4));
+                drawable = getResources().getDrawable(R.drawable.modelbg);
                 break;
             case "5":
                 textView.setText("Tipos de Veículos");
                 int tamanho5 = listType.size();
                 textView2.setText("Total de Tipos: "+ Integer.toString(tamanho5));
+                drawable = getResources().getDrawable(R.drawable.typebg);
                 break;
             case "6":
                 textView.setText("Marcas de Veículos");
                 int tamanho6 = listBrand.size();
                 textView2.setText("Total de Marcas: "+ Integer.toString(tamanho6));
+                drawable = getResources().getDrawable(R.drawable.modelbg);
                 break;
         }
+        relative.setBackgroundDrawable(drawable);
         return view;
     }
 
