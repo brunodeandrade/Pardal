@@ -154,7 +154,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                 textView.setText("Marcas de Veículos");
                 int tamanho6 = listBrand.size();
                 textView2.setText("Total de Marcas: "+ Integer.toString(tamanho6));
-                drawable = getResources().getDrawable(R.drawable.modelbg);
+                drawable = getResources().getDrawable(R.drawable.brandbg);
                 break;
         }
         relative.setBackgroundDrawable(drawable);
