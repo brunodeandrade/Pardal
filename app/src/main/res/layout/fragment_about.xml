@@ -107,6 +107,22 @@
             android:layout_gravity="center_horizontal"
             android:text=" Rafael Akiyoshi\n Ricardo Canela\n Luís Henrique\n Lucas Rufino\n Laércio Junior\n Luís Filipe\n " />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Icones e backgrounds:"
+            android:id="@+id/textView17"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#ff000000" />
+        <ImageView
+            android:layout_width="293dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView3"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/designed"
+            android:layout_marginTop="20dp" />
     </LinearLayout>
 
 </ScrollView>
