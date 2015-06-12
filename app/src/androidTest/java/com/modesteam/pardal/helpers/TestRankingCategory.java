@@ -17,9 +17,16 @@ import models.Brand;
 
 public class TestRankingCategory extends TestCase{
 
-    Brand brand1, brand2;
+    Brand brand1, brand2, genericBrand;
+    RankingCategory rankCategory;
+    ArrayList<Object> arrayListRanking;
+
     public void setUp() throws SQLException, NotNullableException, ClassNotFoundException {
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+
+        rankCategory = new RankingCategory();
+        genericBrand = new Brand();
+        arrayListRanking = null;
 
         brand1 = new Brand("VW");
         brand2 = new Brand("FIAT");
@@ -38,38 +45,26 @@ public class TestRankingCategory extends TestCase{
     }
 
     public void testShouldRankCategoryWithTotalTickets() throws SQLException, ClassNotFoundException{
-        RankingCategory rankCategory = new RankingCategory();
-        Brand brand = new Brand();
 
-        ArrayList<Object> arrayListRanking = null;
-
-        arrayListRanking = rankCategory.rankCategoryWithField(brand, "totalTickets");
+        arrayListRanking = rankCategory.rankCategoryWithField(genericBrand, "totalTickets");
         assertEquals(arrayListRanking.get(0).toString(), brand2.getName());
     }
 
     public void testShouldRankCategoryWithMaximumMeasuredVelocity() throws SQLException, ClassNotFoundException{
-        RankingCategory rankCategory = new RankingCategory();
-        Brand brand = new Brand();
 
-        ArrayList<Object> arrayListRanking = null;
-
-        arrayListRanking = rankCategory.rankCategoryWithField(brand, "maximumMeasuredVelocity");
+        arrayListRanking = rankCategory.rankCategoryWithField(genericBrand, "maximumMeasuredVelocity");
         assertEquals(arrayListRanking.get(0).toString(),brand1.getName());
     }
 
     public void testShouldRankCategoryWithAverageExceded() throws SQLException, ClassNotFoundException{
-        RankingCategory rankCategory = new RankingCategory();
-        Brand brand = new Brand();
 
-        ArrayList<Object> arrayListRanking = null;
-
-        arrayListRanking = rankCategory.rankCategoryWithField(brand, "averageExceded");
+        arrayListRanking = rankCategory.rankCategoryWithField(genericBrand, "averageExceded");
         assertEquals(arrayListRanking.get(0).toString(),brand2.getName());
     }
 
     public void testShouldGetNewInstanceoOfRankingCategory(){
-        RankingCategory rankingCategory = null;
-        rankingCategory = new RankingCategory();
-        assertNotNull(rankingCategory);
+        RankingCategory rankingCategoryInstance = null;
+        rankingCategoryInstance = new RankingCategory();
+        assertNotNull(rankingCategoryInstance);
     }
 }
