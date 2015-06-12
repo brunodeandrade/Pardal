@@ -144,7 +144,6 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
 
         mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
 
-
         final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
         ordenateButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
