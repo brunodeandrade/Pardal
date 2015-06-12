@@ -59,6 +59,7 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
+    private EditText mSearchText;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -137,13 +138,11 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
-        EditText searchText = (EditText) view.findViewById(R.id.searchEditText);
+        mSearchText = (EditText) view.findViewById(R.id.searchEditText);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-        searchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
-
-
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
 
         final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
         ordenateButton.setOnClickListener(new View.OnClickListener() {
@@ -215,5 +214,8 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         mAdapter = new ArrayAdapter<City>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, list);
         mListView.setAdapter(mAdapter);
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
     }
 }
