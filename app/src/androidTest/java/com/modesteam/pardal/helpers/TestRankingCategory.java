@@ -66,4 +66,10 @@ public class TestRankingCategory extends TestCase{
         arrayListRanking = rankCategory.rankCategoryWithField(brand, "averageExceded");
         assertEquals(arrayListRanking.get(0).toString(),brand2.getName());
     }
+
+    public void testShouldGetNewInstanceoOfRankingCategory(){
+        RankingCategory rankingCategory = null;
+        rankingCategory = new RankingCategory();
+        assertNotNull(rankingCategory);
+    }
 }
