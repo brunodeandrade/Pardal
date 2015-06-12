@@ -22,6 +22,7 @@ import annotations.OneRelations;
 import annotations.OrderBy;
 import libraries.Database;
 import libraries.NotNullableException;
+import models.Tickets;
 
 public class GenericPersistence extends Database {
 
@@ -218,6 +219,30 @@ public class GenericPersistence extends Database {
         return beans;
     }
 
+    public ArrayList<Object> selectBeansOrderByField(Object bean, String fieldName) throws SQLException {
+        Field field = getField(bean,fieldName);
+        //System.out.println("field "+field+" Nome "+fieldName + getFields(bean).toString());
+        return selectBeansOrderByField(bean,field);
+    }
+    public ArrayList<Object> selectBeansOrderByField(Object bean, Field orderBy) throws SQLException {
+        this.openConnection();
+        ArrayList<Object> beans = selectBeansOrderByField(bean, orderBy, this.database);
+        this.closeConnection();
+        return beans;
+    }
+    public ArrayList<Object> selectBeansOrderByField(Object bean, Field orderBy, SQLiteDatabase conn) throws SQLException {
+        ArrayList<Object> beans = new ArrayList<Object>();
+
+        Entity entity = bean.getClass().getAnnotation(Entity.class);
+        ArrayList<Field> beanFields = getFields(bean);
+        String sql = "SELECT * FROM " + entity.table() + " ORDER BY "+ databaseColumn(orderBy) + " DESC LIMIT 10";
+
+        Cursor rs = conn.rawQuery(sql, null);
+        while (rs.moveToNext()) {
+            beans.add(result(rs, bean, beanFields));
+        }
+        return beans;
+    }
     public ArrayList<Object> selectMany(Object bean, Object target) throws SQLException{
         return selectMany(bean, target, getOrderField(target));
     }
