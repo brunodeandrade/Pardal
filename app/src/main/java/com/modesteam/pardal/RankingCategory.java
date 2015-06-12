@@ -31,12 +31,13 @@ public class RankingCategory {
     private GenericPersistence gp;
     private ArrayList<Object> objectArrayList;
 
-    public void rankCategoryWithField (Object bean, String fieldName) throws SQLException, ClassNotFoundException{
+    public ArrayList<Object> rankCategoryWithField (Object bean, String fieldName) throws SQLException, ClassNotFoundException{
 
         gp = new GenericPersistence();
         objectArrayList = gp.selectBeansOrderByField(bean,fieldName);
         System.out.println(objectArrayList.toString());
 
+        return objectArrayList;
     }
 
 //    public void rankCategoryWithoutField (HighwayStretch highwayStretch) throws SQLException, ClassNotFoundException{

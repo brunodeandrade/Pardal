@@ -218,10 +218,11 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
      private void rankCategory(Object bean) {
          RankingCategory rankingCategory = new RankingCategory();
          String fieldsNamesArray[] = {"totalTickets", "averageExceded", "maximumMeasuredVelocity"};
+         ArrayList<Object> arrayListRankingObject = null;
 
          for (int i = 0; i < fieldsNamesArray.length; i++) {
              try {
-                 rankingCategory.rankCategoryWithField(bean, fieldsNamesArray[i].toString());
+                 arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldsNamesArray[i].toString());
              } catch (SQLException e) {
                  e.printStackTrace();
              } catch (ClassNotFoundException e) {
