@@ -25,6 +25,10 @@ public class TestRankingCategory extends TestCase{
         brand2 = new Brand("FIAT");
         brand1.setTotalTickets(10);
         brand2.setTotalTickets(20);
+        brand1.setMaximumMeasuredVelocity((double) 190);
+        brand2.setMaximumMeasuredVelocity((double) 100);
+        brand1.setAverageExceded((double) 40);
+        brand2.setAverageExceded((double) 50);
         brand1.save();
         brand2.save();
     }
@@ -40,6 +44,26 @@ public class TestRankingCategory extends TestCase{
         ArrayList<Object> arrayListRanking = null;
 
         arrayListRanking = rankCategory.rankCategoryWithField(brand, "totalTickets");
+        assertEquals(arrayListRanking.get(0).toString(), brand2.getName());
+    }
+
+    public void testShouldRankCategoryWithMaximumMeasuredVelocity() throws SQLException, ClassNotFoundException{
+        RankingCategory rankCategory = new RankingCategory();
+        Brand brand = new Brand();
+
+        ArrayList<Object> arrayListRanking = null;
+
+        arrayListRanking = rankCategory.rankCategoryWithField(brand, "maximumMeasuredVelocity");
+        assertEquals(arrayListRanking.get(0).toString(),brand1.getName());
+    }
+
+    public void testShouldRankCategoryWithAverageExceded() throws SQLException, ClassNotFoundException{
+        RankingCategory rankCategory = new RankingCategory();
+        Brand brand = new Brand();
+
+        ArrayList<Object> arrayListRanking = null;
+
+        arrayListRanking = rankCategory.rankCategoryWithField(brand, "averageExceded");
         assertEquals(arrayListRanking.get(0).toString(),brand2.getName());
     }
 }
