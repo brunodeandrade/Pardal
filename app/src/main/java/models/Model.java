@@ -31,6 +31,12 @@ public class Model implements ComparableCategory{
 	private String name;
 	@Column(name="is_national", nullable=true)
 	private boolean isNational;
+	@Column(name="total_tickets", nullable=true)
+	private int totalTickets;
+	@Column(name="average_exceded", nullable=true)
+	private Double averageExceded;
+	@Column(name="maximum_measured_velocity", nullable=true)
+	private Double maximumMeasuredVelocity;
 	@Column(name="id_brand", nullable=false)
 	private int idBrand;
 	@Column(name="id_type", nullable=false)
@@ -83,6 +89,24 @@ public class Model implements ComparableCategory{
 	public void setNational(boolean isNational) {
 		this.isNational = isNational;
 	}
+    public int getTotalTickets() {
+        return totalTickets;
+    }
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
+    }
+    public Double getAverageExceded() {
+        return averageExceded;
+    }
+    public void setAverageExceded(Double averageExceded) {
+        this.averageExceded = averageExceded;
+    }
+    public Double getMaximumMeasuredVelocity() {
+        return maximumMeasuredVelocity;
+    }
+    public void setMaximumMeasuredVelocity(Double maximumMeasuredVelocity) {
+        this.maximumMeasuredVelocity = maximumMeasuredVelocity;
+    }
 
 	public boolean save() throws ClassNotFoundException, SQLException, NotNullableException{
 		GenericPersistence gP = new GenericPersistence();
@@ -157,61 +181,5 @@ public class Model implements ComparableCategory{
 	public String toString() {
 		return ""+name;
 	}
-
-    @Override
-    public int getTotalTickets() {
-        try {
-            int total = 0;
-            ArrayList<Tickets> tickets = getTickets();
-            for(Tickets ticket : tickets){
-                total += ticket.getTotalTickets();
-            }
-            return total;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return 0;
-    }
-
-    @Override
-    public Double getAverageExceded() {
-        try {
-            double average = 0;
-            ArrayList<Tickets> tickets = getTickets();
-            for(Tickets ticket : tickets){
-                average += ticket.getAverageExceded();
-            }
-            return average/tickets.size();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return 0.0;
-    }
-
-    @Override
-    public Double getMaximumMeasuredVelocity() {
-        try {
-            double maximum = 0;
-            ArrayList<Tickets> tickets = getTickets();
-            for(Tickets ticket : tickets){
-                if(maximum<ticket.getMaximumMeasuredVelocity()){
-                    maximum = ticket.getMaximumMeasuredVelocity();
-                }
-            }
-            return maximum;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return 0.0;
-    }
 
 }
