@@ -213,6 +213,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
 
                     }
                     rankCategory(bean);
+                    break;
                 case R.id.bList:
                     switch(mParam1){
                         case "1":
@@ -233,6 +234,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                         case "6":
                             mListener.onFragmentInteraction(CategoryContent.ITEM_MAP.get(6).id, BrandListFragment.newInstance("6", ""));
                     }
+                    break;
             }
         }
 

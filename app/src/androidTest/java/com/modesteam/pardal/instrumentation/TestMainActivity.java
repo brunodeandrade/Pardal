@@ -18,6 +18,7 @@ import android.widget.ListView;
 
 import com.modesteam.pardal.BrandListFragment;
 import com.modesteam.pardal.MainActivity;
+import com.modesteam.pardal.Pardal;
 import com.modesteam.pardal.R;
 
 import models.Brand;
@@ -45,6 +46,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         setActivityInitialTouchMode(false);
         this.mActivity = getActivity();
         this.mInstrumentation = getInstrumentation();
+        Pardal.getInstance().setDatabaseName("database.dev.sqlite3.db");
     }
 
 
@@ -96,7 +98,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         this.mActivity = getActivity();
         Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         mInstrumentation.waitForIdleSync();
-        ListView listView2 = (ListView) ((LinearLayout) fragment3.getView().findViewById(view)).getChildAt(1);
+        ListView listView2 = (ListView) ((LinearLayout) fragment3.getView().findViewById(view)).getChildAt(2);
         TouchUtils.clickView(this,listView2.getChildAt(1));
         return fragment3;
     }
@@ -237,7 +239,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         Button compareButton = (Button) (fragment3.getView().findViewById(R.id.compareButton));
         TouchUtils.clickView(this,compareButton);
         Fragment fragment4 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        ListView listView = (ListView) ((LinearLayout) fragment4.getView().findViewById(view)).getChildAt(1);
+        ListView listView = (ListView) ((LinearLayout) fragment4.getView().findViewById(view)).getChildAt(2);
         TouchUtils.clickView(this,listView.getChildAt(1));
 
         return fragment3;
