@@ -48,6 +48,8 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
     private String mParam1;
     private String mParam2;
 
+    private Object bean;
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -168,8 +170,28 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         public void onClick(View view) {
             switch(view.getId()){
                 case R.id.bRank:
-                    System.out.println("RANK");
-                    break;
+                    switch(mParam1){
+                        case "1":
+                            bean = new State();
+                            break;
+                        case "2":
+                            bean = new City();
+                            break;
+                        case "3":
+                            bean = new HighwayStretch();
+                            break;
+                        case "4":
+                            bean = new Model();
+                            break;
+                        case "5":
+                            bean = new Type();
+                            break;
+                        case "6":
+                            bean = new Brand();
+                            break;
+
+                    }
+                    rankCategory(bean);
                 case R.id.bList:
                     switch(mParam1){
                         case "1":
@@ -193,19 +215,19 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
             }
         }
 
-        /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-   // public interface OnFragmentInteractionListener {
-  //      // TODO: Update argument type and name
-   //     public void onFragmentInteraction(Uri uri);
-   // }
+     private void rankCategory(Object bean) {
+         RankingCategory rankingCategory = new RankingCategory();
+         String fieldsNamesArray[] = {"totalTickets", "averageExceded", "maximumMeasuredVelocity"};
+         ArrayList<Object> arrayListRankingObject = null;
 
+         for (int i = 0; i < fieldsNamesArray.length; i++) {
+             try {
+                 arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldsNamesArray[i].toString());
+             } catch (SQLException e) {
+                 e.printStackTrace();
+             } catch (ClassNotFoundException e) {
+                 e.printStackTrace();
+             }
+         }
+     }
 }
