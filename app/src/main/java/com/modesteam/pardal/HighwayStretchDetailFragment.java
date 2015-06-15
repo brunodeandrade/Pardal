@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -132,30 +133,35 @@ public class HighwayStretchDetailFragment extends Fragment {
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());
         }
-
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
         //Imprime total ticktes
-        TextView totalTickets = (TextView) view.findViewById(R.id.totalTickets);
-        totalTickets.setText(Integer.toString(highwayStretchDetail.getTotalTickets()));
-
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(highwayStretchDetail.getTotalTickets()));
+        textViewTotalTickets.setTypeface(typeface);
 
         //Imprime velocidade limite dos carros na rodovia
-        TextView velocityLimit = (TextView) view.findViewById(R.id.velocityLimit);
-        velocityLimit.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+        TextView textViewVelocityLimit = (TextView) view.findViewById(R.id.velocityLimit);
+        textViewVelocityLimit.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+        textViewVelocityLimit.setTypeface(typeface);
 
         //Imprime a media de velocidade excedida
-        TextView averageExceded = (TextView) view.findViewById(R.id.averageExceded);
-        averageExceded.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+        textViewAverageExceded.setTypeface(typeface);
 
         //Imprime a maxima velocidade registrada
-        TextView maximumMeasuredVelocity = (TextView) view.findViewById(R.id.maximumMeasuredVelocity);
-        maximumMeasuredVelocity.setText(Double.toString(highwayStretchDetail.getMaximumMeasuredVelocity()) + " km/h");
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(Double.toString(highwayStretchDetail.getMaximumMeasuredVelocity()) + " km/h");
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
-        TextView name = (TextView) view.findViewById(R.id.textViewName);
-        name.setText("BR "+(highwayStretchDetail.getNumber())+" KM "+(highwayStretchDetail.getKilometer()));
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText("BR "+(highwayStretchDetail.getNumber())+" KM "+(highwayStretchDetail.getKilometer()));
+        textViewName.setTypeface(typeface);
 
-        TextView cityState = (TextView) view.findViewById(R.id.textViewCityState);
-        cityState.setText(""+(cityOfHighwayStretch.getName())+"/"+(stateOfHighwayStretch.getName()));
+        TextView textViewcityState = (TextView) view.findViewById(R.id.textViewCityState);
+        textViewcityState.setText(""+(cityOfHighwayStretch.getName())+"/"+(stateOfHighwayStretch.getName()));
+        textViewcityState.setTypeface(typeface);
 
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {

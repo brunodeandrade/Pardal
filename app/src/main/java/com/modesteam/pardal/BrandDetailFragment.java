@@ -2,6 +2,7 @@ package com.modesteam.pardal;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -122,18 +123,23 @@ public class BrandDetailFragment extends Fragment {
 
         double averageExceded = brandDetail.getAverageExceded(), maximumMeasuredVelocity=brandDetail.getMaximumMeasuredVelocity();
         int  totalTickets = brandDetail.getTotalTickets();
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
         TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
         textViewTotalTickets.setText(Integer.toString(totalTickets));
+        textViewTotalTickets.setTypeface(typeface);
 
         TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText((brandDetail.getName()));
+        textViewName.setTypeface(typeface);
 
         TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         textViewAverageExceded.setText((String.format("%.1f", averageExceded) + " km/h"));
+        textViewAverageExceded.setTypeface(typeface);
 
         TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
         textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {

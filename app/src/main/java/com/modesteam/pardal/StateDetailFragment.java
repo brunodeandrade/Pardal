@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -120,21 +121,27 @@ public class StateDetailFragment extends Fragment {
         double maximumMeasuredVelocity = stateDetail.getMaximumMeasuredVelocity();
         int totalTickets = stateDetail.getTotalTickets();
         int totalCities = listCity.size();
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
         TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText((stateDetail.getName()));
+        textViewName.setTypeface(typeface);
 
         TextView textViewCities = (TextView) view.findViewById(R.id.textViewCities);
         textViewCities.setText(Integer.toString(totalCities));
+        textViewCities.setTypeface(typeface);
 
-        TextView textViewTickets = (TextView) view.findViewById(R.id.textViewTickets);
-        textViewTickets.setText(Integer.toString(totalTickets));
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(totalTickets));
+        textViewTotalTickets.setTypeface(typeface);
 
         TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
         textViewMaximumMeasuredVelocity.setText(String.format("%.1f", maximumMeasuredVelocity) + " km/h");
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
-        TextView textViewAverageExcede = (TextView) view.findViewById(R.id.textViewAverageExceded);
-        textViewAverageExcede.setText(String.format("%.1f", averageExceded) + " km/h");
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText(String.format("%.1f", averageExceded) + " km/h");
+        textViewAverageExceded.setTypeface(typeface);
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

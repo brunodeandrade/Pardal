@@ -2,6 +2,7 @@ package com.modesteam.pardal;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -137,13 +138,18 @@ public class CompareFragment extends Fragment {
             percentageTotalTickets = (percentageTotalTickets/totalTickets2)*100;
         }
 
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+
         TextView titleTextView = (TextView) view.findViewById(R.id.titleTextView);
         titleTextView.setText(nameCategory);
 
         TextView itemName1textView = (TextView) view.findViewById(R.id.itemName1textView);
         itemName1textView.setText(nameItem1);
+        itemName1textView.setTypeface(typeface);
+
         TextView itemName2textView = (TextView) view.findViewById(R.id.itemName2textView);
         itemName2textView.setText(nameItem2);
+        itemName2textView.setTypeface(typeface);
 
 
         TextView averageValue1TextView = (TextView) view.findViewById(R.id.averageValue1TextView);
@@ -157,7 +163,9 @@ public class CompareFragment extends Fragment {
         }
         DecimalFormat f = new DecimalFormat("#.##");
         averageValue1TextView.setText(""+f.format(averageExceded1));
+        averageValue1TextView.setTypeface(typeface);
         averageValue2TextView.setText(""+f.format(averageExceded2));
+        averageValue2TextView.setTypeface(typeface);
 
         TextView totalTicketsValue1TextView = (TextView) view.findViewById(R.id.totalTicketsValue1TextView);
         TextView totalTicketsValue2TextView = (TextView) view.findViewById(R.id.totalTicketsValue2TextView);
@@ -169,8 +177,9 @@ public class CompareFragment extends Fragment {
             totalTicketsValue2TextView.setTextColor(Color.RED);
         }
         totalTicketsValue1TextView.setText(Integer.toString(totalTickets1));
+        totalTicketsValue1TextView.setTypeface(typeface);
         totalTicketsValue2TextView.setText(Integer.toString(totalTickets2));
-
+        totalTicketsValue2TextView.setTypeface(typeface);
         TextView maximumValue1TextView = (TextView) view.findViewById(R.id.maximumValue1TextView);
         TextView maximumValue2TextView = (TextView) view.findViewById(R.id.maximumValue2TextView);
         if(maximumMeasuredVelocity1>maximumMeasuredVelocity2){
@@ -181,12 +190,16 @@ public class CompareFragment extends Fragment {
             maximumValue2TextView.setTextColor(Color.RED);
         }
         maximumValue1TextView.setText(""+f.format(maximumMeasuredVelocity1));
+        maximumValue1TextView.setTypeface(typeface);
         maximumValue2TextView.setText(""+f.format(maximumMeasuredVelocity2));
+        maximumValue2TextView.setTypeface(typeface);
 
         TextView percentageTotalTicketsTextView = (TextView) view.findViewById(R.id.percentageTotalTicketsTextView);
         percentageTotalTicketsTextView.setText(""+f.format(percentageTotalTickets)+" %");
+        percentageTotalTicketsTextView.setTypeface(typeface);
         TextView percentageMaximumTextView = (TextView) view.findViewById(R.id.percentageMaximumTextView);
         percentageMaximumTextView.setText(""+f.format(percentageMaximum)+" %");
+        percentageMaximumTextView.setTypeface(typeface);
 
     }
 

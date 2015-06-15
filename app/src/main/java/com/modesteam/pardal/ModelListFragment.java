@@ -12,6 +12,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class ModelListFragment extends Fragment implements AbsListView.OnItemCli
     private String mParam1;
     private String mParam2;
     private Model model;
+    private boolean changeButtonReverse = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,6 +57,7 @@ public class ModelListFragment extends Fragment implements AbsListView.OnItemCli
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
+    private EditText mSearchText;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -135,9 +138,27 @@ public class ModelListFragment extends Fragment implements AbsListView.OnItemCli
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
-        EditText searchText = (EditText) view.findViewById(R.id.searchEditText);
+        mSearchText = (EditText) view.findViewById(R.id.searchEditText);
 
-        searchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+
+
+        final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
+        ordenateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+                onReverseClick();
+                if (changeButtonReverse == false) {
+                    ordenateButton.setImageResource(R.drawable.arrow_up_float);
+                    changeButtonReverse = true;
+                } else {
+                    ordenateButton.setImageResource(R.drawable.arrow_down_float);
+                    changeButtonReverse = false;
+                }
+            }
+        });
+
 
         return view;
     }
@@ -192,5 +213,8 @@ public class ModelListFragment extends Fragment implements AbsListView.OnItemCli
         mAdapter = new ArrayAdapter<Model>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, list);
         mListView.setAdapter(mAdapter);
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
     }
 }

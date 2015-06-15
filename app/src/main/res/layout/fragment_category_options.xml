@@ -1,138 +1,23 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.modesteam.pardal.CategoryOptionsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="235dp"
-        android:stretchColumns="1"
-        android:measureWithLargestChild="false"
-        android:layout_marginTop="80dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bBrand"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/marca"
-                android:focusableInTouchMode="true"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bModel"
-                android:layout_gravity="center_horizontal|top"
-                android:background="@drawable/modelo"
-                android:focusableInTouchMode="false" />
-
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bType"
-                android:background="@drawable/tipos"
-                android:focusableInTouchMode="false"
-                android:layout_gravity="center_vertical" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Marca"
-                android:id="@+id/sBrand"
-                android:layout_marginLeft="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Modelo"
-                android:id="@+id/sModel"
-                android:layout_marginLeft="75dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Tipo"
-                android:id="@+id/sType"
-                android:layout_marginLeft="25dp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/sw">
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bCity"
-                android:layout_gravity="left|center_vertical"
-                android:background="@drawable/cidade"
-                android:focusableInTouchMode="false" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bState"
-                android:layout_gravity="center"
-                android:background="@drawable/estados"
-                android:focusableInTouchMode="false" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bHighway"
-                android:layout_gravity="right|center_vertical"
-                android:background="@drawable/estrada"
-                android:focusableInTouchMode="false" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Cidade"
-                android:id="@+id/sCity"
-                android:layout_column="0"
-                android:layout_marginLeft="10dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Estado"
-                android:id="@+id/sState"
-                android:layout_column="1"
-                android:capitalize="words"
-                android:layout_marginLeft="75dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Rodovia"
-                android:id="@+id/sHighway"
-                android:layout_column="2" />
-        </TableRow>
-
-    </TableLayout>
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bBrand"
+        android:layout_gravity="center_vertical"
+        android:background="@layout/on_selector_brand"
+        android:focusableInTouchMode="true"
+        android:layout_alignTop="@+id/bType"
+        android:layout_alignLeft="@+id/bState"
+        android:layout_alignStart="@+id/bState"
+        android:layout_x="71dp"
+        android:layout_y="35dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -141,14 +26,198 @@
         android:id="@+id/sCategories"
         android:layout_gravity="center_horizontal|top"
         android:textStyle="bold"
-        android:textSize="24dip" />
+        android:textSize="24dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_x="123dp"
+        android:layout_y="0dp" />
 
     <ImageButton
-        android:layout_width="143dp"
-        android:layout_height="60dp"
+        android:layout_width="105dp"
+        android:layout_height="64dp"
         android:text="Sobre"
         android:id="@+id/bAbout"
-        android:layout_gravity="left|bottom"
-        android:background="@drawable/about" />
+        android:background="@layout/on_selector_about"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="241dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="902dp"
+        android:layout_x="129dp"
+        android:layout_y="415dp" />
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Modelo"
+        android:id="@+id/sModel"
+        android:layout_marginLeft="150dp"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="79dp"
+        android:layout_y="233dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Marca"
+        android:id="@+id/sBrand"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="83dp"
+        android:layout_y="110dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Cidade"
+        android:id="@+id/sCity"
+        android:layout_column="0"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="229dp"
+        android:layout_y="233dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tipo"
+        android:id="@+id/sType"
+        android:layout_marginLeft="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="92dp"
+        android:layout_y="356dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rodovia"
+        android:id="@+id/sHighway"
+        android:layout_column="2"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="229dp"
+        android:layout_y="356dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bHighway"
+        android:layout_gravity="right|top"
+        android:background="@layout/on_selector_highway"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="548dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_x="216dp"
+        android:layout_y="269dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Estado"
+        android:id="@+id/sState"
+        android:layout_column="1"
+        android:capitalize="words"
+        android:layout_marginLeft="655dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="227dp"
+        android:layout_y="110dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bState"
+        android:layout_gravity="center"
+        android:background="@layout/on_selector_state"
+        android:focusableInTouchMode="false"
+        android:layout_below="@+id/bType"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_x="216dp"
+        android:layout_y="35dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bCity"
+        android:layout_gravity="left|bottom"
+        android:background="@layout/on_selector_city"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="822dp"
+        android:layout_x="216dp"
+        android:layout_y="152dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bModel"
+        android:layout_gravity="right|bottom"
+        android:background="@layout/on_selector_model"
+        android:focusableInTouchMode="false"
+        android:accessibilityLiveRegion="polite"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="468dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="782dp"
+        android:layout_x="71dp"
+        android:layout_y="152dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bType"
+        android:background="@layout/on_selector_type"
+        android:focusableInTouchMode="false"
+        android:layout_below="@+id/bHighway"
+        android:layout_alignLeft="@+id/sBrand"
+        android:layout_alignStart="@+id/sBrand"
+        android:layout_toLeftOf="@+id/sCategories"
+        android:layout_toStartOf="@+id/sCategories"
+        android:layout_x="71dp"
+        android:layout_y="269dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Sobre"
+        android:id="@+id/sAbout"
+        android:layout_column="1"
+        android:capitalize="words"
+        android:layout_marginLeft="655dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="489dp"
+        android:layout_x="156dp"
+        android:layout_y="482dp" />
+
+</AbsoluteLayout>

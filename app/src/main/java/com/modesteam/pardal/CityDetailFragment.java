@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -115,24 +116,29 @@ public class CityDetailFragment extends Fragment {
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());
         }
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        TextView textViewName, textViewTotalHighwayStretches,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
-        TextView nameCity, totalHighwayStretches,totalTickets,maxVelocity, averageExceded;
+        textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText(cityForDetail.getName()+" - "+stateOfCity.getName());
+        textViewName.setTypeface(typeface);
 
-        nameCity = (TextView) view.findViewById(R.id.textViewName);
-        nameCity.setText(cityForDetail.getName()+" - "+stateOfCity.getName());
+        textViewTotalHighwayStretches = (TextView) view.findViewById(R.id.textViewHighwayStretches);
+        textViewTotalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());
+        textViewTotalHighwayStretches.setTypeface(typeface);
 
-        totalHighwayStretches = (TextView) view.findViewById(R.id.textViewHighwayStretches);
-        totalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());
+        textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(""+cityForDetail.getTotalTickets());
+        textViewTotalTickets.setTypeface(typeface);
 
-        totalTickets = (TextView) view.findViewById(R.id.textViewTickets);
-        totalTickets.setText(""+cityForDetail.getTotalTickets());
+        textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(cityForDetail.getMaximumMeasuredVelocity().toString());
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
-        maxVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
-        maxVelocity.setText(cityForDetail.getMaximumMeasuredVelocity().toString());
-
-        averageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         DecimalFormat f = new DecimalFormat("#.##");
-        averageExceded.setText(""+f.format(cityForDetail.getAverageExceded()));
+        textViewAverageExceded.setText(""+f.format(cityForDetail.getAverageExceded()));
+        textViewAverageExceded.setTypeface(typeface);
 
         Button compareButton = (Button) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
