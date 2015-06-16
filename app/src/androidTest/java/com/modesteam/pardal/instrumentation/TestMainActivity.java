@@ -5,6 +5,8 @@ import android.app.Instrumentation;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.View;
@@ -17,9 +19,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.modesteam.pardal.BrandListFragment;
+import com.modesteam.pardal.HighwayStretchDetailFragment;
 import com.modesteam.pardal.MainActivity;
 import com.modesteam.pardal.Pardal;
 import com.modesteam.pardal.R;
+import com.modesteam.pardal.SplashScreenActivity;
+
+import junit.framework.Assert;
+
+import java.sql.SQLException;
 
 import models.Brand;
 import models.City;
@@ -56,6 +64,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         mInstrumentation.waitForIdleSync();
         ImageButton imageButton = (ImageButton) (fragment.getView().findViewById(position));
         TouchUtils.clickView(this,imageButton);
+        fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         return  fragment;
     }
 
@@ -296,4 +305,36 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openDetailFragment(R.id. type_list_view);
         openCompareFragment(R.id.type_list_view);
     }
+
+    //Make for all the other categories
+    public void testShouldOnAttachThrowException(){
+        this.mActivity = getActivity();
+        Fragment fragment = HighwayStretchDetailFragment.newInstance(new HighwayStretch());
+        ActionBarActivity activity = new ActionBarActivity();
+        activity.getSupportFragmentManager().beginTransaction().attach(fragment);
+        try{
+            fragment.onAttach(activity);
+            Assert.fail("Should have thrown ClassCastException");
+        }
+        catch (ClassCastException c){
+            assertNotNull(c);
+        }
+    }
+
+    public void testShouldThrowExceptionWhenBrandIdIsNegative(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bBrand);
+        BrandListFragment fragment = (BrandListFragment) openListFragment(R.id.bList);
+        fragment.newInstance(new Brand(-100));
+        try{
+            fragment.onCreate(fragment.getArguments());
+            Assert.fail("Should have thrown SQL Exception");
+            throw new SQLException();
+        }
+        catch (SQLException c){
+            assertNotNull(c);
+        }
+    }
+
+
 }
