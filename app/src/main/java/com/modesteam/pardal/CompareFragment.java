@@ -118,7 +118,7 @@ public class CompareFragment extends Fragment {
         double percentageMaximum = 0.0;
         double percentageTotalTickets = 0.0;
 
-        percentageMaximum = ((maximumMeasuredVelocity1-maximumMeasuredVelocity2)/2)*100;
+        percentageMaximum = (maximumMeasuredVelocity1-maximumMeasuredVelocity2);
         if(percentageMaximum < 0){
             percentageMaximum *= -1;
         }
@@ -195,10 +195,19 @@ public class CompareFragment extends Fragment {
         maximumValue2TextView.setTypeface(typeface);
 
         TextView percentageTotalTicketsTextView = (TextView) view.findViewById(R.id.percentageTotalTicketsTextView);
-        percentageTotalTicketsTextView.setText(""+f.format(percentageTotalTickets)+" %");
+        if(maximumMeasuredVelocity1 == 0 && maximumMeasuredVelocity2 == 0){
+            percentageTotalTicketsTextView.setText("Não há dados suficiente em ambos os itens");
+        }else{
+            percentageTotalTicketsTextView.setText(""+f.format(percentageTotalTickets)+" %");
+        }
         percentageTotalTicketsTextView.setTypeface(typeface);
+
         TextView percentageMaximumTextView = (TextView) view.findViewById(R.id.percentageMaximumTextView);
-        percentageMaximumTextView.setText(""+f.format(percentageMaximum)+" %");
+        if(totalTickets1 == 0 && totalTickets2 == 0){
+            percentageMaximumTextView.setText("Não há dados suficiente em ambos os itens");
+        }else{
+            percentageMaximumTextView.setText(""+f.format(percentageMaximum)+" %");
+        }
         percentageMaximumTextView.setTypeface(typeface);
 
     }
