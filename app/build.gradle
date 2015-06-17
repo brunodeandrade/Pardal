@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 22
@@ -16,7 +15,8 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testApplicationId "com.modesteam.pardal.test"
+        testInstrumentationRunner "com.modesteam.pardal.JUnitJacocoTestRunner"
     }
     buildTypes {
         debug {
@@ -28,54 +28,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-jacoco {
-    toolVersion = "0.7.5.201505241946"
-}
-
-// Add JaCoCo test reporting to the test task
-// http://chrisjenx.com/gradle-robolectric-jacoco-dagger/
-task jacocoTestReport(type: JacocoReport, dependsOn: "connectedAndroidTest") {
-    description = "Generates Jacoco coverage reports: XML and HTML"
-    group = "Reporting"
-
-    def fileFilter = ['**/R.class', '**/R$*.class',
-                      '**/BuildConfig.*', '**/Manifest*.*',
-                      'android/**/*.*']
-    def debugTree = fileTree(dir:
-            "${project.buildDir}/intermediates/classes/debug",
-            excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    additionalSourceDirs = files([
-            "${buildDir}/generated/source/buildConfig/debug",
-            "${buildDir}/generated/source/r/debug"
-    ])
-    executionData = files('build/jacoco/connectedAndroidTest.exec')
-    //executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
-
-    reports {
-        xml {
-            enabled = true
-            destination = "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        }
-        csv.enabled false
-        html {
-            enabled = true
-            destination = "${project.buildDir}/reports/jacoco"
-        }
-    }
-}
-
-project.afterEvaluate {
-    def append = "append=true"
-    def destFile = "destfile=$buildDir/outputs/code-coverage/connected/coverage.ec"
-    testDebug.jvmArgs "-javaagent:$buildDir/intermediates/jacoco/jacocoagent.jar=$append,$destFile"
-
-    createDebugCoverageReport.dependsOn testDebug
 }
 
 dependencies {

@@ -1,4 +1,4 @@
-package com.modesteam.pardal.helpers;
+package com.modesteam.pardal.unit;
 
 import com.modesteam.pardal.Pardal;
 import com.modesteam.pardal.RankingCategory;
