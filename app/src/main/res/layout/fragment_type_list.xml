@@ -15,7 +15,8 @@
         android:id="@+id/searchEditText"
         android:drawableRight="@drawable/abc_ic_search_api_mtrl_alpha"
         android:background="#ff090909"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:textSize="40dp"/>
 
     <LinearLayout
         android:orientation="horizontal"
