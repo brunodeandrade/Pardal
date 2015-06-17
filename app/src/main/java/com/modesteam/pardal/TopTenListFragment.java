@@ -24,16 +24,12 @@ import com.modesteam.pardal.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TopTenFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class TopTenListFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Object bean;
+    private String fieldName;
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,11 +45,11 @@ public class TopTenFragment extends Fragment implements AbsListView.OnItemClickL
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static TopTenFragment newInstance(String param1, String param2) {
-        TopTenFragment fragment = new TopTenFragment();
+    public TopTenListFragment newInstance(Object object, String fieldName) {
+        TopTenListFragment fragment = new TopTenListFragment();
+        this.bean = object;
+        this.fieldName = fieldName;
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +58,7 @@ public class TopTenFragment extends Fragment implements AbsListView.OnItemClickL
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TopTenFragment() {
+    public TopTenListFragment() {
     }
 
     @Override
@@ -70,8 +66,7 @@ public class TopTenFragment extends Fragment implements AbsListView.OnItemClickL
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
 
         // TODO: Change Adapter to display your content
