@@ -3,7 +3,25 @@
     android:layout_height="match_parent" tools:context="com.modesteam.pardal.TypeRankFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <Button
+        android:layout_width="118dp"
+        android:layout_height="wrap_content"
+        android:text="Total de multas"
+        android:id="@+id/button_totalTickets"
+        android:layout_gravity="left|center_vertical" />
+
+    <Button
+        android:layout_width="124dp"
+        android:layout_height="wrap_content"
+        android:text="Velocidade Maxima"
+        android:id="@+id/button_maximumVelocity"
+        android:layout_gravity="center" />
+
+    <Button
+        android:layout_width="123dp"
+        android:layout_height="wrap_content"
+        android:text="Media Execedida"
+        android:id="@+id/button_averageExceded"
+        android:layout_gravity="right|center_vertical" />
 </FrameLayout>
