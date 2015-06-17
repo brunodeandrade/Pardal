@@ -2,7 +2,7 @@ package com.modesteam.pardal;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,10 @@ import android.widget.TextView;
 
 
 import com.modesteam.pardal.dummy.DummyContent;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A fragment representing a list of Items.
@@ -30,6 +34,7 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
     // TODO: Rename and change types of parameters
     private Object bean;
     private String fieldName;
+    private ArrayList<Object> arrayListRankingObject = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,9 +74,10 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
 
         }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        this.arrayListRankingObject = rankCategory(this.bean, this.fieldName);
+
+        mAdapter = new ArrayAdapter<Object>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, this.arrayListRankingObject);
     }
 
     @Override
@@ -112,7 +118,6 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
     }
 
@@ -129,19 +134,16 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+    private ArrayList<Object> rankCategory(Object bean, String fieldName){
+        RankingCategory rankingCategory = new RankingCategory();
+        ArrayList<Object> arrayListRankingObject = null;
+        try {
+            arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return arrayListRankingObject;
     }
-
 }
