@@ -179,7 +179,7 @@ public class Model implements ComparableCategory{
 
 	@Override
 	public String toString() {
-		return ""+name;
+		return name;
 	}
 
 }

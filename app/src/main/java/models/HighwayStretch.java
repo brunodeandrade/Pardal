@@ -178,6 +178,6 @@ public class HighwayStretch implements ComparableCategory{
 	@Override
 	public String toString() {
 		return "BR " + number
-				+ ", kilometro " + kilometer;
+				+ " - Km " + kilometer;
 	}
 }

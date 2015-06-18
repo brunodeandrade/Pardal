@@ -78,13 +78,6 @@ public class HighwayStretchDetailFragment extends Fragment {
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(0, HighwayStretchListFragment.newInstance("",""));
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
