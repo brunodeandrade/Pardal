@@ -2,6 +2,7 @@ package com.modesteam.pardal;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.modesteam.pardal.category.CategoryContent;
@@ -73,6 +75,11 @@ public class CategoryOptionsFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category_options, container, false);
         this.view = view;
+
+        Drawable drawable = getResources().getDrawable(R.drawable.mainbg);
+        RelativeLayout relative = (RelativeLayout) view.findViewById(R.id.category_options);
+        relative.setBackgroundDrawable(drawable);
+
         ImageButton bModel = (ImageButton) view.findViewById(R.id.bModel);
         ImageButton bBrand = (ImageButton) view.findViewById(R.id.bBrand);
         ImageButton bType = (ImageButton) view.findViewById(R.id.bType);
