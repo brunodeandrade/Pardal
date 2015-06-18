@@ -25,13 +25,17 @@ public class MainActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.center_title);
         setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getSupportFragmentManager();
         mTitle = getTitle();
 
+
         // Set up the drawer.
         fragmentManager.beginTransaction()
-                .replace(R.id.container, CategoryOptionsFragment.newInstance("", "")).addToBackStack("")
+                .replace(R.id.container, CategoryOptionsFragment.newInstance("", ""))
                 .commit();
     }
 
