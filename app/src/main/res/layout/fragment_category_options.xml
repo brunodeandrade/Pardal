@@ -13,7 +13,6 @@
         android:id="@+id/bBrand"
         android:layout_gravity="center_vertical"
         android:background="@layout/on_selector_brand"
-        android:focusableInTouchMode="true"
         android:layout_alignTop="@+id/bType"
         android:layout_alignLeft="@+id/bState"
         android:layout_alignStart="@+id/bState"
