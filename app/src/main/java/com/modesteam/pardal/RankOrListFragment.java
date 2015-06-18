@@ -1,6 +1,7 @@
     package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -120,7 +121,8 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         textView.setTypeface(typeface);
         TextView textView2= (TextView) view.findViewById(R.id.textViewTotal);
         textView2.setTypeface(typeface);
-
+        textView2.setTextColor(Color.argb(255, 51, 54, 148));
+        textView2.setTextSize(17);
         switch(mParam1) {
             case "1":
                 textView.setText("Estados Brasileiros");
