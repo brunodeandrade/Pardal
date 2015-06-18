@@ -217,21 +217,4 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         mListView.setOnItemClickListener(this);
         mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
     }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.reverse, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if(id == R.id.action_reverse){
-            onReverseClick();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
