@@ -43,4 +43,5 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2'
     // Set this dependency to build and run UI Automator tests
     //androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v14:2.1.0'
+    compile files('src/main/java/libraries/charts/mpandroidchartlibrary-2-1-0.jar')
 }
