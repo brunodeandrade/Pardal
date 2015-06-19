@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+
+import com.philjay.valuebar.ValueBar;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ import java.util.Objects;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TopTenListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class TopTenListFragment extends Fragment implements AbsListView.OnItemClickListener, com.philjay.valuebar.ValueBarSelectionListener {
 
 
     // TODO: Rename and change types of parameters
@@ -74,8 +77,8 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
 
         this.arrayListRankingObject = rankCategory(this.bean, this.fieldName);
 
-        mAdapter = new ArrayAdapter<Object>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, this.arrayListRankingObject);
+       // mAdapter = new ArrayAdapter<Object>(getActivity(),
+              //  android.R.layout.simple_list_item_1, android.R.id.text1, this.arrayListRankingObject);
     }
 
     @Override
@@ -84,12 +87,36 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+      //  mListView = (AbsListView) view.findViewById(android.R.id.list);
+      //  ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+     //   mListView.setOnItemClickListener(this);
 
+        ValueBar bar;
+        bar = (ValueBar) view.findViewById(R.id.valueBar);
+
+        bar.setMinMax(0, 1000);
+        bar.setInterval(1f); // interval in which can be selected
+        bar.setDrawBorder(false);
+        bar.setValueTextSize(14f);
+        bar.setMinMaxTextSize(14f);
+        //bar.setValueTextTypeface(...);
+        //bar.setMinMaxTextTypeface(...);
+        //bar.setOverlayColor(...);
+
+        // create your custom color formatter by using the BarColorFormatter interface
+        //bar.setColorFormatter(new RedToGreenFormatter());
+
+        // add your custom text formatter by using the ValueTextFormatter interface
+        //bar.setValueTextFormatter(...);
+
+        bar.setValue(800f); // display a value
+
+        // or animate from a specific value to a specific value
+        //bar.animate(from, to, animationDuration);
+
+        bar.setValueBarSelectionListener(this); // add a listener for callbacks when touching
         return view;
     }
 
@@ -143,5 +170,15 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
             e.printStackTrace();
         }
         return arrayListRankingObject;
+    }
+
+    @Override
+    public void onSelectionUpdate(float v, float v2, float v3, ValueBar valueBar) {
+
+    }
+
+    @Override
+    public void onValueSelected(float v, float v2, float v3, ValueBar valueBar) {
+
     }
 }
