@@ -103,13 +103,7 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
                 mParam1 = getArguments().getString(ARG_PARAM1);
                 mParam2 = getArguments().getString(ARG_PARAM2);
             }else{
-                try {
-                    city = City.get(getArguments().getInt(ARG_CITY));
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                city = City.get(getArguments().getInt(ARG_CITY));
             }
         }
 

@@ -20,13 +20,7 @@ public class StateContent {
     static {
         // Add all state items.
         ArrayList<State> allStates = null;
-        try {
-            allStates = State.getAll();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allStates = State.getAll();
         for (State state: allStates){
             addItem(state);
         }

@@ -77,19 +77,19 @@ public class State implements ComparableCategory {
         this.maximumMeasuredVelocity = maximumMeasuredVelocity;
     }
 	
-	public boolean save() throws ClassNotFoundException, SQLException, NotNullableException{
+	public boolean save() throws NotNullableException{
 		GenericPersistence gP = new GenericPersistence();
 		boolean result = gP.insertBean(this);
 		this.setId(State.last().getId());
 		return result;
 	}
 	
-	public static State get(int id) throws ClassNotFoundException, SQLException{
+	public static State get(int id) {
 		GenericPersistence gP = new GenericPersistence();
 		return (State) gP.selectBean(new State(id));
 	}
 	
-	public static ArrayList<State> getAll() throws ClassNotFoundException, SQLException{
+	public static ArrayList<State> getAll() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<State> states = new ArrayList<State>();
 		for (Object bean : gP.selectAllBeans(new State())) {
@@ -98,22 +98,22 @@ public class State implements ComparableCategory {
 		return states;
 	}
 	
-	public static int count() throws ClassNotFoundException, SQLException {
+	public static int count()  {
 		GenericPersistence gDB = new GenericPersistence();
 		return gDB.countBean(new State());
 	}
 	
-	public static State first() throws ClassNotFoundException, SQLException{
+	public static State first() {
 		GenericPersistence gP = new GenericPersistence();
 		return (State) gP.firstOrLastBean(new State() , false);
 	}
 	
-	public static State last() throws ClassNotFoundException, SQLException{
+	public static State last() {
 		GenericPersistence gP = new GenericPersistence();
 		return (State) gP.firstOrLastBean(new State() , true);
 	}
 	
-	public static ArrayList<State> getWhere(Condition condition) throws ClassNotFoundException, SQLException{
+	public static ArrayList<State> getWhere(Condition condition) {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<State> states = new ArrayList<State>();
 		for (Object bean : gP.selectWhere(new State(), condition)) {
@@ -122,12 +122,12 @@ public class State implements ComparableCategory {
 		return states;
 	}
 	
-	public boolean delete() throws ClassNotFoundException, SQLException {
+	public boolean delete()  {
 		GenericPersistence gP = new GenericPersistence();
 		return gP.deleteBean(this);
 	}
 	
-	public ArrayList<City> getCities() throws ClassNotFoundException, SQLException{
+	public ArrayList<City> getCities() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<City> beans = new ArrayList<City>();
 		for (Object bean : gP.selectMany(this, new City())) {

@@ -1,340 +1,326 @@
-package com.modesteam.pardal.instrumentation;
-
-import android.app.Activity;
-import android.app.Instrumentation;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.test.ActivityInstrumentationTestCase2;
-import android.test.TouchUtils;
-import android.view.View;
-import android.widget.AbsoluteLayout;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-
-import com.modesteam.pardal.BrandListFragment;
-import com.modesteam.pardal.HighwayStretchDetailFragment;
-import com.modesteam.pardal.MainActivity;
-import com.modesteam.pardal.Pardal;
-import com.modesteam.pardal.R;
-import com.modesteam.pardal.SplashScreenActivity;
-
-import junit.framework.Assert;
-
-import java.sql.SQLException;
-
-import models.Brand;
-import models.City;
-import models.HighwayStretch;
-import models.Model;
-import models.State;
-import models.Type;
-
-/**
- * Created by rafael on 05/05/15.
- */
-public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActivity> {
-
-    private MainActivity mActivity;
-    private Instrumentation mInstrumentation;
-
-    public TestMainActivity(){
-        super(MainActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        setActivityInitialTouchMode(false);
-        this.mActivity = getActivity();
-        this.mInstrumentation = getInstrumentation();
-        Pardal.getInstance().setDatabaseName("database.dev.sqlite3.db");
-    }
-
-
-    public Fragment openListFragment(int position){
-        this.mActivity = getActivity();
-        Fragment fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        mInstrumentation.waitForIdleSync();
-        ImageButton imageButton = (ImageButton) (fragment.getView().findViewById(position));
-        TouchUtils.clickView(this,imageButton);
-        fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        return  fragment;
-    }
-
-
-    public void testShouldShowStateList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bState);
-        openListFragment(R.id.bList);
-
-    }
-    public void testShouldShowCityList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bCity);
-        openListFragment(R.id.bList);
-    }
-    public void testShouldShowHighWayStretchList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bHighway);
-        openListFragment(R.id.bList);
-    }
-
-    public void testShouldShowModelList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bModel);
-        openListFragment(R.id.bList);
-    }
-
-    public void testShouldShowTypeList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bType);
-        openListFragment(R.id.bList);
-    }
-    public void testShouldShowBrandList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bBrand);
-        openListFragment(R.id.bList);
-    }
-
-    public Fragment openDetailFragment(int view){
-        this.mActivity = getActivity();
-        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        mInstrumentation.waitForIdleSync();
-        ListView listView2 = (ListView) ((LinearLayout) fragment3.getView().findViewById(view)).getChildAt(2);
-        TouchUtils.clickView(this,listView2.getChildAt(1));
-        return fragment3;
-    }
-    public void testShouldShowStateDetail(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bState);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id.state_list_view);
-        mInstrumentation.waitForIdleSync();
-    }
-    public void testShouldShowCityDetail(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bCity);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id.city_list_view);
-        mInstrumentation.waitForIdleSync();
-    }
-    public void testShouldShowHighWayStretchDetail(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bHighway);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id.highway_list_view);
-        mInstrumentation.waitForIdleSync();
-    }
-    public void testShouldShowModelDetail(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bModel);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id.model_list_view);
-    }
-    public void testShouldShowTypeDetail(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bType);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id.type_list_view);
-        mInstrumentation.waitForIdleSync();
-    }
-    public void testShouldShowBrandDetail(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bBrand);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. brand_list_view);
-        mInstrumentation.waitForIdleSync();
-    }
-
-
-    public void testShouldShowAbout(){
-        this.mActivity = getActivity();
-        mInstrumentation.waitForIdleSync();
-        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        ImageButton imageButton = (ImageButton) (fragment3.getView().findViewById(R.id.bAbout));
-        TouchUtils.clickView(this,imageButton);
-        mInstrumentation.waitForIdleSync();
-    }
-
-    public void testShouldFilterBrandList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bBrand);
-        openListFragment(R.id.bList);
-        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
-        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
-
-        TouchUtils.clickView(this,editText);
-        mInstrumentation.sendStringSync("asi");
-        assertEquals("ASIA",((Brand)listView.getAdapter().getItem(0)).getName());
-    }
-
-//    public void testShouldFilterTypeList(){
-//        this.mActivity = getActivity();
-//        openListFragment(R.id.bType);
-//        mInstrumentation.waitForIdleSync();
-//        openListFragment(R.id.bList);
-//        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-//        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
-//        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
-//        mInstrumentation.waitForIdleSync();
-//        TouchUtils.clickView(this,editText);
-//        mInstrumentation.waitForIdleSync();
-//        mInstrumentation.sendStringSync("car");
-//        mInstrumentation.waitForIdleSync();
-//        assertEquals("CARGA",((Type)listView.getAdapter().getItem(0)).getName());
+//package com.modesteam.pardal.instrumentation;
+//
+//import android.app.Activity;
+//import android.app.Instrumentation;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.view.GravityCompat;
+//import android.support.v4.widget.DrawerLayout;
+//import android.support.v7.app.ActionBar;
+//import android.support.v7.app.ActionBarActivity;
+//import android.support.v7.app.AppCompatActivity;
+//import android.test.ActivityInstrumentationTestCase2;
+//import android.test.TouchUtils;
+//import android.view.View;
+//import android.widget.AbsoluteLayout;
+//import android.widget.Button;
+//import android.widget.EditText;
+//import android.widget.FrameLayout;
+//import android.widget.ImageButton;
+//import android.widget.LinearLayout;
+//import android.widget.ListView;
+//
+//import com.modesteam.pardal.BrandListFragment;
+//import com.modesteam.pardal.HighwayStretchDetailFragment;
+//import com.modesteam.pardal.MainActivity;
+//import com.modesteam.pardal.Pardal;
+//import com.modesteam.pardal.R;
+//import com.modesteam.pardal.SplashScreenActivity;
+//
+//import junit.framework.Assert;
+//
+//import java.sql.SQLException;
+//
+//import models.Brand;
+//import models.City;
+//import models.HighwayStretch;
+//import models.Model;
+//import models.State;
+//import models.Type;
+//
+///**
+// * Created by rafael on 05/05/15.
+// */
+//public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActivity> {
+//
+//    private MainActivity mActivity;
+//    private Instrumentation mInstrumentation;
+//
+//    public TestMainActivity(){
+//        super(MainActivity.class);
 //    }
-//    public void testShouldFilterModelList(){
+//
+//    @Override
+//    protected void setUp() throws Exception {
+//        super.setUp();
+//        setActivityInitialTouchMode(false);
 //        this.mActivity = getActivity();
-//        openListFragment(R.id.bModel);
-//        openListFragment(R.id.bList);
-//        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-//        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
-//        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
-//        mInstrumentation.waitForIdleSync();
-//        TouchUtils.clickView(this,editText);
-//        mInstrumentation.waitForIdleSync();
-//        mInstrumentation.sendStringSync("13");
-//        mInstrumentation.waitForIdleSync();
-//        assertEquals("13.180",((Model)listView.getAdapter().getItem(0)).getName());
+//        this.mInstrumentation = getInstrumentation();
+//        Pardal.getInstance().setDatabaseName("database.dev.sqlite3.db");
 //    }
-
-//    public void testShouldFilterCityList(){
+//
+//
+//    public Fragment openListFragment(int position){
+//        this.mActivity = getActivity();
+//        Fragment fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        mInstrumentation.waitForIdleSync();
+//        ImageButton imageButton = (ImageButton) (fragment.getView().findViewById(position));
+//        TouchUtils.clickView(this,imageButton);
+//        fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        return  fragment;
+//    }
+//
+//
+//    public void testShouldShowStateList(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bState);
+//        openListFragment(R.id.bList);
+//
+//    }
+//    public void testShouldShowCityList(){
 //        this.mActivity = getActivity();
 //        openListFragment(R.id.bCity);
 //        openListFragment(R.id.bList);
-//        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-//        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
-//        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
-//        mInstrumentation.waitForIdleSync();
-//        TouchUtils.clickView(this,editText);
-//        mInstrumentation.waitForIdleSync();
-//        mInstrumentation.sendStringSync("abaete");
-//        assertEquals("ABAETE",((City)listView.getAdapter().getItem(0)).getName());
 //    }
-
-    public void testShouldFilterStateList(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bState);
-        openListFragment(R.id.bList);
-        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
-        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
-
-        TouchUtils.clickView(this,editText);
-        mInstrumentation.sendStringSync("ba");
-        mInstrumentation.waitForIdleSync();
-        assertEquals("BA",((State)listView.getAdapter().getItem(0)).getName());
-    }
-
-//    public void testShouldFilterHighwayStretchList(){
+//    public void testShouldShowHighWayStretchList(){
 //        this.mActivity = getActivity();
 //        openListFragment(R.id.bHighway);
+//        openListFragment(R.id.bList);
+//    }
+//
+//    public void testShouldShowModelList(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bModel);
+//        openListFragment(R.id.bList);
+//    }
+//
+//    public void testShouldShowTypeList(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bType);
+//        openListFragment(R.id.bList);
+//    }
+//    public void testShouldShowBrandList(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bBrand);
+//        openListFragment(R.id.bList);
+//    }
+//
+//    public Fragment openDetailFragment(int view){
+//        this.mActivity = getActivity();
+//        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        mInstrumentation.waitForIdleSync();
+//        ListView listView2 = (ListView) ((LinearLayout) fragment3.getView().findViewById(view)).getChildAt(2);
+//        TouchUtils.clickView(this,listView2.getChildAt(1));
+//        return fragment3;
+//    }
+//    public void testShouldShowStateDetail(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bState);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id.state_list_view);
+//        mInstrumentation.waitForIdleSync();
+//    }
+//    public void testShouldShowCityDetail(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bCity);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id.city_list_view);
+//        mInstrumentation.waitForIdleSync();
+//    }
+//    public void testShouldShowHighWayStretchDetail(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bHighway);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id.highway_list_view);
+//        mInstrumentation.waitForIdleSync();
+//    }
+//    public void testShouldShowModelDetail(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bModel);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id.model_list_view);
+//    }
+//    public void testShouldShowTypeDetail(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bType);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id.type_list_view);
+//        mInstrumentation.waitForIdleSync();
+//    }
+//    public void testShouldShowBrandDetail(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bBrand);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. brand_list_view);
+//        mInstrumentation.waitForIdleSync();
+//    }
+//
+//
+//    public void testShouldShowAbout(){
+//        this.mActivity = getActivity();
+//        mInstrumentation.waitForIdleSync();
+//        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        ImageButton imageButton = (ImageButton) (fragment3.getView().findViewById(R.id.bAbout));
+//        TouchUtils.clickView(this,imageButton);
+//        mInstrumentation.waitForIdleSync();
+//    }
+//
+//    public void testShouldFilterBrandList(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bBrand);
 //        openListFragment(R.id.bList);
 //        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
 //        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
 //        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
-//        mInstrumentation.waitForIdleSync();
+//
 //        TouchUtils.clickView(this,editText);
-//        mInstrumentation.waitForIdleSync();
-//        mInstrumentation.sendStringSync("22");
-//        mInstrumentation.waitForIdleSync();
-//        assertEquals("010",((HighwayStretch)listView.getAdapter().getItem(0)).getNumber());
-//        assertEquals("229",((HighwayStretch)listView.getAdapter().getItem(0)).getKilometer());
+//        mInstrumentation.sendStringSync("asi");
+//        assertEquals("ASIA",((Brand)listView.getAdapter().getItem(0)).getName());
 //    }
-
-    public Fragment openCompareFragment(int view){
-        this.mActivity = getActivity();
-        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        mInstrumentation.waitForIdleSync();
-        Button compareButton = (Button) (fragment3.getView().findViewById(R.id.compareButton));
-        TouchUtils.clickView(this,compareButton);
-        Fragment fragment4 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
-        ListView listView = (ListView) ((LinearLayout) fragment4.getView().findViewById(view)).getChildAt(2);
-        TouchUtils.clickView(this,listView.getChildAt(1));
-
-        return fragment3;
-    }
-
-    public void testShouldOpenBrandCompareFragment(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bBrand);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. brand_list_view);
-        openCompareFragment(R.id.brand_list_view);
-    }
-    public void testShouldOpenCityCompareFragment(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bCity);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. city_list_view);
-        openCompareFragment(R.id.city_list_view);
-    }
-    public void testShouldOpenHighwayStretchCompareFragment(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bHighway);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. highway_list_view);
-        openCompareFragment(R.id.highway_list_view);
-    }
-    public void testShouldOpenModelCompareFragment(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bModel);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. model_list_view);
-        openCompareFragment(R.id.model_list_view);
-    }
-    public void testShouldOpenStateCompareFragment(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bState);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. state_list_view);
-        openCompareFragment(R.id.state_list_view);
-    }
-    public void testShouldOpenTypeCompareFragment(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bType);
-        openListFragment(R.id.bList);
-        openDetailFragment(R.id. type_list_view);
-        openCompareFragment(R.id.type_list_view);
-    }
-
-    //Make for all the other categories
-    public void testShouldOnAttachThrowException(){
-        this.mActivity = getActivity();
-        Fragment fragment = HighwayStretchDetailFragment.newInstance(new HighwayStretch());
-        ActionBarActivity activity = new ActionBarActivity();
-        activity.getSupportFragmentManager().beginTransaction().attach(fragment);
-        try{
-            fragment.onAttach(activity);
-            Assert.fail("Should have thrown ClassCastException");
-        }
-        catch (ClassCastException c){
-            assertNotNull(c);
-        }
-    }
-
-    public void testShouldThrowExceptionWhenBrandIdIsNegative(){
-        this.mActivity = getActivity();
-        openListFragment(R.id.bBrand);
-        BrandListFragment fragment = (BrandListFragment) openListFragment(R.id.bList);
-        fragment.newInstance(new Brand(-100));
-        try{
-            fragment.onCreate(fragment.getArguments());
-            Assert.fail("Should have thrown SQL Exception");
-            throw new SQLException();
-        }
-        catch (SQLException c){
-            assertNotNull(c);
-        }
-    }
-
-
-}
+//
+////    public void testShouldFilterTypeList(){
+////        this.mActivity = getActivity();
+////        openListFragment(R.id.bType);
+////        mInstrumentation.waitForIdleSync();
+////        openListFragment(R.id.bList);
+////        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+////        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
+////        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
+////        mInstrumentation.waitForIdleSync();
+////        TouchUtils.clickView(this,editText);
+////        mInstrumentation.waitForIdleSync();
+////        mInstrumentation.sendStringSync("car");
+////        mInstrumentation.waitForIdleSync();
+////        assertEquals("CARGA",((Type)listView.getAdapter().getItem(0)).getName());
+////    }
+////    public void testShouldFilterModelList(){
+////        this.mActivity = getActivity();
+////        openListFragment(R.id.bModel);
+////        openListFragment(R.id.bList);
+////        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+////        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
+////        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
+////        mInstrumentation.waitForIdleSync();
+////        TouchUtils.clickView(this,editText);
+////        mInstrumentation.waitForIdleSync();
+////        mInstrumentation.sendStringSync("13");
+////        mInstrumentation.waitForIdleSync();
+////        assertEquals("13.180",((Model)listView.getAdapter().getItem(0)).getName());
+////    }
+//
+////    public void testShouldFilterCityList(){
+////        this.mActivity = getActivity();
+////        openListFragment(R.id.bCity);
+////        openListFragment(R.id.bList);
+////        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+////        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
+////        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
+////        mInstrumentation.waitForIdleSync();
+////        TouchUtils.clickView(this,editText);
+////        mInstrumentation.waitForIdleSync();
+////        mInstrumentation.sendStringSync("abaete");
+////        assertEquals("ABAETE",((City)listView.getAdapter().getItem(0)).getName());
+////    }
+//
+//    public void testShouldFilterStateList(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bState);
+//        openListFragment(R.id.bList);
+//        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
+//        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
+//
+//        TouchUtils.clickView(this,editText);
+//        mInstrumentation.sendStringSync("ba");
+//        mInstrumentation.waitForIdleSync();
+//        assertEquals("BA",((State)listView.getAdapter().getItem(0)).getName());
+//    }
+//
+////    public void testShouldFilterHighwayStretchList(){
+////        this.mActivity = getActivity();
+////        openListFragment(R.id.bHighway);
+////        openListFragment(R.id.bList);
+////        Fragment fragment = mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+////        EditText editText = (EditText) fragment.getView().findViewById(R.id.searchEditText);
+////        ListView listView = (ListView) fragment.getView().findViewById(android.R.id.list);
+////        mInstrumentation.waitForIdleSync();
+////        TouchUtils.clickView(this,editText);
+////        mInstrumentation.waitForIdleSync();
+////        mInstrumentation.sendStringSync("22");
+////        mInstrumentation.waitForIdleSync();
+////        assertEquals("010",((HighwayStretch)listView.getAdapter().getItem(0)).getNumber());
+////        assertEquals("229",((HighwayStretch)listView.getAdapter().getItem(0)).getKilometer());
+////    }
+//
+//    public Fragment openCompareFragment(int view){
+//        this.mActivity = getActivity();
+//        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        mInstrumentation.waitForIdleSync();
+//        Button compareButton = (Button) (fragment3.getView().findViewById(R.id.compareButton));
+//        TouchUtils.clickView(this,compareButton);
+//        Fragment fragment4 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+//        ListView listView = (ListView) ((LinearLayout) fragment4.getView().findViewById(view)).getChildAt(2);
+//        TouchUtils.clickView(this,listView.getChildAt(1));
+//
+//        return fragment3;
+//    }
+//
+//    public void testShouldOpenBrandCompareFragment(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bBrand);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. brand_list_view);
+//        openCompareFragment(R.id.brand_list_view);
+//    }
+//    public void testShouldOpenCityCompareFragment(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bCity);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. city_list_view);
+//        openCompareFragment(R.id.city_list_view);
+//    }
+//    public void testShouldOpenHighwayStretchCompareFragment(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bHighway);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. highway_list_view);
+//        openCompareFragment(R.id.highway_list_view);
+//    }
+//    public void testShouldOpenModelCompareFragment(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bModel);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. model_list_view);
+//        openCompareFragment(R.id.model_list_view);
+//    }
+//    public void testShouldOpenStateCompareFragment(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bState);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. state_list_view);
+//        openCompareFragment(R.id.state_list_view);
+//    }
+//    public void testShouldOpenTypeCompareFragment(){
+//        this.mActivity = getActivity();
+//        openListFragment(R.id.bType);
+//        openListFragment(R.id.bList);
+//        openDetailFragment(R.id. type_list_view);
+//        openCompareFragment(R.id.type_list_view);
+//    }
+//
+//    //Make for all the other categories
+////    public void testShouldOnAttachThrowException(){
+////        this.mActivity = getActivity();
+////        Fragment fragment = HighwayStretchDetailFragment.newInstance(new HighwayStretch());
+////        AppCompatActivity activity = new AppCompatActivity();
+////        activity.getSupportFragmentManager().beginTransaction().attach(fragment);
+////        try{
+////            fragment.onAttach(activity);
+////            Assert.fail("Should have thrown ClassCastException");
+////        }
+////        catch (ClassCastException c){
+////            assertNotNull(c);
+////        }
+////    }
+//
+//
+//}

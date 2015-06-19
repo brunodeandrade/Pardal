@@ -97,12 +97,6 @@ public class GenericPersistence extends Database {
         return (result != -1) ? true : false;
     }
 
-    public boolean insertOne(Object bean, Object one) {
-
-        long result = this.pst.executeInsert();
-        return (result == 1) ? true : false;
-    }
-
     public boolean insertMany(Object mainBean, Object linkedBean) {
         this.openConnection();
         boolean result = insertMany(mainBean, linkedBean, this.database);
@@ -578,17 +572,6 @@ public class GenericPersistence extends Database {
         result.put(PARAMETERS, parameterString);
 
         return result;
-    }
-
-    public static String join(ArrayList<String> strings, String joiner) {
-        String resultString = null;
-        for (int i = 0; i < strings.size(); i++) {
-            resultString += strings.get(i);
-            if (i < strings.size() - 1) {
-                resultString += joiner;
-            }
-        }
-        return resultString;
     }
 
     public static ArrayList<Method> getGetters(Object bean, ArrayList<Field> fields) {

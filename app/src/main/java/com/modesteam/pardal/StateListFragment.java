@@ -96,14 +96,9 @@ public class StateListFragment extends Fragment implements AbsListView.OnItemCli
                 mParam1 = getArguments().getString(ARG_PARAM1);
                 mParam2 = getArguments().getString(ARG_PARAM2);
             }else{
-                try {
-                    state = State.get(getArguments().getInt(ARG_STATE));
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                state = State.get(getArguments().getInt(ARG_STATE));
             }
+
         }
 
         // TODO: Change Adapter to display your content

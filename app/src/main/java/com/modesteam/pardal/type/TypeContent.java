@@ -28,13 +28,7 @@ public class TypeContent {
     static {
         // Add all type items.
         ArrayList<Type> allTypes = null;
-        try {
-            allTypes = Type.getAll();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allTypes = Type.getAll();
         for (Type type: allTypes){
             addItem(type);
         }

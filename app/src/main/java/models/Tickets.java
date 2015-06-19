@@ -117,19 +117,19 @@ public class Tickets {
 		this.idModel = idModel;
 	}
 	
-	public boolean save() throws ClassNotFoundException, SQLException, NotNullableException{
+	public boolean save() throws NotNullableException{
 		GenericPersistence gP = new GenericPersistence();
 		boolean result = gP.insertBean(this);
 		this.setId(Tickets.last().getId());
 		return result;
 	}
 	
-	public static Tickets get(int id) throws ClassNotFoundException, SQLException{
+	public static Tickets get(int id) {
 		GenericPersistence gP = new GenericPersistence();
 		return (Tickets) gP.selectBean(new Tickets(id));
 	}
 	
-	public static ArrayList<Tickets> getAll() throws ClassNotFoundException, SQLException{
+	public static ArrayList<Tickets> getAll() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<Tickets> tickets = new ArrayList<Tickets>();
 		for (Object bean : gP.selectAllBeans(new Tickets())) {
@@ -138,22 +138,22 @@ public class Tickets {
 		return tickets;
 	}
 	
-	public static int count() throws ClassNotFoundException, SQLException {
+	public static int count()  {
 		GenericPersistence gDB = new GenericPersistence();
 		return gDB.countBean(new Tickets());
 	}
 	
-	public static Tickets first() throws ClassNotFoundException, SQLException{
+	public static Tickets first() {
 		GenericPersistence gP = new GenericPersistence();
 		return (Tickets) gP.firstOrLastBean(new Tickets() , false);
 	}
 	
-	public static Tickets last() throws ClassNotFoundException, SQLException{
+	public static Tickets last() {
 		GenericPersistence gP = new GenericPersistence();
 		return (Tickets) gP.firstOrLastBean(new Tickets() , true);
 	}
 	
-	public static ArrayList<Tickets> getWhere(Condition condition) throws ClassNotFoundException, SQLException{
+	public static ArrayList<Tickets> getWhere(Condition condition) {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<Tickets> tickets = new ArrayList<Tickets>();
 		for (Object bean : gP.selectWhere(new Tickets(), condition)) {
@@ -162,17 +162,17 @@ public class Tickets {
 		return tickets;
 	}
 
-	public boolean delete() throws ClassNotFoundException, SQLException {
+	public boolean delete()  {
 		GenericPersistence gP = new GenericPersistence();
 		return gP.deleteBean(this);
 	}
 
-	public Model getModel() throws ClassNotFoundException, SQLException{
+	public Model getModel() {
 		GenericPersistence gP = new GenericPersistence();
 		return (Model) gP.selectOne(this, new Model());
 	}
 	
-	public HighwayStretch getHighwayStretch() throws ClassNotFoundException, SQLException{
+	public HighwayStretch getHighwayStretch() {
 		GenericPersistence gP = new GenericPersistence();
 		return (HighwayStretch) gP.selectOne(this, new HighwayStretch());
 	}

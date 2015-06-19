@@ -101,12 +101,6 @@ public class ModelDetailFragment extends Fragment {
                 modelDetail = Model.get(getArguments().getInt(ID_MODEL));
             }
 
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
         }catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());

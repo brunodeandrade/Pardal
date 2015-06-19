@@ -113,12 +113,6 @@ public class BrandDetailFragment extends Fragment {
         } catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());
-        }catch (ClassNotFoundException e) {
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        } catch (SQLException e) {
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
         }
 
         double averageExceded = brandDetail.getAverageExceded(), maximumMeasuredVelocity=brandDetail.getMaximumMeasuredVelocity();
