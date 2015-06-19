@@ -187,8 +187,8 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         mListener = null;
     }
 
-        @Override
-        public void onClick(View view) {
+    @Override
+    public void onClick(View view) {
             switch(view.getId()){
                 case R.id.bRank:
                     switch(mParam1){
@@ -212,7 +212,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                             break;
 
                     }
-                    rankCategory(bean);
+                    mListener.onFragmentInteraction(0, TypeRankFragment.newInstance(bean));
                     break;
                 case R.id.bList:
                     switch(mParam1){
@@ -237,20 +237,4 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                     break;
             }
         }
-
-     private void rankCategory(Object bean) {
-         RankingCategory rankingCategory = new RankingCategory();
-         String fieldsNamesArray[] = {"totalTickets", "averageExceded", "maximumMeasuredVelocity"};
-         ArrayList<Object> arrayListRankingObject = null;
-
-         for (int i = 0; i < fieldsNamesArray.length; i++) {
-             try {
-                 arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldsNamesArray[i].toString());
-             } catch (SQLException e) {
-                 e.printStackTrace();
-             } catch (ClassNotFoundException e) {
-                 e.printStackTrace();
-             }
-         }
-     }
 }
