@@ -13,8 +13,6 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
-import com.modesteam.pardal.dummy.DummyContent;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -50,10 +48,8 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public TopTenListFragment newInstance(Object object, String fieldName) {
-        TopTenListFragment fragment = new TopTenListFragment();
-        this.bean = object;
-        this.fieldName = fieldName;
+    public static TopTenListFragment newInstance(Object object, String fieldName) {
+        TopTenListFragment fragment = new TopTenListFragment(object, fieldName);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -63,7 +59,9 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TopTenListFragment() {
+    public TopTenListFragment(Object object, String fieldName) {
+        this.bean = object;
+        this.fieldName = fieldName;
     }
 
     @Override

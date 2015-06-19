@@ -189,32 +189,32 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
         mListener = null;
     }
 
-        @Override
-        public void onClick(View view) {
+    @Override
+    public void onClick(View view) {
             switch(view.getId()){
                 case R.id.bRank:
-//                    switch(mParam1){
-//                        case "1":
-//                            bean = new State();
-//                            break;
-//                        case "2":
-//                            bean = new City();
-//                            break;
-//                        case "3":
-//                            bean = new HighwayStretch();
-//                            break;
-//                        case "4":
-//                            bean = new Model();
-//                            break;
-//                        case "5":
-//                            bean = new Type();
-//                            break;
-//                        case "6":
-//                            bean = new Brand();
-//                            break;
-//
-//                    } //Nothing to do yet
-//                    rankCategory(bean);
+                    switch(mParam1){
+                        case "1":
+                            bean = new State();
+                            break;
+                        case "2":
+                            bean = new City();
+                            break;
+                        case "3":
+                            bean = new HighwayStretch();
+                            break;
+                        case "4":
+                            bean = new Model();
+                            break;
+                        case "5":
+                            bean = new Type();
+                            break;
+                        case "6":
+                            bean = new Brand();
+                            break;
+
+                    }
+                    mListener.onFragmentInteraction(0, TypeRankFragment.newInstance(bean));
                     break;
                 case R.id.bList:
                     switch(mParam1){
@@ -239,20 +239,4 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                     break;
             }
         }
-
-     private void rankCategory(Object bean) {
-         RankingCategory rankingCategory = new RankingCategory();
-         String fieldsNamesArray[] = {"totalTickets", "averageExceded", "maximumMeasuredVelocity"};
-         ArrayList<Object> arrayListRankingObject = null;
-
-         for (int i = 0; i < fieldsNamesArray.length; i++) {
-             try {
-                 arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldsNamesArray[i].toString());
-             } catch (SQLException e) {
-                 e.printStackTrace();
-             } catch (ClassNotFoundException e) {
-                 e.printStackTrace();
-             }
-         }
-     }
 }
