@@ -15,6 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/button_maximumVelocity"
         android:layout_toStartOf="@+id/button_maximumVelocity"
+        android:background="@layout/on_selector_rank_total"
         android:layout_marginBottom="130dp" />
 
     <ImageButton
@@ -24,7 +25,8 @@
         android:layout_gravity="center"
         android:layout_alignBottom="@+id/button_totalTickets"
         android:layout_alignLeft="@+id/button_averageExceded"
-        android:layout_alignStart="@+id/button_averageExceded" />
+        android:layout_alignStart="@+id/button_averageExceded"
+        android:background="@layout/on_selector_rank_max"/>
 
     <ImageButton
         android:layout_width="112dp"
@@ -33,6 +35,7 @@
         android:layout_gravity="right|center_vertical"
         android:layout_above="@+id/button_totalTickets"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="52dp" />
+        android:layout_marginBottom="52dp"
+        android:background="@layout/on_selector_rank_avg"/>
     </RelativeLayout>
 </FrameLayout>
