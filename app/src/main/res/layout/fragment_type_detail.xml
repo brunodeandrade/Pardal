@@ -98,9 +98,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total de Modelos"
         android:id="@+id/textViewExtraText"
-        android:layout_marginLeft="118dp"
-        android:layout_marginTop="361dp"
+        android:layout_marginTop="20dp"
         android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewTotalTickets"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -114,16 +114,30 @@
         android:layout_centerHorizontal="true"/>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="50dp"
         android:id="@+id/compareButton"
         android:background="@layout/on_selector_compare"
+        android:layout_above="@+id/textViewCompare"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold|italic"
+        android:text="Comparar"
+        android:id="@+id/textViewCompare"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/textViewName"
-        android:layout_alignEnd="@+id/textViewName"
-        android:layout_alignLeft="@+id/textViewName"
-        android:layout_alignStart="@+id/textViewName"
-        android:layout_below="@+id/textViewTotalModels" />
+        android:layout_centerHorizontal="true" />
 
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descrição"
+        android:id="@+id/textViewDesc"
+        android:layout_x="16dp"
+        android:layout_y="414dp"
+        android:layout_above="@+id/compareButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
