@@ -2,8 +2,13 @@ package com.modesteam.pardal;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.AvoidXfermode;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +19,27 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
-import com.philjay.valuebar.ValueBar;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.Highlight;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.DuplicateFormatFlagsException;
 import java.util.Objects;
+
+import models.Brand;
+import models.Model;
 
 /**
  * A fragment representing a list of Items.
@@ -29,13 +50,17 @@ import java.util.Objects;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TopTenListFragment extends Fragment implements AbsListView.OnItemClickListener, com.philjay.valuebar.ValueBarSelectionListener {
+public class TopTenListFragment extends Fragment implements AbsListView.OnItemClickListener, OnChartValueSelectedListener {
 
 
     // TODO: Rename and change types of parameters
+
+
     private Object bean;
     private String fieldName;
     private ArrayList<Object> arrayListRankingObject = null;
+    private Typeface typeface;
+    private int[] arrayIndexChart = new int[10];
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,9 +101,10 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         }
 
         this.arrayListRankingObject = rankCategory(this.bean, this.fieldName);
+        this.typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
-       // mAdapter = new ArrayAdapter<Object>(getActivity(),
-              //  android.R.layout.simple_list_item_1, android.R.id.text1, this.arrayListRankingObject);
+//        mAdapter = new ArrayAdapter<Object>(getActivity(),
+//                android.R.layout.simple_list_item_1, android.R.id.text1, this.arrayListRankingObject);
     }
 
     @Override
@@ -87,36 +113,58 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Set the adapter
-      //  mListView = (AbsListView) view.findViewById(android.R.id.list);
-      //  ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+//        mListView = (AbsListView) view.findViewById(android.R.id.list);
+//        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+//        mListView.setOnItemClickListener(this);
 
-        // Set OnItemClickListener so we can be notified on item clicks
-     //   mListView.setOnItemClickListener(this);
+        HorizontalBarChart chart = (HorizontalBarChart) view.findViewById(R.id.chartRanking);
 
-        ValueBar bar;
-        bar = (ValueBar) view.findViewById(R.id.valueBar);
+        chart.setOnChartValueSelectedListener(this);
+        chart.setDrawBarShadow(false);
+        chart.setDrawValueAboveBar(true);
+        chart.setDescription("");
+        chart.setPinchZoom(false);
+        chart.setDrawGridBackground(false);
+        chart.setScaleEnabled(false);
+        // mChart.setHighlightEnabled(false);
+        // mChart.setDrawXLabels(false);
+        // mChart.setDrawYLabels(false);
 
-        bar.setMinMax(0, 1000);
-        bar.setInterval(1f); // interval in which can be selected
-        bar.setDrawBorder(false);
-        bar.setValueTextSize(14f);
-        bar.setMinMaxTextSize(14f);
-        //bar.setValueTextTypeface(...);
-        //bar.setMinMaxTextTypeface(...);
-        //bar.setOverlayColor(...);
+        XAxis xl = chart.getXAxis();
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+        xl.setDrawAxisLine(true);
+        xl.setDrawGridLines(true);
+        xl.setGridLineWidth(0.3f);
+        xl.setTextSize(12f);
+        xl.setTextColor(Color.BLACK);
+        //xl.setTypeface(typeface);
 
-        // create your custom color formatter by using the BarColorFormatter interface
-        //bar.setColorFormatter(new RedToGreenFormatter());
+        YAxis yl = chart.getAxisLeft();
+        yl.setDrawAxisLine(true);
+        yl.setDrawGridLines(true);
+        yl.setGridLineWidth(0.3f);
+        //yl.setTypeface(typeface);
+        //yl.setTextSize();
+        //yl.setTextColor(Color.GREEN);
 
-        // add your custom text formatter by using the ValueTextFormatter interface
-        //bar.setValueTextFormatter(...);
+        YAxis yr = chart.getAxisRight();
+        yr.setDrawAxisLine(true);
+        yr.setDrawGridLines(false);
+        //yr.setTypeface(typeface);
+        //yr.setTextSize();
+       // yr.setTextColor(Color.RED);
 
-        bar.setValue(800f); // display a value
+        setData(chart);
+        chart.animateY(2500);
 
-        // or animate from a specific value to a specific value
-        //bar.animate(from, to, animationDuration);
+        // setting data
+        Legend l = chart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setFormSize(8f);
+        l.setXEntrySpace(4f);
+        //l.setTypeface(typeface);
+        // mChart.setDrawLegend(false);
 
-        bar.setValueBarSelectionListener(this); // add a listener for callbacks when touching
         return view;
     }
 
@@ -172,13 +220,49 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         return arrayListRankingObject;
     }
 
-    @Override
-    public void onSelectionUpdate(float v, float v2, float v3, ValueBar valueBar) {
+    private void setData(HorizontalBarChart horizontalBarChart) {
 
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i=9; i>=0; i--){
+            xVals.add(this.arrayListRankingObject.get(i).toString());
+        }
+
+
+        ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
+
+        int indexChart = 9;
+        for (int i = 0; i<10 ; i++) {
+            BarEntry v1e1 = new BarEntry(((Model)this.arrayListRankingObject.get(i)).getMaximumMeasuredVelocity().floatValue(), indexChart);
+            yVals.add(v1e1);
+            this.arrayIndexChart[i] = indexChart;
+            indexChart--;
+        }
+
+
+        BarDataSet set1 = new BarDataSet(yVals, this.fieldName);
+        set1.setBarSpacePercent(35f);
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(12f);
+        //data.setValueTypeface(typeface);
+
+        horizontalBarChart.setData(data);
     }
 
     @Override
-    public void onValueSelected(float v, float v2, float v3, ValueBar valueBar) {
+    public void onValueSelected(Entry entry, int i, Highlight highlight) {
+        if (entry == null) {
+            return;
+        }
+        Model model = (Model)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+        mListener.onFragmentInteraction(0,ModelDetailFragment.newInstance(model));
+    }
+
+    @Override
+    public void onNothingSelected() {
 
     }
 }
