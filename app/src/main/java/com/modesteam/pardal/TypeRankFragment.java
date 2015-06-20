@@ -1,6 +1,7 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class TypeRankFragment extends Fragment implements View.OnClickListener{
@@ -49,6 +51,15 @@ public class TypeRankFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_type_rank, container, false);
+
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+
+        TextView textViewTickets = (TextView) view.findViewById(R.id.textViewTickets);
+        textViewTickets.setTypeface(typeface);
+        TextView textViewVelocity = (TextView) view.findViewById(R.id.textViewVelocity);
+        textViewVelocity.setTypeface(typeface);
+        TextView textViewAverage = (TextView) view.findViewById(R.id.textViewAverage);
+        textViewAverage.setTypeface(typeface);
         ImageButton imageButton = (ImageButton) view.findViewById(R.id.button_totalTickets);
         imageButton.setOnClickListener(this);
         ImageButton imageButton2 = (ImageButton) view.findViewById(R.id.button_averageExceded);
