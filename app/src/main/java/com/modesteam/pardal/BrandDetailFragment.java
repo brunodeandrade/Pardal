@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -141,7 +142,7 @@ public class BrandDetailFragment extends Fragment {
         textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
         textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
-        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mListener.onFragmentInteraction(brandDetail.getId(),BrandListFragment.newInstance(brandDetail));
