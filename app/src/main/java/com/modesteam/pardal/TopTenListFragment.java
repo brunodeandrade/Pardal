@@ -59,6 +59,7 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
     private Object bean;
     private String fieldName;
     private ArrayList<Object> arrayListRankingObject = null;
+    private float[] arrayValuesListRankingObject;
     private Typeface typeface;
     private int[] arrayIndexChart = new int[10];
 
@@ -100,7 +101,7 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
 
         }
 
-        this.arrayListRankingObject = rankCategory(this.bean, this.fieldName);
+        rankCategory(this.bean, this.fieldName);
         this.typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
 //        mAdapter = new ArrayAdapter<Object>(getActivity(),
@@ -207,32 +208,35 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         }
     }
 
-    private ArrayList<Object> rankCategory(Object bean, String fieldName){
+    private void rankCategory(Object bean, String fieldName){
         RankingCategory rankingCategory = new RankingCategory();
         ArrayList<Object> arrayListRankingObject = null;
+        float[] arrayValuesListRankingObject = null;
         try {
             arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldName);
+            arrayValuesListRankingObject = rankingCategory.getValuesRankCategoryWithField(arrayListRankingObject, fieldName, bean);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return arrayListRankingObject;
+        this.arrayListRankingObject = arrayListRankingObject;
+        this.arrayValuesListRankingObject = arrayValuesListRankingObject;
     }
 
     private void setData(HorizontalBarChart horizontalBarChart) {
 
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int i=9; i>=0; i--){
+        for (int i=this.arrayListRankingObject.size()-1; i>=0; i--){
             xVals.add(this.arrayListRankingObject.get(i).toString());
         }
 
 
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
 
-        int indexChart = 9;
-        for (int i = 0; i<10 ; i++) {
-            BarEntry v1e1 = new BarEntry(((Model)this.arrayListRankingObject.get(i)).getMaximumMeasuredVelocity().floatValue(), indexChart);
+        int indexChart = this.arrayListRankingObject.size()-1;
+        for (int i = 0; i<this.arrayListRankingObject.size() ; i++) {
+            BarEntry v1e1 = new BarEntry(this.arrayValuesListRankingObject[i], indexChart);
             yVals.add(v1e1);
             this.arrayIndexChart[i] = indexChart;
             indexChart--;
