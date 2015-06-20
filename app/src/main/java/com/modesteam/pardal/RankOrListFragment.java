@@ -212,7 +212,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                             break;
 
                     }
-                    mListener.onFragmentInteraction(0, TypeRankFragment.newInstance(bean));
+                    mListener.onFragmentInteraction(0, TypeRankFragment.newInstance(bean, mParam1));
                     break;
                 case R.id.bList:
                     switch(mParam1){

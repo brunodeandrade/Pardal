@@ -14,16 +14,19 @@ public class TypeRankFragment extends Fragment implements View.OnClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
 
     // TODO: Rename and change types of parameters
     private String fieldName;
     private Object bean;
+    private String mParam1;
 
     private OnFragmentInteractionListener mListener;
 
-    public static TypeRankFragment newInstance(Object object) {
+    public static TypeRankFragment newInstance(Object object, String param1) {
         TypeRankFragment fragment = new TypeRankFragment(object);
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,7 +39,7 @@ public class TypeRankFragment extends Fragment implements View.OnClickListener{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-
+            mParam1 = getArguments().getString(ARG_PARAM1);
         }
     }
 
@@ -76,7 +79,6 @@ public class TypeRankFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         String fieldName = null;
-        System.out.println("onClinkkkkk");
         switch (view.getId()){
             case R.id.button_totalTickets:
                 fieldName = "totalTickets";
@@ -93,7 +95,7 @@ public class TypeRankFragment extends Fragment implements View.OnClickListener{
         }
 
         if (fieldName != ""){
-            mListener.onFragmentInteraction(0,TopTenListFragment.newInstance(this.bean,fieldName));
+            mListener.onFragmentInteraction(0,TopTenListFragment.newInstance(this.bean,fieldName,mParam1));
         }
     }
 }
