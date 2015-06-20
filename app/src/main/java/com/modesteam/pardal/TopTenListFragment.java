@@ -39,7 +39,11 @@ import java.util.DuplicateFormatFlagsException;
 import java.util.Objects;
 
 import models.Brand;
+import models.City;
+import models.HighwayStretch;
 import models.Model;
+import models.State;
+import models.Type;
 
 /**
  * A fragment representing a list of Items.
@@ -55,6 +59,9 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
 
     // TODO: Rename and change types of parameters
 
+    private static final String ARG_PARAM1 = "param1";
+
+    private String mParam1;
 
     private Object bean;
     private String fieldName;
@@ -77,9 +84,10 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static TopTenListFragment newInstance(Object object, String fieldName) {
+    public static TopTenListFragment newInstance(Object object, String fieldName, String param1) {
         TopTenListFragment fragment = new TopTenListFragment(object, fieldName);
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,7 +106,7 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-
+            mParam1 = getArguments().getString(ARG_PARAM1);
         }
 
         rankCategory(this.bean, this.fieldName);
@@ -261,8 +269,34 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         if (entry == null) {
             return;
         }
-        Model model = (Model)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
-        mListener.onFragmentInteraction(0,ModelDetailFragment.newInstance(model));
+        switch(mParam1){
+            case "1":
+                State state = (State)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+                mListener.onFragmentInteraction(0,StateDetailFragment.newInstance(state));
+                break;
+            case "2":
+                City city = (City)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+                mListener.onFragmentInteraction(0,CityDetailFragment.newInstance(city));
+                break;
+            case "3":
+                HighwayStretch highwayStretch = (HighwayStretch)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+                mListener.onFragmentInteraction(0,HighwayStretchDetailFragment.newInstance(highwayStretch));
+                break;
+            case "4":
+                Model model = (Model)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+                mListener.onFragmentInteraction(0,ModelDetailFragment.newInstance(model));
+                break;
+            case "5":
+                Type type = (Type)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+                mListener.onFragmentInteraction(0,TypeDetailFragment.newInstance(type));
+                break;
+            case "6":
+                Brand brand = (Brand)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+                mListener.onFragmentInteraction(0,BrandDetailFragment.newInstance(brand));
+                break;
+        }
+
+
     }
 
     @Override
