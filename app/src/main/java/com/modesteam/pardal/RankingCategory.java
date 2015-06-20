@@ -16,6 +16,8 @@ import java.util.Objects;
 import annotations.Entity;
 import helpers.Condition;
 import helpers.GenericPersistence;
+import models.Brand;
+import models.City;
 import models.HighwayStretch;
 import models.Model;
 import models.State;
@@ -30,14 +32,112 @@ public class RankingCategory {
 
     private GenericPersistence gp;
     private ArrayList<Object> objectArrayList;
+    private float[] valuesObjectArrayList;
 
     public ArrayList<Object> rankCategoryWithField (Object bean, String fieldName) throws SQLException, ClassNotFoundException{
 
         gp = new GenericPersistence();
         objectArrayList = gp.selectBeansOrderByField(bean,fieldName);
-        System.out.println(objectArrayList.toString());
-
+        valuesObjectArrayList = new float[objectArrayList.size()];
         return objectArrayList;
+    }
+
+    public float[] getValuesRankCategoryWithField (ArrayList<Object> objectArrayList, String fieldName, Object bean) throws SQLException, ClassNotFoundException{
+
+
+        if (bean.getClass().getSimpleName().equals("Model")){
+            for (int i=0; i<objectArrayList.size(); i++){
+                Model model = (Model)objectArrayList.get(i);
+                if (fieldName.equals("totalTickets")){
+                    valuesObjectArrayList[i] = model.getTotalTickets();
+
+                }else if (fieldName.equals("averageExceded")){
+                    valuesObjectArrayList[i] = model.getAverageExceded().floatValue();
+
+                }else if (fieldName.equals("maximumMeasuredVelocity")){
+                    valuesObjectArrayList[i] = model.getMaximumMeasuredVelocity().floatValue();
+                }else {
+                    return null;
+                }
+            }
+        }else if (bean.getClass().getSimpleName().equals("Brand")){
+            for (int i=0; i<objectArrayList.size(); i++){
+                Brand brand = (Brand)objectArrayList.get(i);
+                if (fieldName.equals("totalTickets")){
+                    valuesObjectArrayList[i] = brand.getTotalTickets();
+
+                }else if (fieldName.equals("averageExceded")){
+                    valuesObjectArrayList[i] = brand.getAverageExceded().floatValue();
+
+                }else if (fieldName.equals("maximumMeasuredVelocity")){
+                    valuesObjectArrayList[i] = brand.getMaximumMeasuredVelocity().floatValue();
+                }else {
+                    return null;
+                }
+            }
+        }else if (bean.getClass().getSimpleName().equals("City")){
+            for (int i=0; i<objectArrayList.size(); i++){
+                City city = (City)objectArrayList.get(i);
+                if (fieldName.equals("totalTickets")){
+                    valuesObjectArrayList[i] = city.getTotalTickets();
+
+                }else if (fieldName.equals("averageExceded")){
+                    valuesObjectArrayList[i] = city.getAverageExceded().floatValue();
+
+                }else if (fieldName.equals("maximumMeasuredVelocity")){
+                    valuesObjectArrayList[i] = city.getMaximumMeasuredVelocity().floatValue();
+                }else {
+                    return null;
+                }
+            }
+        }else if (bean.getClass().getSimpleName().equals("HighwayStretch")){
+            for (int i=0; i<objectArrayList.size(); i++){
+                HighwayStretch highwayStretch = (HighwayStretch)objectArrayList.get(i);
+                if (fieldName.equals("totalTickets")){
+                    valuesObjectArrayList[i] = highwayStretch.getTotalTickets();
+
+                }else if (fieldName.equals("averageExceded")){
+                    valuesObjectArrayList[i] = highwayStretch.getAverageExceded().floatValue();
+
+                }else if (fieldName.equals("maximumMeasuredVelocity")){
+                    valuesObjectArrayList[i] = highwayStretch.getMaximumMeasuredVelocity().floatValue();
+                }else {
+                    return null;
+                }
+            }
+        }else if (bean.getClass().getSimpleName().equals("State")){
+            for (int i=0; i<objectArrayList.size(); i++){
+                State state = (State)objectArrayList.get(i);
+                if (fieldName.equals("totalTickets")){
+                    valuesObjectArrayList[i] = state.getTotalTickets();
+
+                }else if (fieldName.equals("averageExceded")){
+                    valuesObjectArrayList[i] = state.getAverageExceded().floatValue();
+
+                }else if (fieldName.equals("maximumMeasuredVelocity")){
+                    valuesObjectArrayList[i] = state.getMaximumMeasuredVelocity().floatValue();
+                }else {
+                    return null;
+                }
+            }
+        }else if (bean.getClass().getSimpleName().equals("Type")){
+            for (int i=0; i<objectArrayList.size(); i++){
+                Type type = (Type)objectArrayList.get(i);
+                if (fieldName.equals("totalTickets")){
+                    valuesObjectArrayList[i] = type.getTotalTickets();
+
+                }else if (fieldName.equals("averageExceded")){
+                    valuesObjectArrayList[i] = type.getAverageExceded().floatValue();
+
+                }else if (fieldName.equals("maximumMeasuredVelocity")){
+                    valuesObjectArrayList[i] = type.getMaximumMeasuredVelocity().floatValue();
+                }else {
+                    return null;
+                }
+            }
+        }
+
+        return valuesObjectArrayList;
     }
 
 //    public void rankCategoryWithoutField (HighwayStretch highwayStretch) throws SQLException, ClassNotFoundException{
