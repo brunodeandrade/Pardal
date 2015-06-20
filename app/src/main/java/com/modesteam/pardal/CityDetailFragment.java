@@ -118,11 +118,14 @@ public class CityDetailFragment extends Fragment {
             genericAlertDialogException.createAlert(this.getActivity());
         }
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
-        TextView textViewName, textViewTotalHighwayStretches,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
+        TextView textViewCompare,textViewName, textViewTotalHighwayStretches,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
         textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText(cityForDetail.getName()+" - "+stateOfCity.getName());
         textViewName.setTypeface(typeface);
+
+        textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
 
         textViewTotalHighwayStretches = (TextView) view.findViewById(R.id.textViewHighwayStretches);
         textViewTotalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());

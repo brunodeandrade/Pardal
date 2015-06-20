@@ -125,6 +125,8 @@ public class ModelDetailFragment extends Fragment {
         TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         textViewAverageExceded.setText(String.format("%.2fKM/h", modelDetail.getAverageExceded()));
         textViewAverageExceded.setTypeface(typeface);
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
         ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

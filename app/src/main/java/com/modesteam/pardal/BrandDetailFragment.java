@@ -130,6 +130,9 @@ public class BrandDetailFragment extends Fragment {
         textViewTotalTickets.setText(Integer.toString(totalTickets));
         textViewTotalTickets.setTypeface(typeface);
 
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
+
         TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText((brandDetail.getName()));
         textViewName.setTypeface(typeface);

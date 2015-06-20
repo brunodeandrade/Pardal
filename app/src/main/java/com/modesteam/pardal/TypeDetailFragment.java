@@ -100,11 +100,14 @@ public class TypeDetailFragment extends Fragment {
         }
 
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
-        TextView textViewName, textViewTotalModels,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
+        TextView textViewCompare,textViewName, textViewTotalModels,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
         textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText(typeForDetail.getName());
         textViewName.setTypeface(typeface);
+
+        textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
 
         textViewTotalModels = (TextView) view.findViewById(R.id.textViewTotalModels);
         textViewTotalModels.setText(""+arrayModelsOfType.size());

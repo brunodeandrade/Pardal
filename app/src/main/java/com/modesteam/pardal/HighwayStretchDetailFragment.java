@@ -164,6 +164,9 @@ public class HighwayStretchDetailFragment extends Fragment {
         textViewcityState.setText(""+(cityOfHighwayStretch.getName())+"/"+(stateOfHighwayStretch.getName()));
         textViewcityState.setTypeface(typeface);
 
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
+
         ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
