@@ -88,12 +88,6 @@ public class TypeDetailFragment extends Fragment {
                 typeForDetail = Type.get(getArguments().getInt(ID_TYPE));
             }
             arrayModelsOfType = typeForDetail.getModels();
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
         }catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());

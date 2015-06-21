@@ -16,13 +16,7 @@ public class CityContent {
 
     static {
         ArrayList<City> allCities = null;
-        try {
-            allCities = City.getAll();
-        }catch (ClassNotFoundException e){
-            e.printStackTrace();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        allCities = City.getAll();
 
         for (City city: allCities){
             addItem(city);

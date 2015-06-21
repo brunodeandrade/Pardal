@@ -1,5 +1,7 @@
 package helpers;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import annotations.Entity;
@@ -60,16 +62,16 @@ public class Condition {
 			sql += getJoiner(this.joiner);
 			sql += this.second.buildConditionSQL(mainBean);
 		} else {
-			String result = "";
-			if(this.value.getClass() == String.class){
-				result = "'"+this.value.toString()+"'";
-			}else{
-				result = this.value.toString();
-			}
-			Entity entity = this.bean.getClass().getAnnotation(Entity.class);
-			sql = entity.table()+"."+GenericPersistence.databaseColumn(GenericPersistence.getField(this.bean, this.field))+
-					getOperator(this.operator)+result;
-		}
+            String result = "";
+            if (this.value.getClass() == String.class) {
+                result = "'" + this.value.toString() + "'";
+            } else {
+                result = this.value.toString();
+            }
+            Entity entity = this.bean.getClass().getAnnotation(Entity.class);
+            sql = entity.table() + ".`" + GenericPersistence.databaseColumn(GenericPersistence.getField(this.bean, this.field))+ "`" +
+                    getOperator(this.operator) + result;
+        }
 		return sql;
 	}
 	
@@ -83,6 +85,7 @@ public class Condition {
 		}
 		sql+=" WHERE "+buildRelationshipChain(mainBean, entities)+buildConditionSQL(mainBean);
 		this.sql=sql;
+        Log.d("RESULT: ", sql);
 	}
 	
 	public String buildRelationshipChain(Object mainBean, ArrayList<Entity> entities){

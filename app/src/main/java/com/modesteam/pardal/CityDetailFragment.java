@@ -106,13 +106,6 @@ public class CityDetailFragment extends Fragment {
             arrayHighwayStretchesOfCity = cityForDetail.getHighwayStretches();
             stateOfCity = cityForDetail.getState();
 
-
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.createAlert(this.getActivity());
         }catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
             genericAlertDialogException.createAlert(this.getActivity());

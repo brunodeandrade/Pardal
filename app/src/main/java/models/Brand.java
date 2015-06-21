@@ -76,56 +76,61 @@ public class Brand implements ComparableCategory{
         this.maximumMeasuredVelocity = maximumMeasuredVelocity;
     }
 
-    public boolean save() throws SQLException, ClassNotFoundException, NotNullableException {
+    public boolean save() throws NotNullableException {
         GenericPersistence gP = new GenericPersistence();
         boolean result = gP.insertBean(this);
         this.setId(Brand.last().getId());
         return result;
     }
 
-    public static Brand last() throws SQLException, ClassNotFoundException{
+    public static Brand last(){
+
         GenericPersistence gP = new GenericPersistence();
         return ((Brand)gP.firstOrLastBean(new Brand(), true));
     }
 
-    public static Brand get(int id) throws ClassNotFoundException, SQLException{
+    public static Brand get(int id) {
         GenericPersistence gP = new GenericPersistence();
         return (Brand) gP.selectBean(new Brand(id));
+
     }
 
-    public static ArrayList<Brand> getAll() throws ClassNotFoundException, SQLException{
+    public static ArrayList<Brand> getAll(){
         GenericPersistence gP = new GenericPersistence();
         ArrayList<Brand> brands = new ArrayList<Brand>();
         for (Object bean : gP.selectAllBeans(new Brand())) {
-            brands.add((Brand)bean);
+            brands.add((Brand) bean);
         }
         return brands;
     }
 
-    public static int count() throws ClassNotFoundException, SQLException {
+    public static int count(){
         GenericPersistence gDB = new GenericPersistence();
         return gDB.countBean(new Brand());
     }
 
-    public static Brand first() throws ClassNotFoundException, SQLException{
+    public static Brand first(){
         GenericPersistence gP = new GenericPersistence();
         return (Brand) gP.firstOrLastBean(new Brand() , false);
+
     }
 
-    public static ArrayList<Brand> getWhere(Condition condition) throws ClassNotFoundException, SQLException{
+    public static ArrayList<Brand> getWhere(Condition condition){
         GenericPersistence gP = new GenericPersistence();
         ArrayList<Brand> brands = new ArrayList<Brand>();
         for (Object bean : gP.selectWhere(new Brand(), condition)) {
             brands.add((Brand)bean);
         }
         return brands;
+
     }
 
-    public boolean delete() throws ClassNotFoundException, SQLException {
+    public boolean delete(){
         GenericPersistence gP = new GenericPersistence();
         return gP.deleteBean(this);
+
     }
-    public ArrayList<Model> getModels() throws ClassNotFoundException, SQLException{
+    public ArrayList<Model> getModels(){
         GenericPersistence gP = new GenericPersistence();
         ArrayList<Model> models = new ArrayList<Model>();
         for (Object bean : gP.selectMany(this, new Model())) {
@@ -133,6 +138,7 @@ public class Brand implements ComparableCategory{
         }
 
         return models;
+
     }
 
     @Override

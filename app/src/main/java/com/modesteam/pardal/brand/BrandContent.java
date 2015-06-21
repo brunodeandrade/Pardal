@@ -22,13 +22,7 @@ public class BrandContent {
     static {
         // Add all type items.
         ArrayList<Brand> allBrands = null;
-        try {
-            allBrands = Brand.getAll();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allBrands = Brand.getAll();
         for (Brand brand: allBrands){
             addItem(brand);
         }

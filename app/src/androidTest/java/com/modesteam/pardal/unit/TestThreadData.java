@@ -1,5 +1,6 @@
-package com.modesteam.pardal.helpers;
+package com.modesteam.pardal.unit;
 
+import com.modesteam.pardal.Pardal;
 import com.modesteam.pardal.ThreadData;
 import com.modesteam.pardal.brand.BrandContent;
 import com.modesteam.pardal.city.CityContent;
@@ -28,6 +29,7 @@ public class TestThreadData extends TestCase {
     private Thread thread;
 
     public void setUp(){
+        Pardal.getInstance().setDatabaseName("database.dev.sqlite3.db");
         threadData = new ThreadData();
         thread = new Thread(threadData);
         thread.start();

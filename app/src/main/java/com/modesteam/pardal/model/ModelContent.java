@@ -21,13 +21,7 @@ public class ModelContent {
     static {
         // Add all type items.
         ArrayList<Model> allModels = null;
-        try {
-            allModels = Model.getAll();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allModels = Model.getAll();
         for (Model model : allModels) {
             addItem(model);
         }
