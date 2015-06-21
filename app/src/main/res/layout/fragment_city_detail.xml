@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/detail_city">
@@ -10,10 +10,12 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Cidade"
         android:id="@+id/textViewCategory"
-        android:layout_x="157dp"
-        android:layout_y="17dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="81dp"
         android:textColor="#ff000000"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,10 +23,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Nome do Item"
         android:id="@+id/textViewName"
-        android:layout_x="136dp"
-        android:layout_y="44dp"
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="44dp"
         android:textColor="#ff163aff"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,9 +36,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Maior velocidade registrada:"
         android:id="@+id/textView"
-        android:layout_x="81dp"
-        android:layout_y="91dp"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="36dp"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewName"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,9 +47,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="XXX KM/H"
         android:id="@+id/textViewMaximumMeasuredVelocity"
-        android:layout_x="157dp"
-        android:layout_y="117dp"
-        android:textColor="#ffff2521" />
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,9 +57,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Média de velocidade excedida"
         android:id="@+id/textView222"
-        android:layout_x="69dp"
-        android:layout_y="191dp"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="45dp"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewMaximumMeasuredVelocity"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,9 +68,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="XXX KM/H"
         android:id="@+id/textViewAverageExceded"
-        android:layout_x="157dp"
-        android:layout_y="217dp"
-        android:textColor="#ffff2521" />
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView222"
+        android:layout_centerHorizontal="true"  />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,9 +78,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total de multas:"
         android:id="@+id/textView19"
-        android:layout_x="122dp"
-        android:layout_y="291dp"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="61dp"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewAverageExceded"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,9 +89,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="XXX KM/H"
         android:id="@+id/textViewTotalTickets"
-        android:layout_x="170dp"
-        android:layout_y="317dp"
-        android:textColor="#ffff2521" />
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView19"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -92,9 +99,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total de Rodovias"
         android:id="@+id/textViewExtraText"
-        android:layout_x="118dp"
-        android:layout_y="391dp"
-        android:textStyle="bold|italic" />
+        android:layout_marginTop="45dp"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewTotalTickets"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -102,18 +110,26 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="XXX KM/H"
         android:id="@+id/textViewHighwayStretches"
-        android:layout_x="170dp"
-        android:layout_y="417dp"
-        android:textColor="#ffff2521" />
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textViewExtraText"
+        android:layout_centerHorizontal="true"  />
 
-    <Button
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:id="@+id/compareButton"
+        android:background="@layout/on_selector_compare"
+        android:layout_above="@+id/textViewCompare"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold|italic"
         android:text="Comparar"
-        android:id="@+id/compareButton"
+        android:id="@+id/textViewCompare"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:layout_x="138dp"
-        android:layout_y="463dp" />
-</AbsoluteLayout>
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

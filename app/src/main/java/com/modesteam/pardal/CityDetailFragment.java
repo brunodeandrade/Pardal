@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -117,11 +118,14 @@ public class CityDetailFragment extends Fragment {
             genericAlertDialogException.createAlert(this.getActivity());
         }
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
-        TextView textViewName, textViewTotalHighwayStretches,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
+        TextView textViewCompare,textViewName, textViewTotalHighwayStretches,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
         textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText(cityForDetail.getName()+" - "+stateOfCity.getName());
         textViewName.setTypeface(typeface);
+
+        textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
 
         textViewTotalHighwayStretches = (TextView) view.findViewById(R.id.textViewHighwayStretches);
         textViewTotalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());
@@ -140,7 +144,7 @@ public class CityDetailFragment extends Fragment {
         textViewAverageExceded.setText(""+f.format(cityForDetail.getAverageExceded()));
         textViewAverageExceded.setTypeface(typeface);
 
-        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mListener.onFragmentInteraction(cityForDetail.getId(), CityListFragment.newInstance(cityForDetail));

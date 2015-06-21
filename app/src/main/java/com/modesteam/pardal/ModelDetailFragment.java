@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -124,7 +125,9 @@ public class ModelDetailFragment extends Fragment {
         TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         textViewAverageExceded.setText(String.format("%.2fKM/h", modelDetail.getAverageExceded()));
         textViewAverageExceded.setTypeface(typeface);
-        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mListener.onFragmentInteraction(modelDetail.getId(),ModelListFragment.newInstance(modelDetail));

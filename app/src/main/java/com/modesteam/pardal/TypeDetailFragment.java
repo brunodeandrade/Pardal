@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -99,11 +100,14 @@ public class TypeDetailFragment extends Fragment {
         }
 
         Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
-        TextView textViewName, textViewTotalModels,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
+        TextView textViewCompare,textViewName, textViewTotalModels,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
         textViewName = (TextView) view.findViewById(R.id.textViewName);
         textViewName.setText(typeForDetail.getName());
         textViewName.setTypeface(typeface);
+
+        textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
 
         textViewTotalModels = (TextView) view.findViewById(R.id.textViewTotalModels);
         textViewTotalModels.setText(""+arrayModelsOfType.size());
@@ -121,7 +125,7 @@ public class TypeDetailFragment extends Fragment {
         TextView typeDesc = (TextView) view.findViewById(R.id.textViewDesc);
         typeDesc.setText(typeForDetail.getDescription());
 
-        Button compareButton = (Button) view.findViewById(R.id.compareButton);
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
         compareButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mListener.onFragmentInteraction(typeForDetail.getId(),TypeListFragment.newInstance(typeForDetail));
