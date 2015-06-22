@@ -186,6 +186,12 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bRank);
     }
 
+    public void testShouldShowEnterCityRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bCity);
+        openListFragment(R.id.bRank);
+    }
+
 
     public void testShouldFilterBrandList(){
         this.mActivity = getActivity();
