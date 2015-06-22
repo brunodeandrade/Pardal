@@ -15,8 +15,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.modesteam.pardal.BrandListFragment;
+import com.modesteam.pardal.HighwayStretchDetailFragment;
 import com.modesteam.pardal.MainActivity;
 import com.modesteam.pardal.Pardal;
 import com.modesteam.pardal.R;
@@ -55,7 +57,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         Fragment fragment = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         mInstrumentation.waitForIdleSync();
         ImageButton imageButton = (ImageButton) (fragment.getView().findViewById(position));
-        TouchUtils.clickView(this,imageButton);
+        TouchUtils.clickView(this, imageButton);
         return  fragment;
     }
 
@@ -94,12 +96,25 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bList);
     }
 
+    public void testShouldCheckHighwayStretchDetail (){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bHighway);
+        openListFragment(R.id.bList);
+        Fragment fragment = openDetailFragment(R.id.highway_list_view);
+        CharSequence maximumVelocity = ((TextView)fragment.getView().findViewById(R.id.textViewMaximumMeasuredVelocity)).getText();
+        fragment.onPause();
+        fragment.onResume();
+        assertEquals(maximumVelocity, ((TextView) fragment.getView().findViewById(R.id.textViewMaximumMeasuredVelocity)).getText());
+
+    }
+
     public Fragment openDetailFragment(int view){
         this.mActivity = getActivity();
         Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         mInstrumentation.waitForIdleSync();
         ListView listView2 = (ListView) ((LinearLayout) fragment3.getView().findViewById(view)).getChildAt(2);
-        TouchUtils.clickView(this,listView2.getChildAt(1));
+        TouchUtils.clickView(this, listView2.getChildAt(1));
+        fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         return fragment3;
     }
     public void testShouldShowStateDetail(){
@@ -145,8 +160,15 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         mInstrumentation.waitForIdleSync();
         Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         ImageButton imageButton = (ImageButton) (fragment3.getView().findViewById(R.id.bAbout));
-        TouchUtils.clickView(this,imageButton);
+        TouchUtils.clickView(this, imageButton);
     }
+
+    public void testShouldShowEnterBrandRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bBrand);
+        openListFragment(R.id.bRank);
+    }
+
 
     public void testShouldFilterBrandList(){
         this.mActivity = getActivity();
