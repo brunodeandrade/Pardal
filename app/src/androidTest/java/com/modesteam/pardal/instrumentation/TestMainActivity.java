@@ -212,6 +212,13 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.button_totalTickets);
     }
 
+    public void testShouldShowBrandAverageExcededRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bBrand);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_averageExceded);
+    }
+
 
     public void testShouldFilterBrandList(){
         this.mActivity = getActivity();
