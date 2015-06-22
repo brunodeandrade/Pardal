@@ -119,7 +119,9 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         return fragment3;
     }
 
-    /*public Fragment openDetailAbstractListFragment(int view){
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    public Fragment openDetailAbstractListFragment(int view){
         this.mActivity = getActivity();
         Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         mInstrumentation.waitForIdleSync();
@@ -127,7 +129,8 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         TouchUtils.clickView(this, listView2.getChildAt(1));
         fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         return fragment3;
-    }*/
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////
 
 
     public void testShouldShowStateDetail(){
@@ -342,7 +345,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bType);
         openListFragment(R.id.bRank);
         openListFragment(R.id.button_maximumVelocity);
-        openDetailAbstractListFragment(R.id.textViewTitleTypeRank);
+        openDetailAbstractListFragment(R.id.chartRanking);
     }
 
     public void testShouldShowTypeTotalTicketsRankingDetail(){
@@ -350,7 +353,7 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bType);
         openListFragment(R.id.bRank);
         openListFragment(R.id.button_totalTickets);
-        openDetailAbstractListFragment(R.id.type_list_view);
+        openDetailFragment(R.id.chartRanking);
     }
 
     public void testShouldShowTypeAverageExcededRankingDetail(){
@@ -359,9 +362,6 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bRank);
         openListFragment(R.id.button_averageExceded);
     }*/
-
-
-
 
 
 
