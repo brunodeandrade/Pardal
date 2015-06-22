@@ -282,6 +282,27 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.button_averageExceded);
     }
 
+    public void testShouldShowStateMaxVelocityRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bState);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_maximumVelocity);
+    }
+
+    public void testShouldShowStateTotalTicketsRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bState);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_totalTickets);
+    }
+
+    public void testShouldShowStateAverageExcededRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bState);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_averageExceded);
+    }
+
 
 
 
