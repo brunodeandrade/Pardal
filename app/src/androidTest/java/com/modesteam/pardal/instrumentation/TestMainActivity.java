@@ -205,6 +205,13 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.button_maximumVelocity);
     }
 
+    public void testShouldShowBrandTotalTicketsRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bBrand);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_totalTickets);
+    }
+
 
     public void testShouldFilterBrandList(){
         this.mActivity = getActivity();
