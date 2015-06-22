@@ -168,6 +168,11 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bBrand);
         openListFragment(R.id.bRank);
     }
+    public void testShouldShowEnterModelRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bModel);
+        openListFragment(R.id.bRank);
+    }
 
 
     public void testShouldFilterBrandList(){
