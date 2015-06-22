@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.EditText;
@@ -117,6 +118,18 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
         return fragment3;
     }
+
+    /*public Fragment openDetailAbstractListFragment(int view){
+        this.mActivity = getActivity();
+        Fragment fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+        mInstrumentation.waitForIdleSync();
+        AbsListView listView2 = (AbsListView) ((FrameLayout) fragment3.getView().findViewById(view)).getChildAt(2);
+        TouchUtils.clickView(this, listView2.getChildAt(1));
+        fragment3 = this.mActivity.getSupportFragmentManager().findFragmentById(R.id.container);
+        return fragment3;
+    }*/
+
+
     public void testShouldShowStateDetail(){
         this.mActivity = getActivity();
         openListFragment(R.id.bState);
@@ -323,6 +336,31 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bRank);
         openListFragment(R.id.button_averageExceded);
     }
+
+    /*public void testShouldShowTypeMaxVelocityRankingDetail(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bType);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_maximumVelocity);
+        openDetailAbstractListFragment(R.id.textViewTitleTypeRank);
+    }
+
+    public void testShouldShowTypeTotalTicketsRankingDetail(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bType);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_totalTickets);
+        openDetailAbstractListFragment(R.id.type_list_view);
+    }
+
+    public void testShouldShowTypeAverageExcededRankingDetail(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bType);
+        openListFragment(R.id.bRank);
+        openListFragment(R.id.button_averageExceded);
+    }*/
+
+
 
 
 
