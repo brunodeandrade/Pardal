@@ -180,6 +180,12 @@ public class TestMainActivity extends ActivityInstrumentationTestCase2<MainActiv
         openListFragment(R.id.bRank);
     }
 
+    public void testShouldShowEnterStateRanking(){
+        this.mActivity = getActivity();
+        openListFragment(R.id.bState);
+        openListFragment(R.id.bRank);
+    }
+
 
     public void testShouldFilterBrandList(){
         this.mActivity = getActivity();
