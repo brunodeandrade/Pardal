@@ -739,4 +739,79 @@ public class MainActivityTest {
         onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void shouldShowCityRankingMaximumvelocity() {
+        //List
+        onView(withId(R.id.bCity)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_maximumVelocity)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Cidade")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("GURUPI"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowCityRankingTotalTickets() {
+        //List
+        onView(withId(R.id.bCity)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_totalTickets)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Cidade")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("PONTA GROSSA"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowCityRankingAverageExceded() {
+        //List
+        onView(withId(R.id.bCity)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_averageExceded)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Cidade")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("BRASILANDIA"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
 }
