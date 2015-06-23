@@ -664,4 +664,79 @@ public class MainActivityTest {
         onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void shouldShowStateRankingMaximumvelocity() {
+        //List
+        onView(withId(R.id.bState)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_maximumVelocity)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Estado")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("ES"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowStateRankingTotalTickets() {
+        //List
+        onView(withId(R.id.bState)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_totalTickets)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Estado")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("MG"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowStateRankingAverageExceded() {
+        //List
+        onView(withId(R.id.bState)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_averageExceded)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Estado")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("PA"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
 }
