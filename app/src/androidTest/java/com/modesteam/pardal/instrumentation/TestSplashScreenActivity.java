@@ -18,12 +18,22 @@ import android.test.suitebuilder.annotation.LargeTest;
 import com.modesteam.pardal.MainActivity;
 import com.modesteam.pardal.R;
 import com.modesteam.pardal.SplashScreenActivity;
+import com.modesteam.pardal.brand.BrandContent;
+import com.modesteam.pardal.city.CityContent;
+import com.modesteam.pardal.highwayStretch.HighwayStretchContent;
+import com.modesteam.pardal.model.ModelContent;
+import com.modesteam.pardal.state.StateContent;
+import com.modesteam.pardal.type.TypeContent;
+
+import junit.framework.Assert;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.regex.Matcher;
+
+import models.HighwayStretch;
 
 /**
  * Created by andrebsguedes on 16/06/15.
@@ -37,6 +47,12 @@ public class TestSplashScreenActivity {
 
     @Test
     public void shouldGetNewInstanceOfSplashScreenActivity() {
-        onView(withText("Pardal\n\t v 1.0")).check(matches(isDisplayed()));
+        assertThat(mActivityRule.getActivity().findViewById(R.id.textViewVersion),isDisplayed());
+        Assert.assertNotNull(ModelContent.ITEMS);
+        Assert.assertNotNull(HighwayStretchContent.ITEMS);
+        Assert.assertNotNull(BrandContent.ITEMS);
+        Assert.assertNotNull(CityContent.ITEMS);
+        Assert.assertNotNull(StateContent.ITEMS);
+        Assert.assertNotNull(TypeContent.ITEMS);
     }
 }

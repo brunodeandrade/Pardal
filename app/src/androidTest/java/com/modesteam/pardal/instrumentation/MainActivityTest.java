@@ -13,10 +13,30 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
+import android.inputmethodservice.Keyboard;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.AmbiguousViewMatcherException;
+import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.espresso.ViewAction;
+import android.support.test.espresso.ViewFinder;
+import android.support.test.espresso.action.CoordinatesProvider;
+import android.support.test.espresso.action.EspressoKey;
+import android.support.test.espresso.action.GeneralClickAction;
+import android.support.test.espresso.action.Press;
+import android.support.test.espresso.action.Tap;
+import android.support.test.espresso.action.ViewActions;
+import android.support.test.espresso.base.ViewFinderImpl;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.v4.app.Fragment;
+import android.test.TouchUtils;
 import android.test.suitebuilder.annotation.LargeTest;
+import android.view.KeyEvent;
+import android.view.View;
 
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.Highlight;
 import com.modesteam.pardal.MainActivity;
 import com.modesteam.pardal.R;
 
@@ -418,6 +438,31 @@ public class MainActivityTest {
         onView((withId(android.R.id.list))).check(matches(withChild(withText(containsString("BR 493"))))).check(matches(isDisplayed()));
 
         onView(withId(R.id.bOrdenate)).perform(click());
+    }
+
+    @Test
+    public void shouldShowHighwayStretchRanking() {
+        //List
+        onView(withId(R.id.bHighway)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_maximumVelocity)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Rodovia")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("BR 101 KM 177"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
     }
 
 }

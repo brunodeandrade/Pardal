@@ -1,26 +1,20 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.AvoidXfermode;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -30,14 +24,14 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Highlight;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.DuplicateFormatFlagsException;
-import java.util.Objects;
+import java.util.Collections;
 
+import helpers.Category;
+import helpers.GenericPersistence;
 import models.Brand;
 import models.City;
 import models.HighwayStretch;
@@ -59,16 +53,20 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
 
     // TODO: Rename and change types of parameters
 
-    private static final String ARG_PARAM1 = "param1";
+    private static final String NAME_ARRAY = "nameArray";
+    private static final String VALUE_ARRAY = "valueArray";
+    private static final String ID_ARRAY = "idArray";
+    private static final String FIELD_NAME = "fieldName";
+    private static final String CATEGORY = "category";
 
-    private String mParam1;
 
-    private Object bean;
+
+    private ArrayList<String> nameArray;
+    private float[] valueArray;
+    private ArrayList<Integer> idArray;
     private String fieldName;
-    private ArrayList<Object> arrayListRankingObject = null;
-    private float[] arrayValuesListRankingObject;
+    private String category;
     private Typeface typeface;
-    private int[] arrayIndexChart = new int[10];
 
     private OnFragmentInteractionListener mListener;
 
@@ -84,10 +82,37 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static TopTenListFragment newInstance(Object object, String fieldName, String param1) {
-        TopTenListFragment fragment = new TopTenListFragment(object, fieldName);
+    public static TopTenListFragment newInstance(ComparableCategory bean, String fieldName) {
+        TopTenListFragment fragment = new TopTenListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        Category category = bean.getCategory();
+        args.putString(CATEGORY, category.name());
+        args.putString(FIELD_NAME, fieldName);
+        GenericPersistence gP = new GenericPersistence();
+        ArrayList<Object> objects = gP.selectAllBeans(bean, 10, true, GenericPersistence.getField(bean, fieldName));
+        Collections.reverse(objects);
+        ArrayList<String> names = new ArrayList<String>();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        float[] values = new float[objects.size()];
+        for (int i = 0; i < objects.size(); i++) {
+            ComparableCategory categoryItem = (ComparableCategory)objects.get(i);
+            names.add(categoryItem.toString());
+            ids.add(categoryItem.getId());
+            switch (fieldName){
+                case "maximumMeasuredVelocity":
+                    values[i] = categoryItem.getMaximumMeasuredVelocity().floatValue();
+                    break;
+                case "averageExceded":
+                    values[i] = categoryItem.getAverageExceded().floatValue();
+                    break;
+                case "totalTickets":
+                    values[i] = (float) categoryItem.getTotalTickets();
+                    break;
+            }
+        }
+        args.putStringArrayList(NAME_ARRAY, names);
+        args.putIntegerArrayList(ID_ARRAY, ids);
+        args.putFloatArray(VALUE_ARRAY, values);
         fragment.setArguments(args);
         return fragment;
     }
@@ -96,9 +121,7 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public TopTenListFragment(Object object, String fieldName) {
-        this.bean = object;
-        this.fieldName = fieldName;
+    public TopTenListFragment() {
     }
 
     @Override
@@ -106,10 +129,14 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            nameArray = getArguments().getStringArrayList(NAME_ARRAY);
+            valueArray = getArguments().getFloatArray(VALUE_ARRAY);
+            idArray = getArguments().getIntegerArrayList(ID_ARRAY);
+            fieldName = getArguments().getString(FIELD_NAME);
+            category = getArguments().getString(CATEGORY);
         }
 
-        rankCategory(this.bean, this.fieldName);
+        //rankCategory(this.bean, this.fieldName);
         this.typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
 
 //        mAdapter = new ArrayAdapter<Object>(getActivity(),
@@ -216,50 +243,21 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         }
     }
 
-    private void rankCategory(Object bean, String fieldName){
-        RankingCategory rankingCategory = new RankingCategory();
-        ArrayList<Object> arrayListRankingObject = null;
-        float[] arrayValuesListRankingObject = null;
-        try {
-            arrayListRankingObject = rankingCategory.rankCategoryWithField(bean, fieldName);
-            arrayValuesListRankingObject = rankingCategory.getValuesRankCategoryWithField(arrayListRankingObject, fieldName, bean);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        this.arrayListRankingObject = arrayListRankingObject;
-        this.arrayValuesListRankingObject = arrayValuesListRankingObject;
-    }
-
     private void setData(HorizontalBarChart horizontalBarChart) {
-
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i=this.arrayListRankingObject.size()-1; i>=0; i--){
-            xVals.add(this.arrayListRankingObject.get(i).toString());
-        }
-
 
         ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
 
-        int indexChart = this.arrayListRankingObject.size()-1;
-        for (int i = 0; i<this.arrayListRankingObject.size() ; i++) {
-            BarEntry v1e1 = new BarEntry(this.arrayValuesListRankingObject[i], indexChart);
-            yVals.add(v1e1);
-            this.arrayIndexChart[i] = indexChart;
-            indexChart--;
+        for (int i = 0; i < nameArray.size(); i++) {
+            yVals.add(new BarEntry(valueArray[i],i));
         }
-
-
         BarDataSet set1 = new BarDataSet(yVals, this.fieldName);
         set1.setBarSpacePercent(35f);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
 
-        BarData data = new BarData(xVals, dataSets);
+        BarData data = new BarData(nameArray, dataSets);
         data.setValueTextSize(12f);
-        //data.setValueTypeface(typeface);
 
         horizontalBarChart.setData(data);
     }
@@ -269,29 +267,31 @@ public class TopTenListFragment extends Fragment implements AbsListView.OnItemCl
         if (entry == null) {
             return;
         }
-        switch(mParam1){
-            case "1":
-                State state = (State)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+        Category category = Category.valueOf(this.category);
+        int j = highlight.getXIndex();
+        switch(category){
+            case STATE:
+                State state = State.get(idArray.get(j));
                 mListener.onFragmentInteraction(0,StateDetailFragment.newInstance(state));
                 break;
-            case "2":
-                City city = (City)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+            case CITY:
+                City city = City.get(idArray.get(j));
                 mListener.onFragmentInteraction(0,CityDetailFragment.newInstance(city));
                 break;
-            case "3":
-                HighwayStretch highwayStretch = (HighwayStretch)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+            case HIGHWAY_STRETCH:
+                HighwayStretch highwayStretch = HighwayStretch.get(idArray.get(j));
                 mListener.onFragmentInteraction(0,HighwayStretchDetailFragment.newInstance(highwayStretch));
                 break;
-            case "4":
-                Model model = (Model)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+            case MODEL:
+                Model model = Model.get(idArray.get(j));
                 mListener.onFragmentInteraction(0,ModelDetailFragment.newInstance(model));
                 break;
-            case "5":
-                Type type = (Type)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+            case TYPE:
+                Type type = Type.get(idArray.get(j));
                 mListener.onFragmentInteraction(0,TypeDetailFragment.newInstance(type));
                 break;
-            case "6":
-                Brand brand = (Brand)(this.arrayListRankingObject.get(this.arrayIndexChart[highlight.getXIndex()]));
+            case BRAND:
+                Brand brand = Brand.get(idArray.get(j));
                 mListener.onFragmentInteraction(0,BrandDetailFragment.newInstance(brand));
                 break;
         }

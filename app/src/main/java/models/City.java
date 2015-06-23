@@ -3,6 +3,7 @@ package models;
 import com.modesteam.pardal.ComparableCategory;
 
 import annotations.OrderBy;
+import helpers.Category;
 import helpers.Condition;
 import helpers.GenericPersistence;
 
@@ -166,6 +167,11 @@ public class City implements ComparableCategory {
 			stretches.add((HighwayStretch)bean);
 		}
 		return stretches;
+	}
+
+	@Override
+	public Category getCategory() {
+		return Category.CITY;
 	}
 
 	@Override

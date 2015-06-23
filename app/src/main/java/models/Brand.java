@@ -10,6 +10,7 @@ import annotations.Entity;
 import annotations.HasMany;
 import annotations.ManyRelations;
 import annotations.OrderBy;
+import helpers.Category;
 import helpers.Condition;
 import helpers.GenericPersistence;
 import libraries.NotNullableException;
@@ -139,6 +140,11 @@ public class Brand implements ComparableCategory{
 
         return models;
 
+    }
+
+    @Override
+    public Category getCategory() {
+        return Category.BRAND;
     }
 
     @Override

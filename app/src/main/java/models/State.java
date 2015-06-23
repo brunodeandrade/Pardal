@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import annotations.OrderBy;
+import helpers.Category;
 import libraries.NotNullableException;
 import helpers.Condition;
 import helpers.GenericPersistence;
@@ -134,6 +135,11 @@ public class State implements ComparableCategory {
 			beans.add((City)bean);
 		}
 		return beans;
+	}
+
+	@Override
+	public Category getCategory() {
+		return Category.STATE;
 	}
 
 	@Override

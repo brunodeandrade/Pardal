@@ -106,7 +106,7 @@ public class TypeRankFragment extends Fragment implements View.OnClickListener{
         }
 
         if (fieldName != ""){
-            mListener.onFragmentInteraction(0,TopTenListFragment.newInstance(this.bean,fieldName,mParam1));
+            mListener.onFragmentInteraction(0,TopTenListFragment.newInstance((ComparableCategory)this.bean,fieldName));
         }
     }
 }

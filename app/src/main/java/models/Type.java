@@ -3,6 +3,7 @@ package models;
 import com.modesteam.pardal.ComparableCategory;
 
 import annotations.OrderBy;
+import helpers.Category;
 import helpers.Condition;
 import helpers.GenericPersistence;
 
@@ -141,6 +142,11 @@ public class Type implements ComparableCategory {
 			beans.add((Model)bean);
 		}
 		return beans;
+	}
+
+	@Override
+	public Category getCategory() {
+		return Category.TYPE;
 	}
 
 	@Override

@@ -200,16 +200,23 @@ public class GenericPersistence extends Database {
     public ArrayList<Object> selectAllBeans(Object bean) {
         return selectAllBeans(bean, getOrderField(bean));
     }
+    public ArrayList<Object> selectAllBeans(Object bean, int limit, boolean desc, Field orderBy) {
+        this.openConnection();
+        ArrayList<Object> beans = selectAllBeans(bean, limit, desc, orderBy, this.database);
+        this.closeConnection();
+        return beans;
+    }
+
     public ArrayList<Object> selectAllBeans(Object bean, Field orderBy) {
         this.openConnection();
-        ArrayList<Object> beans = selectAllBeans(bean, orderBy, this.database);
+        ArrayList<Object> beans = selectAllBeans(bean, 0, false, orderBy, this.database);
         this.closeConnection();
         return beans;
     }
     public ArrayList<Object> selectAllBeans(Object bean, SQLiteDatabase conn) {
-        return selectAllBeans(bean, getOrderField(bean), conn);
+        return selectAllBeans(bean, 0, false, getOrderField(bean), conn);
     }
-    public ArrayList<Object> selectAllBeans(Object bean, Field orderBy, SQLiteDatabase conn) {
+    public ArrayList<Object> selectAllBeans(Object bean, int limit, boolean desc, Field orderBy, SQLiteDatabase conn) {
         ArrayList<Object> beans = new ArrayList<Object>();
         try{
             Entity entity = bean.getClass().getAnnotation(Entity.class);
@@ -222,6 +229,13 @@ public class GenericPersistence extends Database {
             if(orderBy != null){
                 sql+= " ORDER BY "+ databaseColumn(orderBy);
             }
+            if(desc){
+                sql+= " DESC";
+            }
+            if(limit > 0){
+                sql+= " LIMIT "+ limit;
+            }
+
 
             Cursor rs = conn.rawQuery(sql, null);
             while (rs.moveToNext()) {
@@ -233,33 +247,6 @@ public class GenericPersistence extends Database {
         return beans;
     }
 
-    public ArrayList<Object> selectBeansOrderByField(Object bean, String fieldName) {
-        Field field = getField(bean, fieldName);
-        //System.out.println("field "+field+" Nome "+fieldName + getFields(bean).toString());
-        return selectBeansOrderByField(bean, field);
-    }
-    public ArrayList<Object> selectBeansOrderByField(Object bean, Field orderBy) {
-        this.openConnection();
-        ArrayList<Object> beans = selectBeansOrderByField(bean, orderBy, this.database);
-        this.closeConnection();
-        return beans;
-    }
-    public ArrayList<Object> selectBeansOrderByField(Object bean, Field orderBy, SQLiteDatabase conn) {
-        ArrayList<Object> beans = new ArrayList<Object>();
-        try{
-            Entity entity = bean.getClass().getAnnotation(Entity.class);
-            ArrayList<Field> beanFields = getFields(bean);
-            String sql = "SELECT * FROM " + entity.table() + " ORDER BY "+ databaseColumn(orderBy) + " DESC LIMIT 10";
-
-            Cursor rs = conn.rawQuery(sql, null);
-            while (rs.moveToNext()) {
-                beans.add(result(rs, bean, beanFields));
-            }
-        }catch (SQLException s){
-            s.printStackTrace();
-        }
-        return beans;
-    }
     public ArrayList<Object> selectMany(Object bean, Object target) {
         return selectMany(bean, target, getOrderField(target));
     }
