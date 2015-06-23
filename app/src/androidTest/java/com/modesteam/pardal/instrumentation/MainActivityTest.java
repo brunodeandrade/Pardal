@@ -589,4 +589,79 @@ public class MainActivityTest {
         onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void shouldShowBrandRankingMaximumvelocity() {
+        //List
+        onView(withId(R.id.bBrand)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_maximumVelocity)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Marca")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("VW"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowBrandRankingTotalTickets() {
+        //List
+        onView(withId(R.id.bBrand)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_totalTickets)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Marca")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("HONDA"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void shouldShowBrandRankingAverageExceded() {
+        //List
+        onView(withId(R.id.bBrand)).perform(click());
+        onView(withId(R.id.bRank)).perform(click());
+        onView(withId(R.id.button_averageExceded)).perform(click());
+
+        Fragment fragment = mActivityRule.getActivity().getSupportFragmentManager().findFragmentById(R.id.container);
+        final HorizontalBarChart barChart = (HorizontalBarChart) fragment.getView().findViewById(R.id.chartRanking);
+
+        //Click in last ranking item
+        mActivityRule.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barChart.highlightValue(0,0);
+                barChart.highlightTouch(barChart.getHighlighted()[0]);
+            }
+        });
+
+
+        onView(withText("Marca")).check(matches(isDisplayed()));
+        onView(withId(R.id.textViewName)).check(matches(withText(containsString("KIA"))));
+        onView(withId(R.id.compareButton)).check(matches(isDisplayed()));
+    }
+
 }
