@@ -235,6 +235,7 @@ public class RankOrListFragment extends Fragment implements View.OnClickListener
                             break;
                         case "6":
                             mListener.onFragmentInteraction(CategoryContent.ITEM_MAP.get(6).id, BrandListFragment.newInstance("6", ""));
+                            break;
                     }
                     break;
             }
