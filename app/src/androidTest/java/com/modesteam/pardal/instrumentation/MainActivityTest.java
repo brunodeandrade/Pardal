@@ -38,8 +38,10 @@ import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.Highlight;
 import com.modesteam.pardal.MainActivity;
+import com.modesteam.pardal.Pardal;
 import com.modesteam.pardal.R;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +55,12 @@ public class MainActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
+
+    @Before
+    public void setUp(){
+        Pardal.getInstance().setDatabaseName("database.dev.sqlite3.db");
+    }
+
 
     @Test
     public void shouldShowBrandDetail() {
@@ -92,6 +100,7 @@ public class MainActivityTest {
         onView(withText("Modelo")).check(matches(isDisplayed()));
 
         //Detail
+        //onData(hasToString(containsString("1215 C"))).perform(click());
         onView(withText("1215 C")).check(matches(isDisplayed())).perform(click());
 
         //Test
