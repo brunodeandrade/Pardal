@@ -11,7 +11,7 @@ public class Pardal extends Application{
     private static String databaseName;
 
     public Pardal(){
-        databaseName = "database.dev.sqlite3.db";
+        databaseName = "database.sqlite3.db";
         instance = this;
     }
 
