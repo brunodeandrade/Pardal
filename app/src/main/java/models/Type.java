@@ -1,5 +1,9 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
+import annotations.OrderBy;
+import helpers.Category;
 import helpers.Condition;
 import helpers.GenericPersistence;
 
@@ -14,7 +18,8 @@ import annotations.ManyRelations;
 
 @Entity(table="type", primaryKey="id")
 @ManyRelations({@HasMany(entity=Model.class, foreignKey="idType")})
-public class Type {
+@OrderBy(field = "name")
+public class Type implements ComparableCategory {
 	
 	@Column(name="_id", nullable=false)
 	private int id;
@@ -80,19 +85,19 @@ public class Type {
     }
 
 
-    public boolean save() throws ClassNotFoundException, SQLException, NotNullableException{
+    public boolean save() throws NotNullableException{
 		GenericPersistence gP = new GenericPersistence();
 		boolean result = gP.insertBean(this);
 		this.setId(Type.last().getId());
 		return result;
 	}
 	
-	public static Type get(int id) throws ClassNotFoundException, SQLException{
+	public static Type get(int id) {
 		GenericPersistence gP = new GenericPersistence();
 		return (Type) gP.selectBean(new Type(id));
 	}
 	
-	public static ArrayList<Type> getAll() throws ClassNotFoundException, SQLException{
+	public static ArrayList<Type> getAll() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<Type> types = new ArrayList<Type>();
 		for (Object bean : gP.selectAllBeans(new Type())) {
@@ -101,22 +106,22 @@ public class Type {
 		return types;
 	}
 	
-	public static int count() throws ClassNotFoundException, SQLException {
+	public static int count()  {
 		GenericPersistence gDB = new GenericPersistence();
 		return gDB.countBean(new Type());
 	}
 	
-	public static Type first() throws ClassNotFoundException, SQLException{
+	public static Type first() {
 		GenericPersistence gP = new GenericPersistence();
 		return (Type) gP.firstOrLastBean(new Type() , false);
 	}
 	
-	public static Type last() throws ClassNotFoundException, SQLException{
+	public static Type last() {
 		GenericPersistence gP = new GenericPersistence();
 		return (Type) gP.firstOrLastBean(new Type() , true);
 	}
 	
-	public static ArrayList<Type> getWhere(Condition condition) throws ClassNotFoundException, SQLException{
+	public static ArrayList<Type> getWhere(Condition condition) {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<Type> types = new ArrayList<Type>();
 		for (Object bean : gP.selectWhere(new Type(), condition)) {
@@ -125,18 +130,23 @@ public class Type {
 		return types;
 	}
 	
-	public boolean delete() throws ClassNotFoundException, SQLException {
+	public boolean delete()  {
 		GenericPersistence gP = new GenericPersistence();
 		return gP.deleteBean(this);
 	}
 	
-	public ArrayList<Model> getModels() throws ClassNotFoundException, SQLException{
+	public ArrayList<Model> getModels() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<Model> beans = new ArrayList<Model>();
 		for (Object bean : gP.selectMany(this, new Model())) {
 			beans.add((Model)bean);
 		}
 		return beans;
+	}
+
+	@Override
+	public Category getCategory() {
+		return Category.TYPE;
 	}
 
 	@Override

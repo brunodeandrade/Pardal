@@ -5,12 +5,14 @@ import com.modesteam.pardal.Pardal;
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import helpers.Condition;
 import helpers.Operator;
 import libraries.NotNullableException;
 import models.Brand;
 import models.Model;
+import models.State;
 import models.Type;
 
 /**
@@ -22,6 +24,9 @@ public class TypeTest extends TestCase {
     Type type1, type2;
     public void setUp() throws SQLException, NotNullableException, ClassNotFoundException {
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+        for (Type type: Type.getAll()){
+            type.delete();
+        }
         type1 = new Type("Carro tipo passageiro","PASSAGEIRO");
         type2 = new Type("Carro tipo carga","CARGA");
         type1.save();
@@ -70,6 +75,18 @@ public class TypeTest extends TestCase {
     public void testShouldGetWhereTypeFromDatabase() throws SQLException, ClassNotFoundException, NotNullableException {
         Condition condition = new Condition(new Type(),"name", Operator.EQUAL,"PASSAGEIRO");
         assertEquals(type1.getName(), Type.getWhere(condition).get(0).getName());
+    }
+
+    public void testShouldShowTypeSorted() throws SQLException, ClassNotFoundException, NotNullableException {
+        Type typeZ = new Type ("1","Z");
+        typeZ.save();
+        Type typeA = new Type ("2","A");
+        typeA.save();
+        ArrayList<Type> list = Type.getAll();
+        assertEquals(typeA.getName(), list.get(0).getName());
+        assertEquals(typeZ.getName(), list.get(list.size() - 1).getName());
+        typeA.delete();
+        typeZ.delete();
     }
 //Metodos Diferentes por classe
 

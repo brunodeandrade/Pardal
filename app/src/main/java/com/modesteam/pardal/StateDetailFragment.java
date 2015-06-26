@@ -1,11 +1,14 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -28,12 +31,11 @@ import models.Tickets;
 public class StateDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String IDState = "idState";
-    private static final String Name = "name";
+    private static State stateDetail = null;
+    private static final String ID_STATE = "idState";
 
     // TODO: Rename and change types of parameters
     private int idState;
-    private String name;
 
     private OnFragmentInteractionListener mListener;
 
@@ -41,15 +43,15 @@ public class StateDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     *
      * @return A new instance of fragment StateDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static StateDetailFragment newInstance(int param1, String param2) {
+    public static StateDetailFragment newInstance(State state) {
         StateDetailFragment fragment = new StateDetailFragment();
         Bundle args = new Bundle();
-        args.putInt(IDState, param1);
-        args.putString(Name, param2);
+        stateDetail = state;
+        args.putInt(ID_STATE, state.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,8 +64,7 @@ public class StateDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            idState = getArguments().getInt(IDState);
-            name = getArguments().getString(Name);
+            idState = getArguments().getInt(ID_STATE);
         }
     }
 
@@ -72,43 +73,7 @@ public class StateDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_state_detail, container, false);
-
-        try {
-            State state = State.get(idState);
-            ArrayList<City> listCity = state.getCities();
-            ArrayList<HighwayStretch> listHighwayStretches = new ArrayList<>();
-            ArrayList<Tickets> listTickets = new ArrayList<>();
-            
-            double averageExceded = state.getAverageExceded();
-            double maximumMeasuredVelocity = state.getMaximumMeasuredVelocity();
-            int totalTickets = state.getTotalTickets();
-            int totalCities = listCity.size();
-
-            TextView textViewName = (TextView) rootView.findViewById(R.id.textViewName);
-            textViewName.setText((name));
-
-            TextView textViewCities = (TextView) rootView.findViewById(R.id.textViewCities);
-            textViewCities.setText(Integer.toString(totalCities));
-
-            TextView textViewTickets = (TextView) rootView.findViewById(R.id.textViewTickets);
-            textViewTickets.setText(Integer.toString(totalTickets));
-
-            TextView textViewMaximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.textViewMaximumMeasuredVelocity);
-            textViewMaximumMeasuredVelocity.setText(String.format("%.1f", maximumMeasuredVelocity) + " km/h");
-
-            TextView textViewAverageExcede = (TextView) rootView.findViewById(R.id.textViewAverageExceded);
-            textViewAverageExcede.setText(String.format("%.1f", averageExceded) + " km/h");
-        } catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }catch (NullPointerException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }
-
+        detailState(rootView);
         return rootView;
 
     }
@@ -128,5 +93,56 @@ public class StateDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void detailState(View view) {
+        ArrayList<City> listCity = null;
+        ArrayList<HighwayStretch> listHighwayStretches = null;
+        ArrayList<Tickets> listTickets = null;
+        try {
+            listCity = stateDetail.getCities();
+            listHighwayStretches = new ArrayList<>();
+            listTickets = new ArrayList<>();
+            if (stateDetail==null){
+                stateDetail = State.get(getArguments().getInt(ID_STATE));
+            }
+        }catch (NullPointerException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }
+
+        double averageExceded = stateDetail.getAverageExceded();
+        double maximumMeasuredVelocity = stateDetail.getMaximumMeasuredVelocity();
+        int totalTickets = stateDetail.getTotalTickets();
+        int totalCities = listCity.size();
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText((stateDetail.getName()));
+        textViewName.setTypeface(typeface);
+
+        TextView textViewCities = (TextView) view.findViewById(R.id.textViewCities);
+        textViewCities.setText(Integer.toString(totalCities));
+        textViewCities.setTypeface(typeface);
+
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(totalTickets));
+        textViewTotalTickets.setTypeface(typeface);
+
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(String.format("%.1f", maximumMeasuredVelocity) + " km/h");
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
+
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText(String.format("%.1f", averageExceded) + " km/h");
+        textViewAverageExceded.setTypeface(typeface);
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(stateDetail.getId(),StateListFragment.newInstance(stateDetail));
+            }
+        });
     }
 }

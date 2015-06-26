@@ -1,22 +1,25 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.modesteam.pardal.category.CategoryContent;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import exception.GenericAlertDialogException;
 import models.Brand;
-import models.Model;
-import models.Tickets;
 
 
 /**
@@ -29,12 +32,11 @@ import models.Tickets;
 public class BrandDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String IDBrand = "idBrand";
-    private static final String Name = "Name";
+    private static Brand brandDetail = null;
+    private static final String ID_BRAND = "idBrand";
 
     // TODO: Rename and change types of parameters
     private int idBrand;
-    private String name;
 
 
     private OnFragmentInteractionListener mListener;
@@ -51,15 +53,15 @@ public class BrandDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     *
      * @return A new instance of fragment BrandDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BrandDetailFragment newInstance(int param1, String param2) {
+    public static BrandDetailFragment newInstance(Brand brand) {
         BrandDetailFragment fragment = new BrandDetailFragment();
         Bundle args = new Bundle();
-        args.putInt(IDBrand, param1);
-        args.putString(Name, param2);
+        brandDetail = brand;
+        args.putInt(ID_BRAND, brand.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -72,8 +74,7 @@ public class BrandDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            idBrand = getArguments().getInt(IDBrand);
-            name = getArguments().getString(Name);
+            idBrand = getArguments().getInt(ID_BRAND);
         }
     }
 
@@ -82,38 +83,7 @@ public class BrandDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_brand_detail, container, false);
-
-        try {
-            
-            Brand brand = Brand.get(idBrand);
-            double averageExceded = brand.getAverageExceded(), maximumMeasuredVelocity=brand.getMaximumMeasuredVelocity();
-            int  totalTickets=brand.getTotalTickets();
-
-            TextView textViewTotalTickets = (TextView) rootView.findViewById(R.id.textViewTotalTickets);
-            textViewTotalTickets.setText(Integer.toString(totalTickets));
-
-            TextView textViewName = (TextView) rootView.findViewById(R.id.textViewName);
-            textViewName.setText((name));
-
-            TextView textViewAverageExceded = (TextView) rootView.findViewById(R.id.textViewAverageExceded);
-            textViewAverageExceded.setText((String.format("%.1f", averageExceded) + " km/h"));
-
-            TextView textViewMaximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.textViewMaximumMeasuredVelocity);
-            textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
-
-        } catch (ClassNotFoundException e) {
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-           // e.printStackTrace();
-        } catch (SQLException e) {
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-            //e.printStackTrace();
-        } catch (NullPointerException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }
-
+        detailBrand(rootView);
         return rootView;
     }
 
@@ -133,6 +103,48 @@ public class BrandDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void detailBrand(View view) {
+        try {
+            if (brandDetail==null){
+                brandDetail = Brand.get(getArguments().getInt(ID_BRAND));
+            }
+
+        } catch (NullPointerException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }
+
+        double averageExceded = brandDetail.getAverageExceded(), maximumMeasuredVelocity=brandDetail.getMaximumMeasuredVelocity();
+        int  totalTickets = brandDetail.getTotalTickets();
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(totalTickets));
+        textViewTotalTickets.setTypeface(typeface);
+
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
+
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText((brandDetail.getName()));
+        textViewName.setTypeface(typeface);
+
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText((String.format("%.1f", averageExceded) + " km/h"));
+        textViewAverageExceded.setTypeface(typeface);
+
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText((Double.toString(maximumMeasuredVelocity )+ " km/h"));
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
+
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(brandDetail.getId(),BrandListFragment.newInstance(brandDetail));
+            }
+        });
     }
 
 

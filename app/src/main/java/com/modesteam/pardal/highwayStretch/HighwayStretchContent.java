@@ -20,13 +20,7 @@ public class HighwayStretchContent {
     static {
         // Add all type items.
         ArrayList<HighwayStretch> allHighwayStretches = null;
-        try {
-            allHighwayStretches = HighwayStretch.getAll();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        allHighwayStretches = HighwayStretch.getAll();
         for (HighwayStretch highwayStretch: allHighwayStretches){
             addItem(highwayStretch);
         }

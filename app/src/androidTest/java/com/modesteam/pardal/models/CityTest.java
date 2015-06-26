@@ -24,6 +24,12 @@ public class CityTest extends TestCase {
     State state;
     public void setUp() throws SQLException, NotNullableException, ClassNotFoundException {
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+        for (State state: State.getAll()){
+            state.delete();
+        }
+        for (City city: City.getAll()){
+            city.delete();
+        }
         state = new State("DF");
         state.save();
         city1 = new City("1","City1",1);
@@ -70,6 +76,16 @@ public class CityTest extends TestCase {
         assertEquals(3, City.getAll().size());
         city3.delete();
         assertEquals(2, City.getAll().size());
+    }
+
+    public void testShouldShowCitySorted() throws SQLException, ClassNotFoundException, NotNullableException {
+        City cityZ = new City ("1","Z", 1);
+        cityZ.save();
+        City cityA = new City ("2","A", 2);
+        cityA.save();
+        ArrayList<City> list = City.getAll();
+        assertEquals(cityA.getName(), list.get(0).getName());
+        assertEquals(cityZ.getName(), list.get(list.size() - 1).getName());
     }
 
     //Metodos Diferentes por classe

@@ -1,5 +1,9 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
+import annotations.OrderBy;
+import helpers.Category;
 import helpers.Condition;
 import helpers.GenericPersistence;
 
@@ -17,7 +21,8 @@ import annotations.OneRelations;
 @Entity(table="city", primaryKey="id")
 @OneRelations({@HasOne(entity=State.class, reference="idState", belongs=true)})
 @ManyRelations({@HasMany(entity=HighwayStretch.class, foreignKey="idCity")})
-public class City {
+@OrderBy(field = "name")
+public class City implements ComparableCategory {
 
 	@Column(name="_id", nullable=false)
 	private int id;
@@ -100,19 +105,19 @@ public class City {
         this.maximumMeasuredVelocity = maximumMeasuredVelocity;
     }
 	
-	public boolean save() throws ClassNotFoundException, SQLException, NotNullableException{
+	public boolean save() throws  NotNullableException{
 		GenericPersistence gP = new GenericPersistence();
 		boolean result = gP.insertBean(this);
 		this.setId(City.last().getId());
 		return result;
 	}
 	
-	public static City get(int id) throws ClassNotFoundException, SQLException{
+	public static City get(int id) {
 		GenericPersistence gP = new GenericPersistence();
 		return (City) gP.selectBean(new City(id));
 	}
 	
-	public static ArrayList<City> getAll() throws ClassNotFoundException, SQLException{
+	public static ArrayList<City> getAll() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<City> cities = new ArrayList<City>();
 		for (Object bean : gP.selectAllBeans(new City())) {
@@ -121,22 +126,22 @@ public class City {
 		return cities;
 	}
 	
-	public static int count() throws ClassNotFoundException, SQLException {
+	public static int count()  {
 		GenericPersistence gDB = new GenericPersistence();
 		return gDB.countBean(new City());
 	}
 	
-	public static City first() throws ClassNotFoundException, SQLException{
+	public static City first() {
 		GenericPersistence gP = new GenericPersistence();
 		return (City) gP.firstOrLastBean(new City() , false);
 	}
 	
-	public static City last() throws ClassNotFoundException, SQLException{
+	public static City last() {
 		GenericPersistence gP = new GenericPersistence();
 		return (City) gP.firstOrLastBean(new City() , true);
 	}
 	
-	public static ArrayList<City> getWhere(Condition condition) throws ClassNotFoundException, SQLException{
+	public static ArrayList<City> getWhere(Condition condition) {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<City> cities = new ArrayList<City>();
 		for (Object bean : gP.selectWhere(new City(), condition)) {
@@ -145,23 +150,28 @@ public class City {
 		return cities;
 	}
 
-	public boolean delete() throws ClassNotFoundException, SQLException {
+	public boolean delete()  {
 		GenericPersistence gP = new GenericPersistence();
 		return gP.deleteBean(this);
 	}
 
-	public State getState() throws ClassNotFoundException, SQLException{
+	public State getState() {
 		GenericPersistence gP = new GenericPersistence();
 		return (State) gP.selectOne(this, new State());
 	}
 	
-	public ArrayList<HighwayStretch> getHighwayStretches() throws ClassNotFoundException, SQLException{
+	public ArrayList<HighwayStretch> getHighwayStretches() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<HighwayStretch> stretches = new ArrayList<HighwayStretch>();
 		for (Object bean : gP.selectMany(this, new HighwayStretch())) {
 			stretches.add((HighwayStretch)bean);
 		}
 		return stretches;
+	}
+
+	@Override
+	public Category getCategory() {
+		return Category.CITY;
 	}
 
 	@Override

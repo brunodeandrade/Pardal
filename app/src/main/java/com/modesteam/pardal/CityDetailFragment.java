@@ -1,12 +1,14 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
-import android.net.Uri;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -16,7 +18,6 @@ import java.util.ArrayList;
 import exception.GenericAlertDialogException;
 import models.City;
 import models.HighwayStretch;
-import models.Model;
 import models.State;
 
 
@@ -30,9 +31,12 @@ import models.State;
 public class CityDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static City cityForDetail;
+    private static City cityForDetail = null;
+    private static final String ID_CITY = "idCity";
 
     private OnFragmentInteractionListener mListener;
+
+    private int idCity;
 
     /**
      * Use this factory method to create a new instance of
@@ -46,6 +50,7 @@ public class CityDetailFragment extends Fragment {
         CityDetailFragment fragment = new CityDetailFragment();
         Bundle args = new Bundle();
         cityForDetail = city;
+        args.putInt(ID_CITY,city.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +63,7 @@ public class CityDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            idCity = getArguments().getInt(ID_CITY);
 
         }
     }
@@ -67,7 +73,8 @@ public class CityDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_city_detail, container, false);
-        detailType(rootView);
+        detailCity(rootView);
+
         return rootView;
     }
 
@@ -88,41 +95,54 @@ public class CityDetailFragment extends Fragment {
         mListener = null;
     }
 
-    public void detailType(View view) {
+    public void detailCity(View view) {
 
         ArrayList<HighwayStretch> arrayHighwayStretchesOfCity = null;
         State stateOfCity = null;
         try {
+            if (cityForDetail==null){
+                cityForDetail = City.get(getArguments().getInt(ID_CITY));
+            }
             arrayHighwayStretchesOfCity = cityForDetail.getHighwayStretches();
             stateOfCity = cityForDetail.getState();
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
+
         }catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
+            genericAlertDialogException.createAlert(this.getActivity());
         }
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        TextView textViewCompare,textViewName, textViewTotalHighwayStretches,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
-        TextView nameCity, totalHighwayStretches,totalTickets,maxVelocity, averageExceded;
+        textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText(cityForDetail.getName()+" - "+stateOfCity.getName());
+        textViewName.setTypeface(typeface);
 
-        nameCity = (TextView) view.findViewById(R.id.textViewName);
-        nameCity.setText(cityForDetail.getName()+" - "+stateOfCity.getName());
+        textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
 
-        totalHighwayStretches = (TextView) view.findViewById(R.id.textViewHighwayStretches);
-        totalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());
+        textViewTotalHighwayStretches = (TextView) view.findViewById(R.id.textViewHighwayStretches);
+        textViewTotalHighwayStretches.setText("" + arrayHighwayStretchesOfCity.size());
+        textViewTotalHighwayStretches.setTypeface(typeface);
 
-        totalTickets = (TextView) view.findViewById(R.id.textViewTickets);
-        totalTickets.setText(""+cityForDetail.getTotalTickets());
+        textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(""+cityForDetail.getTotalTickets());
+        textViewTotalTickets.setTypeface(typeface);
 
-        maxVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
-        maxVelocity.setText(cityForDetail.getMaximumMeasuredVelocity().toString());
+        textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(cityForDetail.getMaximumMeasuredVelocity().toString());
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
 
-        averageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         DecimalFormat f = new DecimalFormat("#.##");
-        averageExceded.setText(""+f.format(cityForDetail.getAverageExceded()));
+        textViewAverageExceded.setText(""+f.format(cityForDetail.getAverageExceded()));
+        textViewAverageExceded.setTypeface(typeface);
+
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(cityForDetail.getId(), CityListFragment.newInstance(cityForDetail));
+            }
+        });
 
     }
 

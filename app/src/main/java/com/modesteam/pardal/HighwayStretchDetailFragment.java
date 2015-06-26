@@ -1,19 +1,24 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import exception.GenericAlertDialogException;
+import models.City;
 import models.HighwayStretch;
+import models.State;
 import models.Tickets;
 
 
@@ -27,18 +32,12 @@ import models.Tickets;
 public class HighwayStretchDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static HighwayStretch highwayStretchDetail;
+    private static HighwayStretch highwayStretchDetail = null;
     private static final String ID_HIGHWAY_STRETCH = "idHighwayStretch";
-    private static final String NAME = "nameHighwayStretch";
-    private static final String KM = "kmHighwayStretch";
 
 
     // TODO: Rename and change types of parameters
     private int idHighwayStretch;
-    private String nameHighwayStretch;
-    private String cityHighwayStretch;
-    private String stateHighwayStretch;
-    private int kmHighwayStretch;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,7 +45,7 @@ public class HighwayStretchDetailFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param idHighwayStretch Parameter 1.
+     *
      * @return A new instance of fragment HighwayStretchDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -55,8 +54,6 @@ public class HighwayStretchDetailFragment extends Fragment {
         Bundle args = new Bundle();
         highwayStretchDetail = highwayStretch;
         args.putInt(ID_HIGHWAY_STRETCH, highwayStretch.getId());
-        args.putString(NAME, highwayStretch.getNumber());
-        args.putInt(KM, highwayStretch.getKilometer());
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,8 +67,6 @@ public class HighwayStretchDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             idHighwayStretch = getArguments().getInt(ID_HIGHWAY_STRETCH);
-            nameHighwayStretch = getArguments().getString(NAME);
-            kmHighwayStretch = getArguments().getInt(KM);
         }
     }
 
@@ -80,80 +75,8 @@ public class HighwayStretchDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_highway_stretch_detail, container, false);
-
-        try {
-            // Implemente
-
-            /*/Imprime total de rodovias
-            TextView total = (TextView) rootView.findViewById(R.id.total);
-            total.setText(Integer.toString(HighwayStretch.getAll().size()));
-            */
-
-            //Imprime total de tickets na rodovia
-            TextView totalTickets = (TextView) rootView.findViewById(R.id.totalTickets);
-            ArrayList<Tickets> tickets = highwayStretchDetail.getTickets();
-            cityHighwayStretch = highwayStretchDetail.getCity().getName();
-            stateHighwayStretch = highwayStretchDetail.getCity().getState().getName();
-
-            int amountTickets = 0;
-            int actualTicket = 0;
-            double velocity = tickets.get(0).getVelocityLimit();
-            double velocityExceded = 0;
-            double maximumVelocity = tickets.get(0).getMaximumMeasuredVelocity();
-
-
-            for (Tickets ticket : tickets){
-                amountTickets += ticket.getTotalTickets();
-                velocityExceded += tickets.get(actualTicket).getAverageExceded();
-                actualTicket++;
-            }
-            totalTickets.setText(Integer.toString(amountTickets));
-
-
-            if(tickets.size() != 0) {
-                velocityExceded = velocityExceded / tickets.size();
-            }else{
-                velocityExceded = 0;
-            }
-
-            //Imprime velocidade limite dos carros na rodovia
-            TextView velocityLimit = (TextView) rootView.findViewById(R.id.velocityLimit);
-            velocityLimit.setText(Double.toString(velocity) + " km/h");
-
-            //Imprime a media de velocidade excedida
-            TextView averageExceded = (TextView) rootView.findViewById(R.id.averageExceded);
-            averageExceded.setText(String.format("%.1f",velocityExceded) + " km/h");
-
-            //Imprime a maxima velocidade registrada
-            TextView maximumMeasuredVelocity = (TextView) rootView.findViewById(R.id.maximumMeasuredVelocity);
-            maximumMeasuredVelocity.setText(Double.toString(maximumVelocity) + " km/h");
-
-            TextView name = (TextView) rootView.findViewById(R.id.textViewName);
-            name.setText("BR "+(nameHighwayStretch)+" KM "+(kmHighwayStretch));
-
-            TextView cityState = (TextView) rootView.findViewById(R.id.textViewCityState);
-            cityState.setText(""+(cityHighwayStretch)+"/"+(stateHighwayStretch));
-
-
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }catch (NullPointerException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }
-
+        detailHighwayStretch(rootView);
         return rootView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(0, HighwayStretchListFragment.newInstance("",""));
-        }
     }
 
     @Override
@@ -171,5 +94,71 @@ public class HighwayStretchDetailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void detailHighwayStretch(View view) {
+
+        City cityOfHighwayStretch = null;
+        State stateOfHighwayStretch = null;
+        ArrayList<Tickets> tickets = null;
+        double velocityLimitOfHighwayStretch = 0.0;
+
+
+        try {
+            if (highwayStretchDetail==null){
+                highwayStretchDetail = HighwayStretch.get(getArguments().getInt(ID_HIGHWAY_STRETCH));
+            }
+            cityOfHighwayStretch = highwayStretchDetail.getCity();
+            stateOfHighwayStretch = cityOfHighwayStretch.getState();
+
+            tickets = highwayStretchDetail.getTickets();
+
+            if (tickets.size()>0) {
+                velocityLimitOfHighwayStretch = tickets.get(0).getVelocityLimit();
+            }
+
+        }catch (NullPointerException e){
+            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
+            genericAlertDialogException.createAlert(this.getActivity());
+        }
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+
+        //Imprime total ticktes
+        TextView textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(Integer.toString(highwayStretchDetail.getTotalTickets()));
+        textViewTotalTickets.setTypeface(typeface);
+
+        //Imprime velocidade limite dos carros na rodovia
+        TextView textViewVelocityLimit = (TextView) view.findViewById(R.id.velocityLimit);
+        textViewVelocityLimit.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+        textViewVelocityLimit.setTypeface(typeface);
+
+        //Imprime a media de velocidade excedida
+        TextView textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewAverageExceded.setText(Double.toString(velocityLimitOfHighwayStretch) + " km/h");
+        textViewAverageExceded.setTypeface(typeface);
+
+        //Imprime a maxima velocidade registrada
+        TextView textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(Double.toString(highwayStretchDetail.getMaximumMeasuredVelocity()) + " km/h");
+        textViewMaximumMeasuredVelocity.setTypeface(typeface);
+
+        TextView textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText("BR "+(highwayStretchDetail.getNumber())+" KM "+(highwayStretchDetail.getKilometer()));
+        textViewName.setTypeface(typeface);
+
+        TextView textViewcityState = (TextView) view.findViewById(R.id.textViewCityState);
+        textViewcityState.setText(""+(cityOfHighwayStretch.getName())+"/"+(stateOfHighwayStretch.getName()));
+        textViewcityState.setTypeface(typeface);
+
+        TextView textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
+
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(highwayStretchDetail.getId(),HighwayStretchListFragment.newInstance(highwayStretchDetail));
+            }
+        });
     }
 }

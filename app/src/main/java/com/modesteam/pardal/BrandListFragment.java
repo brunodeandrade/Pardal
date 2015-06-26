@@ -3,12 +3,21 @@ package com.modesteam.pardal;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -16,7 +25,11 @@ import android.widget.TextView;
 import com.modesteam.pardal.brand.BrandContent;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import helpers.ListViewSearch;
 import models.Brand;
 
 /**
@@ -28,16 +41,19 @@ import models.Brand;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class BrandListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class BrandListFragment extends Fragment implements AbsListView.OnItemClickListener , OnReverseListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_BRAND = "brand";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Brand brand;
+    private boolean changeButtonReverse = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -45,12 +61,13 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
+    private EditText mSearchText;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private ArrayAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static BrandListFragment newInstance(String param1, String param2) {
@@ -58,6 +75,15 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static BrandListFragment newInstance(Brand brand) {
+        BrandListFragment fragment = new BrandListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_BRAND, brand.getId());
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,14 +100,30 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            if(getArguments().getInt(ARG_BRAND) == 0){
+                mParam1 = getArguments().getString(ARG_PARAM1);
+                mParam2 = getArguments().getString(ARG_PARAM2);
+            }else{
+
+                brand = Brand.get(getArguments().getInt(ARG_BRAND));
+
+            }
         }
 
         // TODO: Change Adapter to display your content
+        List<Brand> listBrand = new ArrayList<Brand>();
+        if(brand != null) {
+            for (Brand brandItem : BrandContent.ITEMS) {
+                if (brandItem.getId() != brand.getId()) {
+                    listBrand.add(brandItem);
+                }
+            }
+        }else{
+            listBrand = BrandContent.ITEMS;
+        }
         mAdapter = new ArrayAdapter<Brand>(getActivity(),
-                  android.R.layout.simple_list_item_1, android.R.id.text1, BrandContent.ITEMS);
-
+                  android.R.layout.simple_list_item_1, android.R.id.text1, listBrand);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -93,11 +135,32 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
+        Log.d("TAG: ", mListView.getItemAtPosition(0).toString());
+
+        mSearchText = (EditText) view.findViewById(R.id.searchEditText);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
 
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+
+        final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
+        ordenateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+                onReverseClick();
+                if (changeButtonReverse == false) {
+                    ordenateButton.setImageResource(R.drawable.arrow_up_float);
+                    changeButtonReverse = true;
+                } else {
+                    ordenateButton.setImageResource(R.drawable.arrow_down_float);
+                    changeButtonReverse = false;
+                }
+            }
+        });
+
         return view;
-    }
+     }
 
     @Override
     public void onAttach(Activity activity) {
@@ -119,10 +182,13 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected
-                Brand brandSelected = BrandContent.ITEMS.get(position);
-                mListener.onFragmentInteraction(position, BrandDetailFragment.newInstance(position, brandSelected.getName()));
+            if(brand == null){
+                Brand brandSelected = (Brand)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(position, BrandDetailFragment.newInstance(brandSelected));
+            }else{
+                Brand brandSelected = (Brand)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(position, CompareFragment.newInstance(brand,brandSelected,"Marca"));
+            }
         }
     }
 
@@ -137,5 +203,17 @@ public class BrandListFragment extends Fragment implements AbsListView.OnItemCli
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
+    }
+
+    @Override
+    public void onReverseClick() {
+        ArrayList<Brand> list = (ArrayList<Brand>)BrandContent.ITEMS;
+        Collections.reverse(list);
+        mAdapter = new ArrayAdapter<Brand>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, list);
+        mListView.setAdapter(mAdapter);
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
     }
 }

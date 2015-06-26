@@ -1,0 +1,218 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.modesteam.pardal.CategoryOptionsFragment"
+    android:id="@+id/category_options">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bBrand"
+        android:layout_gravity="center_vertical"
+        android:background="@layout/on_selector_brand"
+        android:layout_alignLeft="@+id/bState"
+        android:layout_alignStart="@+id/bState"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categorias"
+        android:id="@+id/sCategories"
+        android:layout_gravity="center_horizontal|top"
+        android:textStyle="bold"
+        android:textSize="24dip"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="123dp"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true" />
+
+    <ImageButton
+        android:layout_width="105dp"
+        android:layout_height="64dp"
+        android:text="Sobre"
+        android:id="@+id/bAbout"
+        android:background="@layout/on_selector_about"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="129dp"
+        android:layout_marginTop="415dp"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Modelo"
+        android:id="@+id/sModel"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="79dp"
+        android:layout_marginTop="233dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Marca"
+        android:id="@+id/sBrand"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="83dp"
+        android:layout_marginTop="110dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Cidade"
+        android:id="@+id/sCity"
+        android:layout_column="0"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="229dp"
+        android:layout_marginTop="233dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Tipo"
+        android:id="@+id/sType"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="356dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rodovia"
+        android:id="@+id/sHighway"
+        android:layout_column="2"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="229dp"
+        android:layout_marginTop="356dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bHighway"
+        android:layout_gravity="right|top"
+        android:background="@layout/on_selector_highway"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="216dp"
+        android:layout_marginTop="269dp"
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Estado"
+        android:id="@+id/sState"
+        android:layout_column="1"
+        android:capitalize="words"
+        android:layout_gravity="right|center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="227dp"
+        android:layout_marginTop="110dp" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bState"
+        android:layout_gravity="center"
+        android:background="@layout/on_selector_state"
+        android:focusableInTouchMode="false"
+        android:layout_below="@+id/bType"
+        android:layout_marginLeft="216dp"
+        android:layout_marginTop="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/bCity"
+        android:layout_alignEnd="@+id/bCity"
+        android:adjustViewBounds="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignWithParentIfMissing="false" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bCity"
+        android:layout_gravity="left|bottom"
+        android:background="@layout/on_selector_city"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="216dp"
+        android:layout_marginTop="152dp"
+        android:adjustViewBounds="true" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bModel"
+        android:layout_gravity="right|bottom"
+        android:background="@layout/on_selector_model"
+        android:focusableInTouchMode="false"
+        android:accessibilityLiveRegion="polite"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="71dp"
+        android:layout_marginTop="152dp"
+        android:adjustViewBounds="true" />
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/bType"
+        android:background="@layout/on_selector_type"
+        android:focusableInTouchMode="false"
+        android:adjustViewBounds="true"
+        android:layout_alignTop="@+id/bHighway"
+        android:layout_alignLeft="@+id/bModel"
+        android:layout_alignStart="@+id/bModel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Sobre"
+        android:id="@+id/sAbout"
+        android:layout_column="1"
+        android:capitalize="words"
+        android:layout_gravity="right|center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="156dp"
+        android:layout_marginTop="482dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="false" />
+
+</RelativeLayout>

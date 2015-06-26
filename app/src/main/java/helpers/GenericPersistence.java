@@ -22,6 +22,7 @@ import annotations.OneRelations;
 import annotations.OrderBy;
 import libraries.Database;
 import libraries.NotNullableException;
+import models.Tickets;
 
 public class GenericPersistence extends Database {
 
@@ -30,7 +31,7 @@ public class GenericPersistence extends Database {
     public static String FIELDS = "fields";
     public static String PARAMETERS = "parameters";
 
-    public GenericPersistence() throws SQLException, ClassNotFoundException {
+    public GenericPersistence(){
         super();
     }
 
@@ -46,62 +47,64 @@ public class GenericPersistence extends Database {
         this.database.endTransaction();
     }
 
-    public boolean insertBean(Object bean) throws SQLException, NotNullableException {
+    public boolean insertBean(Object bean) throws  NotNullableException {
         this.openConnection();
         boolean result = insertBean(bean, this.database);
         this.closeConnection();
         return result;
     }
 
-    public boolean insertBean(Object bean, SQLiteDatabase conn) throws SQLException, NotNullableException {
-        Entity entity = bean.getClass().getAnnotation(Entity.class);
-        ArrayList<Field> beanFields = getFields(bean);
+    public boolean insertBean(Object bean, SQLiteDatabase conn) throws  NotNullableException {
+        long result = 0;
+        try {
+            Entity entity = bean.getClass().getAnnotation(Entity.class);
 
-        OneRelations oneRelations = bean.getClass().getAnnotation(OneRelations.class);
-        if(oneRelations != null){
-            for (int i = 0; i < oneRelations.value().length; i++) {
-                HasOne hasOne =  oneRelations.value()[i];
-                Field relationField = getField(bean, hasOne.reference());
-                if (isNullRelation(bean, relationField)){
-                    if (relationField.getAnnotation(Column.class).nullable()){
-                        beanFields.remove(relationField);
-                    } else {
-                        throw new NotNullableException();
+            ArrayList<Field> beanFields = getFields(bean);
+
+            OneRelations oneRelations = bean.getClass().getAnnotation(OneRelations.class);
+            if (oneRelations != null) {
+                for (int i = 0; i < oneRelations.value().length; i++) {
+                    HasOne hasOne = oneRelations.value()[i];
+                    Field relationField = getField(bean, hasOne.reference());
+                    if (isNullRelation(bean, relationField)) {
+                        if (relationField.getAnnotation(Column.class).nullable()) {
+                            beanFields.remove(relationField);
+                        } else {
+                            throw new NotNullableException();
+                        }
                     }
                 }
             }
+
+            Field primaryField = primaryField(bean);
+
+            beanFields.remove(primaryField);
+
+            HashMap<String, String> sqlSets = buildStrings(beanFields);
+
+            String sql = "INSERT INTO " + entity.table() + " (" + sqlSets.get(FIELDS) + ")";
+            sql += " VALUES(" + sqlSets.get(PARAMETERS) + ")";
+            this.pst = conn.compileStatement(sql);
+
+            prepare(pst, bean, beanFields);
+
+            result = this.pst.executeInsert();
+
+        }catch (SQLException s){
+            s.printStackTrace();
         }
 
-        Field primaryField = primaryField(bean);
-
-        beanFields.remove(primaryField);
-
-        HashMap<String, String> sqlSets = buildStrings(beanFields);
-
-        String sql = "INSERT INTO " + entity.table() + " (" + sqlSets.get(FIELDS) + ")";
-        sql += " VALUES(" + sqlSets.get(PARAMETERS)+")";
-        this.pst = conn.compileStatement(sql);
-
-        prepare(pst, bean, beanFields);
-
-        long result = this.pst.executeInsert();
         return (result != -1) ? true : false;
     }
 
-    public boolean insertOne(Object bean, Object one) throws SQLException{
-
-        long result = this.pst.executeInsert();
-        return (result == 1) ? true : false;
-    }
-
-    public boolean insertMany(Object mainBean, Object linkedBean) throws SQLException{
+    public boolean insertMany(Object mainBean, Object linkedBean) {
         this.openConnection();
         boolean result = insertMany(mainBean, linkedBean, this.database);
         this.closeConnection();
         return result;
     }
 
-    public boolean insertMany(Object mainBean, Object linkedBean, SQLiteDatabase conn) throws SQLException{
+    public boolean insertMany(Object mainBean, Object linkedBean, SQLiteDatabase conn) {
         ManyRelations hasMultiple = mainBean.getClass().getAnnotation(ManyRelations.class);
 
         if (hasMultiple != null){
@@ -123,152 +126,183 @@ public class GenericPersistence extends Database {
                 }
             }
         }
+
+
         return false;
     }
 
-    public Object selectBean(Object bean) throws SQLException {
+    public Object selectBean(Object bean) {
         this.openConnection();
         Object result = selectBean(bean, this.database);
         this.closeConnection();
         return result;
     }
 
-    public Object selectBean(Object bean, SQLiteDatabase conn) throws SQLException {
-
-        Entity entity = bean.getClass().getAnnotation(Entity.class);
-        ArrayList<Field> beanFields = getFields(bean);
-        Field primaryField = primaryField(bean);
-
-        String sql = "SELECT * FROM " + entity.table() + " WHERE " + primaryColumn(primaryField) + " = ?";
-
-        Cursor rs = prepare(bean, sql, primaryField, conn);
-
+    public Object selectBean(Object bean, SQLiteDatabase conn) {
         Object result = null;
-        if (rs.moveToFirst()) {
-            result = result(rs, bean, beanFields);
+        try{
+            Entity entity = bean.getClass().getAnnotation(Entity.class);
+            ArrayList<Field> beanFields = getFields(bean);
+            Field primaryField = primaryField(bean);
+
+            String sql = "SELECT * FROM " + entity.table() + " WHERE " + primaryColumn(primaryField) + " = ?";
+
+            Cursor rs = prepare(bean, sql, primaryField, conn);
+
+            if (rs.moveToFirst()) {
+                result = result(rs, bean, beanFields);
+            }
+        }catch (SQLException s){
+            s.printStackTrace();
         }
+
         return result;
     }
 
-    public Object selectOne(Object bean, Object one) throws SQLException {
+    public Object selectOne(Object bean, Object one) {
         this.openConnection();
         Object result = selectOne(bean, one, this.database);
         this.closeConnection();
         return result;
     }
 
-    public Object selectOne(Object bean, Object one, SQLiteDatabase conn) throws SQLException{
+    public Object selectOne(Object bean, Object one, SQLiteDatabase conn) {
         Object result = null;
-        Entity entity = one.getClass().getAnnotation(Entity.class);
-        ArrayList<Field> beanFields = getFields(one);
-        Field primaryField = primaryField(one);
-        OneRelations oneRelations = bean.getClass().getAnnotation(OneRelations.class);
-        if(oneRelations != null){
-            HasOne hasOne = null;
-            for (int i = 0; i < oneRelations.value().length; i++) {
-                if(oneRelations.value()[i].entity() == one.getClass()){
-                    hasOne = oneRelations.value()[i];
+        try{
+            Entity entity = one.getClass().getAnnotation(Entity.class);
+            ArrayList<Field> beanFields = getFields(one);
+            Field primaryField = primaryField(one);
+            OneRelations oneRelations = bean.getClass().getAnnotation(OneRelations.class);
+            if(oneRelations != null){
+                HasOne hasOne = null;
+                for (int i = 0; i < oneRelations.value().length; i++) {
+                    if(oneRelations.value()[i].entity() == one.getClass()){
+                        hasOne = oneRelations.value()[i];
+                    }
                 }
+
+                String sql = "SELECT * FROM " + entity.table() + " WHERE " +
+                        primaryColumn(primaryField) + " = ?";
+
+                Cursor rs = prepare(bean, sql, getField(bean, hasOne.reference()), conn);
+
+                if (rs.moveToFirst()) {
+                    result = result(rs, one, beanFields);
+                }
+
             }
-
-            String sql = "SELECT * FROM " + entity.table() + " WHERE " +
-                    primaryColumn(primaryField) + " = ?";
-
-            Cursor rs = prepare(bean, sql, getField(bean, hasOne.reference()), conn);
-
-            if (rs.moveToFirst()) {
-                result = result(rs, one, beanFields);
-            }
-
-
+        }catch (SQLException s){
+            s.printStackTrace();
         }
         return result;
     }
 
-    public ArrayList<Object> selectAllBeans(Object bean) throws SQLException {
+    public ArrayList<Object> selectAllBeans(Object bean) {
         return selectAllBeans(bean, getOrderField(bean));
     }
-    public ArrayList<Object> selectAllBeans(Object bean, Field orderBy) throws SQLException {
+    public ArrayList<Object> selectAllBeans(Object bean, int limit, boolean desc, Field orderBy) {
         this.openConnection();
-        ArrayList<Object> beans = selectAllBeans(bean, orderBy, this.database);
+        ArrayList<Object> beans = selectAllBeans(bean, limit, desc, orderBy, this.database);
         this.closeConnection();
         return beans;
     }
-    public ArrayList<Object> selectAllBeans(Object bean, SQLiteDatabase conn) throws SQLException {
-        return selectAllBeans(bean, getOrderField(bean), conn);
+
+    public ArrayList<Object> selectAllBeans(Object bean, Field orderBy) {
+        this.openConnection();
+        ArrayList<Object> beans = selectAllBeans(bean, 0, false, orderBy, this.database);
+        this.closeConnection();
+        return beans;
     }
-    public ArrayList<Object> selectAllBeans(Object bean, Field orderBy, SQLiteDatabase conn) throws SQLException {
+    public ArrayList<Object> selectAllBeans(Object bean, SQLiteDatabase conn) {
+        return selectAllBeans(bean, 0, false, getOrderField(bean), conn);
+    }
+    public ArrayList<Object> selectAllBeans(Object bean, int limit, boolean desc, Field orderBy, SQLiteDatabase conn) {
         ArrayList<Object> beans = new ArrayList<Object>();
+        try{
+            Entity entity = bean.getClass().getAnnotation(Entity.class);
+            ArrayList<Field> beanFields = getFields(bean);
 
-        Entity entity = bean.getClass().getAnnotation(Entity.class);
-        ArrayList<Field> beanFields = getFields(bean);
+            String sql = "SELECT * FROM " + entity.table();
 
-        String sql = "SELECT * FROM " + entity.table();
+            System.out.println(orderBy);
 
-        System.out.println(orderBy);
+            if(orderBy != null){
+                sql+= " ORDER BY "+ databaseColumn(orderBy);
+            }
+            if(desc){
+                sql+= " DESC";
+            }
+            if(limit > 0){
+                sql+= " LIMIT "+ limit;
+            }
 
-        if(orderBy != null){
-            sql+= " ORDER BY "+ databaseColumn(orderBy);
-        }
 
-        Cursor rs = conn.rawQuery(sql, null);
-        while (rs.moveToNext()) {
-            beans.add(result(rs, bean, beanFields));
+            Cursor rs = conn.rawQuery(sql, null);
+            while (rs.moveToNext()) {
+                beans.add(result(rs, bean, beanFields));
+            }
+        }catch (SQLException s){
+            s.printStackTrace();
         }
         return beans;
     }
 
-    public ArrayList<Object> selectMany(Object bean, Object target) throws SQLException{
+    public ArrayList<Object> selectMany(Object bean, Object target) {
         return selectMany(bean, target, getOrderField(target));
     }
-    public ArrayList<Object> selectMany(Object bean, Object target, Field orderBy) throws SQLException{
+    public ArrayList<Object> selectMany(Object bean, Object target, Field orderBy) {
         this.openConnection();
         ArrayList<Object> beans = selectMany(bean, target, orderBy, this.database);
         this.closeConnection();
         return beans;
     }
-    public ArrayList<Object> selectMany(Object bean, Object target, SQLiteDatabase conn) throws SQLException{
+    public ArrayList<Object> selectMany(Object bean, Object target, SQLiteDatabase conn) {
         return selectMany(bean, target, getOrderField(target), conn);
     }
-    public ArrayList<Object> selectMany(Object bean, Object target, Field orderBy, SQLiteDatabase conn) throws SQLException{
+    public ArrayList<Object> selectMany(Object bean, Object target, Field orderBy, SQLiteDatabase conn) {
         ArrayList<Object> beans = new ArrayList<Object>();
-        ManyRelations hasMultiple = bean.getClass().getAnnotation(ManyRelations.class);
 
-        if (hasMultiple != null){
-            HasMany hasMany = null;
-            for (int i = 0; i < hasMultiple.value().length; i++) {
-                if(hasMultiple.value()[i].entity().equals(target.getClass())){
-                    hasMany = hasMultiple.value()[i];
+        try{
+            ManyRelations hasMultiple = bean.getClass().getAnnotation(ManyRelations.class);
+
+            if (hasMultiple != null){
+                HasMany hasMany = null;
+                for (int i = 0; i < hasMultiple.value().length; i++) {
+                    if(hasMultiple.value()[i].entity().equals(target.getClass())){
+                        hasMany = hasMultiple.value()[i];
+                    }
+                }
+                if (hasMany != null){
+                    Entity entity = target.getClass().getAnnotation(Entity.class);
+                    String sql = "SELECT * FROM " + entity.table() +" WHERE "
+                            + databaseColumn(getField(target, hasMany.foreignKey())) + " = ?";
+
+                    if(orderBy != null){
+                        sql+= " ORDER BY "+ databaseColumn(orderBy);
+                    }
+
+                    ArrayList<Field> targetFields = getFields(target);
+
+                    Cursor rs = prepare(bean, sql, primaryField(bean), conn);
+                    while (rs.moveToNext()) {
+                        beans.add(result(rs, target, targetFields));
+                    }
                 }
             }
-            if (hasMany != null){
-                Entity entity = target.getClass().getAnnotation(Entity.class);
-                String sql = "SELECT * FROM " + entity.table() +" WHERE "
-                        + databaseColumn(getField(target, hasMany.foreignKey())) + " = ?";
-
-                if(orderBy != null){
-                    sql+= " ORDER BY "+ databaseColumn(orderBy);
-                }
-
-                ArrayList<Field> targetFields = getFields(target);
-
-                Cursor rs = prepare(bean, sql, primaryField(bean), conn);
-                while (rs.moveToNext()) {
-                    beans.add(result(rs, target, targetFields));
-                }
-            }
+        }catch (SQLException s){
+            s.printStackTrace();
         }
         return beans;
     }
 
-    public Integer countBean(Object bean) throws SQLException {
+    public Integer countBean(Object bean) {
         this.openConnection();
         Integer count = countBean(bean, this.database);
         this.closeConnection();
         return count;
     }
 
-    public Integer countBean(Object bean, SQLiteDatabase conn) throws SQLException {
+    public Integer countBean(Object bean, SQLiteDatabase conn) {
         Integer count = 0;
 
         Entity entity = bean.getClass().getAnnotation(Entity.class);
@@ -281,7 +315,7 @@ public class GenericPersistence extends Database {
         return count;
     }
 
-    public Object firstOrLastBean(Object bean, boolean last) throws SQLException {
+    public Object firstOrLastBean(Object bean, boolean last) {
         this.openConnection();
         Object result = firstOrLastBean(bean, last, this.database);
         this.closeConnection();
@@ -289,66 +323,74 @@ public class GenericPersistence extends Database {
     }
 
 
-    public Object firstOrLastBean(Object bean, boolean last, SQLiteDatabase conn) throws SQLException {
-        Entity entity = bean.getClass().getAnnotation(Entity.class);
-        ArrayList<Field> beanFields = getFields(bean);
+    public Object firstOrLastBean(Object bean, boolean last, SQLiteDatabase conn) {
         Object result = null;
-        String sql = "SELECT * FROM " + entity.table() + " ORDER BY "
-                + primaryColumn(primaryField(bean));
+        try{
+            Entity entity = bean.getClass().getAnnotation(Entity.class);
+            ArrayList<Field> beanFields = getFields(bean);
 
-        if(last)
-            sql += " DESC";
+            String sql = "SELECT * FROM " + entity.table() + " ORDER BY "
+                    + primaryColumn(primaryField(bean));
 
-        sql+=" LIMIT 1";
+            if(last)
+                sql += " DESC";
 
-        Cursor rs = conn.rawQuery(sql, null);
-        if (rs.moveToFirst()) {
-            result = result(rs, bean, beanFields);
+            sql+=" LIMIT 1";
+
+            Cursor rs = conn.rawQuery(sql, null);
+            if (rs.moveToFirst()) {
+                result = result(rs, bean, beanFields);
+            }
+        }catch (SQLException s){
+            s.printStackTrace();
         }
-
         return result;
     }
 
-    public ArrayList<Object> selectWhere(Object bean,Condition condition) throws SQLException{
+    public ArrayList<Object> selectWhere(Object bean,Condition condition) {
         return selectWhere(bean, condition, getOrderField(bean));
     }
-    public ArrayList<Object> selectWhere(Object bean, Condition condition, Field orderBy) throws SQLException{
+    public ArrayList<Object> selectWhere(Object bean, Condition condition, Field orderBy) {
         this.openConnection();
         ArrayList<Object> beans = selectWhere(bean, condition, orderBy, this.database);
         this.closeConnection();
         return beans;
     }
-    public ArrayList<Object> selectWhere(Object bean, Condition condition, SQLiteDatabase conn) throws SQLException{
+    public ArrayList<Object> selectWhere(Object bean, Condition condition, SQLiteDatabase conn) {
         return selectWhere(bean, condition, getOrderField(bean), conn);
     }
 
-    public ArrayList<Object> selectWhere(Object bean, Condition condition, Field orderBy, SQLiteDatabase conn) throws SQLException{
+    public ArrayList<Object> selectWhere(Object bean, Condition condition, Field orderBy, SQLiteDatabase conn) {
         ArrayList<Object> beans = new ArrayList<Object>();
-        ArrayList<Field> beanFields = getFields(bean);
+        try{
+            ArrayList<Field> beanFields = getFields(bean);
 
-        condition.prepareSQL(bean);
+            condition.prepareSQL(bean);
 
-        String sql = condition.getSql();
+            String sql = condition.getSql();
 
-        if(orderBy != null){
-            sql+= " ORDER BY "+ databaseColumn(orderBy);
-        }
+            if(orderBy != null){
+                sql+= " ORDER BY "+ databaseColumn(orderBy);
+            }
 
-        Cursor rs = conn.rawQuery(sql, null);
-        while (rs.moveToNext()) {
-            beans.add(result(rs, bean, beanFields));
+            Cursor rs = conn.rawQuery(sql, null);
+            while (rs.moveToNext()) {
+                beans.add(result(rs, bean, beanFields));
+            }
+        }catch (SQLException s){
+            s.printStackTrace();
         }
         return beans;
     }
 
-    public boolean deleteBean(Object bean) throws SQLException {
+    public boolean deleteBean(Object bean) {
         this.openConnection();
         boolean result = deleteBean(bean, this.database);
         this.closeConnection();
         return result;
     }
 
-    public boolean deleteMany(Object bean, SQLiteDatabase conn) throws SQLException{
+    public boolean deleteMany(Object bean, SQLiteDatabase conn) {
         ManyRelations hasMultiple = bean.getClass().getAnnotation(ManyRelations.class);
 
         boolean result = true;
@@ -359,7 +401,7 @@ public class GenericPersistence extends Database {
                     HasMany hasMany = hasMultiple.value()[i];
                     Class<?> child = hasMany.entity();
                     Object childInstance = child.newInstance();
-                    ArrayList<Object> results = selectMany(bean, childInstance, getOrderField(bean) , conn);
+                    ArrayList<Object> results = selectMany(bean, childInstance , conn);
                     for (Object object : results) {
                         boolean status = deleteBean(object, conn);
                         if (!status){
@@ -367,29 +409,40 @@ public class GenericPersistence extends Database {
                         }
                     }
                 }
-            } catch (InstantiationException | IllegalAccessException e) {
+            } catch (InstantiationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
+
         return result;
     }
 
-    public boolean deleteBean(Object bean, SQLiteDatabase conn) throws SQLException {
-        Entity entity = bean.getClass().getAnnotation(Entity.class);
-        ManyRelations hasMultiple = bean.getClass().getAnnotation(ManyRelations.class);
-        Field primaryField = primaryField(bean);
+    public boolean deleteBean(Object bean, SQLiteDatabase conn) {
         boolean response = true;
-        if(hasMultiple != null){
-            response = deleteMany(bean, conn);
-        }
-        if(response){
-            String sql = "DELETE FROM "+ entity.table() + " WHERE "+ primaryColumn(primaryField) +" = ?";
-            this.pst = conn.compileStatement(sql);
-            prepare(this.pst, bean, 1, primaryField);
-            long result = this.pst.executeInsert();
-            return (result != -1) ? true : false;
+        try {
+
+            Entity entity = bean.getClass().getAnnotation(Entity.class);
+            ManyRelations hasMultiple = bean.getClass().getAnnotation(ManyRelations.class);
+            Field primaryField = primaryField(bean);
+
+            if(hasMultiple != null){
+                response = deleteMany(bean, conn);
+            }
+            if(response){
+                String sql = "DELETE FROM "+ entity.table() + " WHERE "+ primaryColumn(primaryField) +" = ?";
+                this.pst = conn.compileStatement(sql);
+                prepare(this.pst, bean, 1, primaryField);
+                long result = this.pst.executeInsert();
+                return (result != -1) ? true : false;
+            }
+
+        }catch (SQLException s){
+            s.printStackTrace();
         }
         return response;
     }
@@ -506,17 +559,6 @@ public class GenericPersistence extends Database {
         result.put(PARAMETERS, parameterString);
 
         return result;
-    }
-
-    public static String join(ArrayList<String> strings, String joiner) {
-        String resultString = null;
-        for (int i = 0; i < strings.size(); i++) {
-            resultString += strings.get(i);
-            if (i < strings.size() - 1) {
-                resultString += joiner;
-            }
-        }
-        return resultString;
     }
 
     public static ArrayList<Method> getGetters(Object bean, ArrayList<Field> fields) {
@@ -649,7 +691,10 @@ public class GenericPersistence extends Database {
         Object result = null;
         try {
             result = bean.getClass().newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

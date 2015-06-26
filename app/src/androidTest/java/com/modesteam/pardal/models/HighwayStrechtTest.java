@@ -27,6 +27,15 @@ public class HighwayStrechtTest extends TestCase {
     @Override
     public void setUp() throws SQLException, NotNullableException, ClassNotFoundException {
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+        for (State state: State.getAll()){
+            state.delete();
+        }
+        for (City city: City.getAll()){
+            city.delete();
+        }
+        for (HighwayStretch highwayStretch: HighwayStretch.getAll()){
+            highwayStretch.delete();
+        }
         testState = new State("testState");
         testState.save();
         testCity = new City("001","Gama", testState.getId());
@@ -85,5 +94,17 @@ public class HighwayStrechtTest extends TestCase {
     public void testShouldGetWhereHighwayFromDatabase() throws SQLException, ClassNotFoundException, NotNullableException {
         Condition condition = new Condition(new HighwayStretch(),"kilometer", Operator.EQUAL,10);
         assertEquals(highway1.getKilometer(), HighwayStretch.getWhere(condition).get(0).getKilometer());
+    }
+
+    public void testShouldShowHighwaySorted() throws SQLException, ClassNotFoundException, NotNullableException {
+        HighwayStretch highwayStretchZ = new HighwayStretch ("99",14,testCity.getId());
+        highwayStretchZ.save();
+        HighwayStretch highwayStretchA = new HighwayStretch ("00", 15,testCity.getId());
+        highwayStretchA.save();
+        ArrayList<HighwayStretch> list = HighwayStretch.getAll();
+        assertEquals(highwayStretchA.getNumber(), list.get(0).getNumber());
+        assertEquals(highwayStretchZ.getNumber(), list.get(list.size()-1).getNumber());
+        highwayStretchA.delete();
+        highwayStretchZ.delete();
     }
 }

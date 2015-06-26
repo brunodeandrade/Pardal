@@ -1,12 +1,14 @@
 package com.modesteam.pardal;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -14,9 +16,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import exception.GenericAlertDialogException;
-import helpers.Condition;
-import helpers.Operator;
-import models.Tickets;
 import models.Model;
 import models.Type;
 
@@ -24,11 +23,11 @@ import models.Type;
 public class TypeDetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static Type typeForDetail;
-   // private static final String NAME_TYPE = "nameType";
+    private static Type typeForDetail = null;
+    private static final String ID_TYPE = "idType";
 
     // TODO: Rename and change types of parameters
-    //private static String nameOfType;
+    private static int idType;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,7 +36,7 @@ public class TypeDetailFragment extends Fragment {
         TypeDetailFragment fragment = new TypeDetailFragment();
         Bundle args = new Bundle();
         typeForDetail = type;
-       // args.putString(NAME_TYPE,nameType);
+        args.putInt(ID_TYPE,type.getId());
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +49,7 @@ public class TypeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            //nameOfType = getArguments().getString(NAME_TYPE);
+            idType = getArguments().getInt(ID_TYPE);
         }
     }
 
@@ -83,37 +82,49 @@ public class TypeDetailFragment extends Fragment {
     public void detailType(View view) {
 
         ArrayList<Model> arrayModelsOfType = null;
+
         try {
+            if (typeForDetail==null){
+                typeForDetail = Type.get(getArguments().getInt(ID_TYPE));
+            }
             arrayModelsOfType = typeForDetail.getModels();
-        }catch(ClassNotFoundException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
-        }catch(SQLException e){
-            GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
         }catch (NullPointerException e){
             GenericAlertDialogException genericAlertDialogException = new GenericAlertDialogException();
-            genericAlertDialogException.criarAviso(this.getActivity());
+            genericAlertDialogException.createAlert(this.getActivity());
         }
 
-        TextView nameType, totalModels,totalTickets,maxVelocity, averageExceded;
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Quango.otf");
+        TextView textViewCompare,textViewName, textViewTotalModels,textViewTotalTickets, textViewMaximumMeasuredVelocity, textViewAverageExceded;
 
-        nameType = (TextView) view.findViewById(R.id.textViewName);
-        nameType.setText(typeForDetail.getName());
+        textViewName = (TextView) view.findViewById(R.id.textViewName);
+        textViewName.setText(typeForDetail.getName());
+        textViewName.setTypeface(typeface);
 
-        totalModels = (TextView) view.findViewById(R.id.textViewModels);
-        totalModels.setText(""+arrayModelsOfType.size());
+        textViewCompare = (TextView) view.findViewById(R.id.textViewCompare);
+        textViewCompare.setTypeface(typeface);
 
-        totalTickets = (TextView) view.findViewById(R.id.textViewTickets);
-        totalTickets.setText(""+typeForDetail.getTotalTickets());
+        textViewTotalModels = (TextView) view.findViewById(R.id.textViewTotalModels);
+        textViewTotalModels.setText(""+arrayModelsOfType.size());
 
-        maxVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
-        maxVelocity.setText(typeForDetail.getMaximumMeasuredVelocity().toString());
+        textViewTotalTickets = (TextView) view.findViewById(R.id.textViewTotalTickets);
+        textViewTotalTickets.setText(""+typeForDetail.getTotalTickets());
 
-        averageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
+        textViewMaximumMeasuredVelocity = (TextView) view.findViewById(R.id.textViewMaximumMeasuredVelocity);
+        textViewMaximumMeasuredVelocity.setText(typeForDetail.getMaximumMeasuredVelocity().toString());
+
+        textViewAverageExceded = (TextView) view.findViewById(R.id.textViewAverageExceded);
         DecimalFormat f = new DecimalFormat("#.##");
-        averageExceded.setText(""+f.format(typeForDetail.getAverageExceded()));
+        textViewAverageExceded.setText(""+f.format(typeForDetail.getAverageExceded()));
 
+        TextView typeDesc = (TextView) view.findViewById(R.id.textViewDesc);
+        typeDesc.setText(typeForDetail.getDescription());
+
+        ImageButton compareButton = (ImageButton) view.findViewById(R.id.compareButton);
+        compareButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mListener.onFragmentInteraction(typeForDetail.getId(),TypeListFragment.newInstance(typeForDetail));
+            }
+        });
     }
 
 }

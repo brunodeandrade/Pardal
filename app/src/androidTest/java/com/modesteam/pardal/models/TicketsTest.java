@@ -21,6 +21,12 @@ public class TicketsTest extends TestCase{
         //(int year, int semester, int totalTickets,Double velocityLimit, Double averageExceded,
         // Double maximumMeasuredVelocity, int idHighwayStretch, int idModel)
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+        for (Model model: Model.getAll()) {
+            model.delete();
+        }
+        for (HighwayStretch highwayStretch: HighwayStretch.getAll()){
+            highwayStretch.delete();
+        }
         model1 = new Model("model1",true,1,1);
         highwayStretch1 = new HighwayStretch("040", 10, 1);
         model1.save();

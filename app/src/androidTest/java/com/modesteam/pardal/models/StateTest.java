@@ -5,6 +5,7 @@ import com.modesteam.pardal.Pardal;
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import helpers.Condition;
 import helpers.Operator;
@@ -23,6 +24,9 @@ public class StateTest extends TestCase {
     @Override
     public void setUp() throws SQLException, NotNullableException, ClassNotFoundException {
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+        for (State state: State.getAll()){
+            state.delete();
+        }
         state1 = new State("DF");
         state2 = new State("GO");
         state1.save();
@@ -75,5 +79,17 @@ public class StateTest extends TestCase {
         city.save();
         assertEquals(city.getName(), State.first().getCities().get(0).getName());
         city.delete();
+    }
+
+    public void testShouldShowStateSorted() throws SQLException, ClassNotFoundException, NotNullableException {
+        State stateZ = new State ("Z");
+        stateZ.save();
+        State stateA = new State ("A");
+        stateA.save();
+        ArrayList<State> list = State.getAll();
+        assertEquals(stateA.getName(), list.get(0).getName());
+        assertEquals(stateZ.getName(), list.get(list.size() - 1).getName());
+        stateA.delete();
+        stateZ.delete();
     }
 }

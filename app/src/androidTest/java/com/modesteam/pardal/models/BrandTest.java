@@ -5,6 +5,7 @@ import com.modesteam.pardal.Pardal;
 import junit.framework.TestCase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import helpers.Condition;
 import helpers.Operator;
@@ -23,6 +24,9 @@ public class BrandTest extends TestCase {
     Brand brand1, brand2;
     public void setUp() throws SQLException, NotNullableException, ClassNotFoundException {
         Pardal.getInstance().setDatabaseName("database_test.sqlite3.db");
+        for (Brand brand: Brand.getAll()){
+            brand.delete();
+        }
         brand1 = new Brand("VW");
         brand2 = new Brand("FIAT");
         brand1.save();
@@ -75,5 +79,17 @@ public class BrandTest extends TestCase {
         model.save();
         assertEquals(model.getName(), Brand.first().getModels().get(0).getName());
         model.delete();
+    }
+
+    public void testShouldShowBrandSorted() throws SQLException, ClassNotFoundException, NotNullableException {
+        Brand brandZ = new Brand ("Z");
+        brandZ.save();
+        Brand brandA = new Brand ("A");
+        brandA.save();
+        ArrayList<Brand> list = Brand.getAll();
+        assertEquals(brandA.getName(), list.get(0).getName());
+        assertEquals(brandZ.getName(), list.get(list.size()-1).getName());
+        brandA.delete();
+        brandZ.delete();
     }
 }

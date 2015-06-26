@@ -1,5 +1,9 @@
 package models;
 
+import com.modesteam.pardal.ComparableCategory;
+
+import annotations.OrderBy;
+import helpers.Category;
 import helpers.Condition;
 import helpers.GenericPersistence;
 
@@ -21,7 +25,8 @@ import annotations.OneRelations;
 @ManyRelations({
 	@HasMany(entity=Tickets.class, foreignKey="idHighwayStretch")
 })
-public class HighwayStretch {
+@OrderBy(field = "number")
+public class HighwayStretch implements ComparableCategory{
 
 	@Column(name="_id", nullable=false)
 	private int id;
@@ -29,6 +34,13 @@ public class HighwayStretch {
 	private String number;
 	
 	private int kilometer;
+
+	@Column(name="total_tickets", nullable=true)
+	private int totalTickets;
+	@Column(name="average_exceded", nullable=true)
+	private Double averageExceded;
+	@Column(name="maximum_measured_velocity", nullable=true)
+	private Double maximumMeasuredVelocity;
 	
 	@Column(name="id_city", nullable = false)
 	private int idCity;
@@ -80,20 +92,39 @@ public class HighwayStretch {
 	public void setIdCity(int idCity) {
 		this.idCity = idCity;
 	}
+
+    public int getTotalTickets() {
+        return totalTickets;
+    }
+    public void setTotalTickets(int totalTickets) {
+        this.totalTickets = totalTickets;
+    }
+    public Double getAverageExceded() {
+        return averageExceded;
+    }
+    public void setAverageExceded(Double averageExceded) {
+        this.averageExceded = averageExceded;
+    }
+    public Double getMaximumMeasuredVelocity() {
+        return maximumMeasuredVelocity;
+    }
+    public void setMaximumMeasuredVelocity(Double maximumMeasuredVelocity) {
+        this.maximumMeasuredVelocity = maximumMeasuredVelocity;
+    }
 	
-	public boolean save() throws ClassNotFoundException, SQLException, NotNullableException{
+	public boolean save() throws NotNullableException{
 		GenericPersistence gP = new GenericPersistence();
 		boolean result = gP.insertBean(this);
 		this.setId(HighwayStretch.last().getId());
 		return result;
 	}
 	
-	public static HighwayStretch get(int id) throws ClassNotFoundException, SQLException{
+	public static HighwayStretch get(int id) {
 		GenericPersistence gP = new GenericPersistence();
 		return (HighwayStretch) gP.selectBean(new HighwayStretch(id));
 	}
 	
-	public static ArrayList<HighwayStretch> getAll() throws ClassNotFoundException, SQLException{
+	public static ArrayList<HighwayStretch> getAll() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<HighwayStretch> stretches = new ArrayList<HighwayStretch>();
 		for (Object bean : gP.selectAllBeans(new HighwayStretch())) {
@@ -102,22 +133,22 @@ public class HighwayStretch {
 		return stretches;
 	}
 	
-	public static int count() throws ClassNotFoundException, SQLException {
+	public static int count()  {
 		GenericPersistence gDB = new GenericPersistence();
 		return gDB.countBean(new HighwayStretch());
 	}
 	
-	public static HighwayStretch first() throws ClassNotFoundException, SQLException{
+	public static HighwayStretch first() {
 		GenericPersistence gP = new GenericPersistence();
 		return (HighwayStretch) gP.firstOrLastBean(new HighwayStretch() , false);
 	}
 	
-	public static HighwayStretch last() throws ClassNotFoundException, SQLException{
+	public static HighwayStretch last() {
 		GenericPersistence gP = new GenericPersistence();
 		return (HighwayStretch) gP.firstOrLastBean(new HighwayStretch() , true);
 	}
 	
-	public static ArrayList<HighwayStretch> getWhere(Condition condition) throws ClassNotFoundException, SQLException{
+	public static ArrayList<HighwayStretch> getWhere(Condition condition) {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<HighwayStretch> stretches = new ArrayList<HighwayStretch>();
 		for (Object bean : gP.selectWhere(new HighwayStretch(), condition)) {
@@ -126,17 +157,17 @@ public class HighwayStretch {
 		return stretches;
 	}
 
-	public boolean delete() throws ClassNotFoundException, SQLException {
+	public boolean delete()  {
 		GenericPersistence gP = new GenericPersistence();
 		return gP.deleteBean(this);
 	}
 
-	public City getCity() throws ClassNotFoundException, SQLException{
+	public City getCity() {
 		GenericPersistence gP = new GenericPersistence();
 		return (City) gP.selectOne(this, new City());
 	}
 	
-	public ArrayList<Tickets> getTickets() throws ClassNotFoundException, SQLException{
+	public ArrayList<Tickets> getTickets() {
 		GenericPersistence gP = new GenericPersistence();
 		ArrayList<Tickets> beans = new ArrayList<Tickets>();
 		for (Object bean : gP.selectMany(this, new Tickets())) {
@@ -146,8 +177,13 @@ public class HighwayStretch {
 	}
 
 	@Override
+	public Category getCategory() {
+		return Category.HIGHWAY_STRETCH;
+	}
+
+	@Override
 	public String toString() {
 		return "BR " + number
-				+ ", kilometro " + kilometer;
+				+ " - Km " + kilometer;
 	}
 }

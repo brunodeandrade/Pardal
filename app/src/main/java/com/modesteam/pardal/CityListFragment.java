@@ -3,17 +3,31 @@ package com.modesteam.pardal;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
+import com.modesteam.pardal.brand.BrandContent;
 import com.modesteam.pardal.city.CityContent;
+
+import helpers.ListViewSearch;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import models.City;
 
 /**
@@ -25,16 +39,19 @@ import models.City;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class CityListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class CityListFragment extends Fragment implements AbsListView.OnItemClickListener, OnReverseListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_CITY = "city";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private City city;
+    private boolean changeButtonReverse = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -42,12 +59,13 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
      * The fragment's ListView/GridView.
      */
     private AbsListView mListView;
+    private EditText mSearchText;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
      * Views.
      */
-    private ListAdapter mAdapter;
+    private ArrayAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
     public static CityListFragment newInstance(String param1, String param2) {
@@ -55,6 +73,15 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static CityListFragment newInstance(City city) {
+        CityListFragment fragment = new CityListFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_CITY, city.getId());
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,14 +97,30 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            if(getArguments().getInt(ARG_CITY) == 0){
+                mParam1 = getArguments().getString(ARG_PARAM1);
+                mParam2 = getArguments().getString(ARG_PARAM2);
+            }else{
+                city = City.get(getArguments().getInt(ARG_CITY));
+            }
         }
 
         // TODO: Change Adapter to display your content
+        List<City> listCity = new ArrayList<City>();
+        if(city != null) {
+            for (City cityItem : CityContent.ITEMS) {
+                if (cityItem.getId() != city.getId()) {
+                    listCity.add(cityItem);
+                }
+            }
+        }else{
+            listCity = CityContent.ITEMS;
+        }
         mAdapter = new ArrayAdapter<City>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, CityContent.ITEMS);
+                android.R.layout.simple_list_item_1, android.R.id.text1, listCity);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -89,8 +132,27 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
 
+        mSearchText = (EditText) view.findViewById(R.id.searchEditText);
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
+
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+
+        final ImageButton ordenateButton = (ImageButton) view.findViewById(R.id.bOrdenate);
+        ordenateButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+                onReverseClick();
+                if (changeButtonReverse == false) {
+                    ordenateButton.setImageResource(R.drawable.arrow_up_float);
+                    changeButtonReverse = true;
+                } else{
+                    ordenateButton.setImageResource(R.drawable.arrow_down_float);
+                    changeButtonReverse = false;
+                }
+            }
+        });
 
         return view;
     }
@@ -116,8 +178,13 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            City citySelected = CityContent.ITEMS.get(position);
-            mListener.onFragmentInteraction(citySelected.getId(),CityDetailFragment.newInstance(citySelected));
+            if(city == null){
+                City citySelected = (City)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(citySelected.getId(),CityDetailFragment.newInstance(citySelected));
+            }else{
+                City citySelected = (City)mAdapter.getItem(position);
+                mListener.onFragmentInteraction(position, CompareFragment.newInstance(city,citySelected,"Cidade"));
+            }
         }
     }
 
@@ -134,4 +201,15 @@ public class CityListFragment extends Fragment implements AbsListView.OnItemClic
         }
     }
 
+    @Override
+    public void onReverseClick() {
+        ArrayList<City> list = (ArrayList<City>) CityContent.ITEMS;
+        Collections.reverse(list);
+        mAdapter = new ArrayAdapter<City>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, list);
+        mListView.setAdapter(mAdapter);
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
+        mSearchText.addTextChangedListener(ListViewSearch.searchListView(mAdapter));
+    }
 }

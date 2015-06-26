@@ -1,0 +1,96 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.modesteam.pardal.RankOrListFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rank_or_list">
+        <ImageButton
+            android:layout_width="101dp"
+            android:layout_height="101dp"
+            android:id="@+id/bList"
+            android:layout_gravity="center"
+            android:background="@layout/on_selector_list"
+            android:layout_row="11"
+            android:layout_column="1"
+            android:layout_centerVertical="true"
+            android:layout_alignRight="@+id/textView9"
+            android:layout_alignEnd="@+id/textView9"
+            android:adjustViewBounds="true" />
+
+        <ImageButton
+            android:layout_width="101dp"
+            android:layout_height="101dp"
+            android:id="@+id/bRank"
+            android:layout_gravity="right|top"
+            android:background="@layout/on_selector_rank"
+            android:layout_row="15"
+            android:layout_column="0"
+            android:layout_alignTop="@+id/bList"
+            android:layout_alignLeft="@+id/textView9"
+            android:layout_alignStart="@+id/textView9"
+            android:adjustViewBounds="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ranking"
+            android:id="@+id/sRanking"
+            android:layout_marginRight="23dp"
+            android:layout_marginEnd="23dp"
+            android:layout_alignTop="@+id/sList"
+            android:layout_alignRight="@+id/bRank"
+            android:layout_alignEnd="@+id/bRank" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lista"
+            android:id="@+id/sList"
+            android:layout_below="@+id/bList"
+            android:layout_alignLeft="@+id/bList"
+            android:layout_alignStart="@+id/bList"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Opções de Visualização"
+            android:id="@+id/textView9"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="24dip"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/textViewDesc"
+            android:layout_below="@+id/textView9"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="23dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/textViewTotal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignWithParentIfMissing="false" />
+
+    </RelativeLayout>
+
+</FrameLayout>

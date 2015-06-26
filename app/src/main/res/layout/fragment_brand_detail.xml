@@ -1,91 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.modesteam.pardal.BrandListFragment">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/brand_detail">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Detalhes:"
-        android:id="@+id/textViewDetalhes"
+        android:text="Marca"
+        android:id="@+id/textViewCategory"
+        android:textColor="#ff000000"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="81dp"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textViewTotalTickets"
-        android:layout_marginTop="33dp"
-        android:text="New Text"
-        android:layout_below="@+id/textViewName"
-        android:layout_alignLeft="@+id/textViewAverageExceded"
-        android:layout_alignStart="@+id/textViewAverageExceded" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Total de Multas:"
-        android:id="@+id/textView2"
-        android:layout_marginRight="27dp"
-        android:layout_marginEnd="27dp"
-        android:layout_alignTop="@+id/textViewTotalTickets"
-        android:layout_alignRight="@+id/textViewName"
-        android:layout_alignEnd="@+id/textViewName" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Média Excedida:"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2"
-        android:layout_marginTop="25dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Maior Velocidade:"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView3"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_marginTop="26dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textViewAverageExceded"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textViewMaximumMeasuredVelocity"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="New Text"
+        android:text="Nome do Item"
         android:id="@+id/textViewName"
-        android:layout_below="@+id/textViewDetalhes"
+        android:textColor="#ff163aff"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/textViewCategory"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Maior velocidade registrada:"
+        android:id="@+id/textView"
+        android:layout_marginLeft="81dp"
+        android:layout_marginTop="91dp"
+        android:textStyle="bold|italic"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX KM/H"
+        android:id="@+id/textViewMaximumMeasuredVelocity"
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Média de velocidade excedida"
+        android:id="@+id/textView222"
+        android:layout_marginLeft="69dp"
+        android:layout_marginTop="191dp"
+        android:textStyle="bold|italic"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX KM/H"
+        android:id="@+id/textViewAverageExceded"
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView222"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total de multas:"
+        android:id="@+id/textView19"
+        android:layout_marginLeft="122dp"
+        android:layout_marginTop="291dp"
+        android:textStyle="bold|italic"
+        android:layout_centerHorizontal="true"  />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX KM/H"
+        android:id="@+id/textViewTotalTickets"
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView19"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:id="@+id/compareButton"
+        android:background="@layout/on_selector_compare"
+        android:layout_above="@+id/textViewCompare"
         android:layout_centerHorizontal="true"
-        android:textColor="#ff4d71ff"
-        style="@android:style/Animation" />
+        android:adjustViewBounds="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold|italic"
+        android:text="Comparar"
+        android:id="@+id/textViewCompare"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

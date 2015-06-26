@@ -1,119 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.modesteam.pardal.StateDetailFragment">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/detail_highway">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Detalhes:"
-        android:id="@+id/textViewDetalhes"
+        android:text="Rodovia"
+        android:id="@+id/textViewCategory"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="81dp"
+        android:textColor="#ff000000"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp" />
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Nome do Item"
         android:id="@+id/textViewName"
-        android:textSize="18dp"
-        android:text="New Text"
-        android:layout_below="@+id/textViewDetalhes"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ff2b2dff" />
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="44dp"
+        android:textColor="#ff163aff"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Total de Multas:"
-        android:id="@+id/textView2"
+        android:text="Maior velocidade registrada:"
+        android:id="@+id/textView"
+        android:textStyle="bold|italic"
         android:layout_marginTop="39dp"
-        android:layout_below="@+id/textViewName"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/totalTickets"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_alignLeft="@+id/averageExceded"
-        android:layout_alignStart="@+id/averageExceded" />
+        android:layout_below="@+id/textViewCityState"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Velocidade Limite:"
-        android:id="@+id/textView3"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/textView2"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5" />
+        android:text="XXX KM/H"
+        android:id="@+id/textViewMaximumMeasuredVelocity"
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Média de velocidade excedida"
+        android:id="@+id/textView222"
+        android:layout_marginTop="41dp"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewMaximumMeasuredVelocity"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX KM/H"
+        android:id="@+id/textViewAverageExceded"
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView222"
+        android:layout_centerHorizontal="true"  />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total de multas:"
+        android:id="@+id/textView19"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewAverageExceded"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX KM/H"
+        android:id="@+id/textViewTotalTickets"
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textView19"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Velocidade Limite"
+        android:id="@+id/textViewExtraText"
+        android:textStyle="bold|italic"
+        android:layout_below="@+id/textViewTotalTickets"
+        android:layout_alignRight="@+id/textView19"
+        android:layout_alignEnd="@+id/textView19" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="XXX KM/H"
         android:id="@+id/velocityLimit"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_alignLeft="@+id/totalTickets"
-        android:layout_alignStart="@+id/totalTickets" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Media de Velocidades Excedidas:"
-        android:id="@+id/textView4"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/averageExceded"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Maior Velocidade Registrada:"
-        android:id="@+id/textView5"
-        android:layout_marginTop="28dp"
-        android:layout_below="@+id/textView4"
-        android:layout_toLeftOf="@+id/textView5"
-        android:layout_toStartOf="@+id/textView5" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/maximumMeasuredVelocity"
-        android:layout_alignTop="@+id/textView5"
-        android:layout_alignLeft="@+id/averageExceded"
-        android:layout_alignStart="@+id/averageExceded" />
+        android:textColor="#ffff2521"
+        android:layout_below="@+id/textViewExtraText"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="50dp"
+        android:id="@+id/compareButton"
+        android:background="@layout/on_selector_compare"
+        android:layout_above="@+id/textViewCompare"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold|italic"
+        android:text="Comparar"
+        android:id="@+id/textViewCompare"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Cidade/Estado"
-        android:id="@+id/textView8"
-        android:layout_below="@+id/textViewName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Small Text"
         android:id="@+id/textViewCityState"
-        android:layout_below="@+id/textViewName"
-        android:layout_alignRight="@+id/totalTickets"
-        android:layout_alignEnd="@+id/totalTickets"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_toRightOf="@+id/textViewName"
-        android:layout_toEndOf="@+id/textViewName" />
-
+        android:layout_marginLeft="136dp"
+        android:layout_marginTop="64dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
