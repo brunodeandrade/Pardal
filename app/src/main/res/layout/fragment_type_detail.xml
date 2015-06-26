@@ -119,7 +119,8 @@
         android:id="@+id/compareButton"
         android:background="@layout/on_selector_compare"
         android:layout_above="@+id/textViewCompare"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -18,7 +18,8 @@
             android:layout_column="1"
             android:layout_centerVertical="true"
             android:layout_alignRight="@+id/textView9"
-            android:layout_alignEnd="@+id/textView9" />
+            android:layout_alignEnd="@+id/textView9"
+            android:adjustViewBounds="true" />
 
         <ImageButton
             android:layout_width="101dp"
@@ -30,7 +31,8 @@
             android:layout_column="0"
             android:layout_alignTop="@+id/bList"
             android:layout_alignLeft="@+id/textView9"
-            android:layout_alignStart="@+id/textView9" />
+            android:layout_alignStart="@+id/textView9"
+            android:adjustViewBounds="true" />
 
         <TextView
             android:layout_width="wrap_content"

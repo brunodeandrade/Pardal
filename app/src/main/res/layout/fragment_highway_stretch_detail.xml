@@ -36,10 +36,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Maior velocidade registrada:"
         android:id="@+id/textView"
-        android:layout_marginLeft="81dp"
-        android:layout_marginTop="91dp"
         android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true"  />
+        android:layout_marginTop="39dp"
+        android:layout_below="@+id/textViewCityState"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,10 +57,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Média de velocidade excedida"
         android:id="@+id/textView222"
-        android:layout_marginLeft="69dp"
-        android:layout_marginTop="191dp"
+        android:layout_marginTop="41dp"
         android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true"  />
+        android:layout_below="@+id/textViewMaximumMeasuredVelocity"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,10 +79,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total de multas:"
         android:id="@+id/textView19"
-        android:layout_marginLeft="122dp"
-        android:layout_marginTop="291dp"
         android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/textViewAverageExceded"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="37dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,10 +100,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Velocidade Limite"
         android:id="@+id/textViewExtraText"
-        android:layout_marginLeft="118dp"
-        android:layout_marginTop="391dp"
         android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/textViewTotalTickets"
+        android:layout_alignRight="@+id/textView19"
+        android:layout_alignEnd="@+id/textView19" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,7 +113,7 @@
         android:id="@+id/velocityLimit"
         android:textColor="#ffff2521"
         android:layout_below="@+id/textViewExtraText"
-        android:layout_centerHorizontal="true"  />
+        android:layout_centerHorizontal="true" />
 
     <ImageButton
         android:layout_width="75dp"
@@ -120,7 +121,8 @@
         android:id="@+id/compareButton"
         android:background="@layout/on_selector_compare"
         android:layout_above="@+id/textViewCompare"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:layout_width="wrap_content"

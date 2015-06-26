@@ -24,7 +24,8 @@
         android:layout_gravity="right|center_vertical"
         android:background="@layout/on_selector_rank_avg"
         android:layout_below="@+id/textViewTickets"
-        android:layout_centerHorizontal="true"  />
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true" />
 
     <ImageButton
         android:layout_width="110dp"
@@ -32,9 +33,10 @@
         android:id="@+id/button_maximumVelocity"
         android:layout_gravity="center"
         android:background="@layout/on_selector_rank_max"
-        android:layout_marginTop="29dp"
+        android:adjustViewBounds="true"
         android:layout_below="@+id/textViewTitleTypeRank"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/button_totalTickets"
+        android:layout_alignStart="@+id/button_totalTickets" />
 
     <ImageButton
         android:layout_width="110dp"
@@ -44,7 +46,8 @@
         android:layout_gravity="left|center_vertical"
         android:background="@layout/on_selector_rank_total"
         android:layout_below="@+id/textViewVelocity"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:layout_width="wrap_content"

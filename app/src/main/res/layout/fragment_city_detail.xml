@@ -36,10 +36,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Maior velocidade registrada:"
         android:id="@+id/textView"
-        android:layout_marginTop="36dp"
         android:textStyle="bold|italic"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/textViewName"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/textView222"
+        android:layout_alignStart="@+id/textView222" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +58,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Média de velocidade excedida"
         android:id="@+id/textView222"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="20dp"
         android:textStyle="bold|italic"
         android:layout_below="@+id/textViewMaximumMeasuredVelocity"
         android:layout_centerHorizontal="true" />
@@ -78,10 +79,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total de multas:"
         android:id="@+id/textView19"
-        android:layout_marginTop="61dp"
         android:textStyle="bold|italic"
         android:layout_below="@+id/textViewAverageExceded"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,8 +100,8 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Total de Rodovias"
         android:id="@+id/textViewExtraText"
-        android:layout_marginTop="45dp"
         android:textStyle="bold|italic"
+        android:layout_marginTop="51dp"
         android:layout_below="@+id/textViewTotalTickets"
         android:layout_centerHorizontal="true" />
 

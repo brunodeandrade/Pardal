@@ -13,13 +13,16 @@
         android:id="@+id/bBrand"
         android:layout_gravity="center_vertical"
         android:background="@layout/on_selector_brand"
-        android:layout_alignTop="@+id/bType"
         android:layout_alignLeft="@+id/bState"
         android:layout_alignStart="@+id/bState"
         android:layout_marginLeft="71dp"
         android:layout_marginTop="35dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentRight="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,7 +48,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="129dp"
-        android:layout_marginTop="415dp" />
+        android:layout_marginTop="415dp"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,7 +125,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="216dp"
-        android:layout_marginTop="269dp" />
+        android:layout_marginTop="269dp"
+        android:adjustViewBounds="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -148,7 +155,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/bCity"
-        android:layout_alignEnd="@+id/bCity" />
+        android:layout_alignEnd="@+id/bCity"
+        android:adjustViewBounds="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignWithParentIfMissing="false" />
 
     <ImageButton
         android:layout_width="80dp"
@@ -160,7 +170,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="216dp"
-        android:layout_marginTop="152dp" />
+        android:layout_marginTop="152dp"
+        android:adjustViewBounds="true" />
 
     <ImageButton
         android:layout_width="80dp"
@@ -173,7 +184,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="71dp"
-        android:layout_marginTop="152dp" />
+        android:layout_marginTop="152dp"
+        android:adjustViewBounds="true" />
 
     <ImageButton
         android:layout_width="80dp"
@@ -181,16 +193,10 @@
         android:id="@+id/bType"
         android:background="@layout/on_selector_type"
         android:focusableInTouchMode="false"
-        android:layout_below="@+id/bHighway"
-        android:layout_alignLeft="@+id/sBrand"
-        android:layout_alignStart="@+id/sBrand"
-        android:layout_toStartOf="@+id/sCategories"
-        android:layout_marginLeft="71dp"
-        android:layout_marginTop="269dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/bModel"
-        android:layout_alignEnd="@+id/bModel" />
+        android:adjustViewBounds="true"
+        android:layout_alignTop="@+id/bHighway"
+        android:layout_alignLeft="@+id/bModel"
+        android:layout_alignStart="@+id/bModel" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -204,6 +210,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="156dp"
-        android:layout_marginTop="482dp" />
+        android:layout_marginTop="482dp"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentBottom="false" />
 
 </RelativeLayout>
